@@ -1,0 +1,32 @@
+:root{
+--font-sans:'Inter Tight',system-ui,sans-serif;
+--font-signature:'Poppins',system-ui,sans-serif;
+/* Display */
+--fs-hero:clamp(40px,7vw,92px); /* @kind font */
+--lh-hero:.98; /* @kind other */
+--fw-hero:700; /* @kind other */
+/* Headings */
+--fs-h1:56px; /* @kind font */
+--lh-h1:1.05; /* @kind other */
+--fw-h1:700; /* @kind other */
+--fs-h2:34px; /* @kind font */
+--lh-h2:1.15; /* @kind other */
+--fw-h2:700; /* @kind other */
+--fs-h3:26px; /* @kind font */
+--lh-h3:1.2; /* @kind other */
+--fw-h3:600; /* @kind other */
+/* Text */
+--fs-body:16px; /* @kind font */
+--lh-body:1.6; /* @kind other */
+--fw-body:400; /* @kind other */
+--fs-body-sm:15px; /* @kind font */
+--lh-body-sm:1.6; /* @kind other */
+--fs-label:12px; /* @kind font */
+--lh-label:1.4; /* @kind other */
+--fw-label:600; /* @kind other */
+--ls-label:.06em; /* @kind other */
+/* Signature (the word "Nate" only) */
+--fs-logo:22px; /* @kind font */
+--lh-logo:1; /* @kind other */
+--fw-logo:500; /* @kind other */
+}

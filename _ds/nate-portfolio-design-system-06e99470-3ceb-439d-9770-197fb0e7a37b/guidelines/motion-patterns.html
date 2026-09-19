@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- @dsCard name="Motion — scroll reveal & hover elevation" group="guidelines" viewport="1200x760" -->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion patterns — Nate Portfolio Design System</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="../motion/scroll-reveal.js"></script>
+<style>
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;line-height:1.6;}
+  .wrap{max-width:900px;margin:0 auto;padding:56px 40px 96px;}
+  .doc-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 10px;}
+  h1{font-size:34px;font-weight:600;letter-spacing:-.02em;margin:0 0 14px;}
+  h2{font-size:22px;font-weight:600;letter-spacing:-.01em;margin:56px 0 10px;}
+  p{color:var(--ink-soft);max-width:66ch;}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;background:rgba(20,18,15,.07);border-radius:6px;padding:1px 6px;}
+  [data-theme="dark"] code{background:rgba(255,255,255,.1);}
+  table{border-collapse:collapse;width:100%;margin-top:18px;font-size:14.5px;}
+  th,td{text-align:left;padding:9px 12px;border-bottom:.5px solid var(--line);}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;}
+  .demo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:24px;}
+  .glass-card{background:var(--card);border:.5px solid var(--border-strong);border-radius:var(--card-radius,18px);padding:28px;box-shadow:var(--shadow-elevation);}
+  .card-eyebrow{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:10px;}
+  .card-desc{font-size:15px;color:var(--ink-soft);}
+  .spacer{height:70vh;display:flex;align-items:center;font-size:13px;color:var(--muted);}
+  .section-eyebrow{display:flex;align-items:center;gap:12px;margin:0 0 14px;}
+  .section-eyebrow .rule{width:28px;height:2px;background:var(--yellow-deep);border-radius:2px;}
+  .section-eyebrow .num{font-size:13px;font-weight:600;color:var(--yellow-deep);letter-spacing:.04em;}
+  .section-title{font-size:26px;font-weight:600;letter-spacing:-.01em;margin:0 0 12px;}
+</style>
+</head>
+<body data-reveal-root>
+<div class="wrap">
+  <p class="doc-label">Guidelines · Motion</p>
+  <h1>Scroll reveal &amp; hover elevation</h1>
+  <p>Two shared patterns. Both live in <code>tokens/motion.css</code>; the reveal is driven by <code>motion/scroll-reveal.js</code>.</p>
+
+  <h2>1 · Scroll reveal</h2>
+  <p>Section eyebrows, headings and subtitles fade up once when they first enter the viewport. They do not reset on the way back up, and they never animate under <code>prefers-reduced-motion: reduce</code>. Body paragraphs, cards, photography and the hero stay static.</p>
+  <table>
+    <tr><th>Token</th><th>Value</th><th>Used for</th></tr>
+    <tr><td><code>--reveal-distance</code></td><td>20px</td><td>Initial <code>translateY</code></td></tr>
+    <tr><td><code>--reveal-duration</code></td><td>550ms</td><td>Opacity + transform</td></tr>
+    <tr><td><code>--reveal-ease</code></td><td>ease-out</td><td>Both properties</td></tr>
+    <tr><td><code>--reveal-stagger</code></td><td>90ms</td><td>Delay per sibling in the section</td></tr>
+  </table>
+  <p>Markup: mark the page container <code>data-reveal-root</code>. Every <code>section</code> / <code>.about-section</code> inside it staggers its own heading children in document order. Opt one element in with <code>data-reveal</code>, out with <code>data-reveal="off"</code>. After client-side routing, call <code>window.NateScrollReveal.refresh()</code>.</p>
+
+  <div class="spacer">Scroll down — the block below reveals with a 90ms stagger.</div>
+
+  <section>
+    <div class="section-eyebrow"><span class="rule"></span><span class="num">01</span></div>
+    <h3 class="section-title">At a glance</h3>
+    <p class="body-text">Eyebrow, then title, then this subtitle — 90ms apart.</p>
+  </section>
+
+  <h2>2 · Hover elevation</h2>
+  <p>The lift <code>PhotoCard</code> already used, extended to the solid <code>GlassCard</code>: <code>translateY(-3px)</code> plus <code>--shadow-hover</code> over <code>.22s ease</code>. Only transform and shadow move — fill, border and radius hold. Suppressed on <code>hover: none</code> pointers, where a sticky hover state would read as a stuck card.</p>
+  <table>
+    <tr><th>Token</th><th>Value</th></tr>
+    <tr><td><code>--elevate-lift</code></td><td>-3px</td></tr>
+    <tr><td><code>--elevate-duration</code></td><td>.22s</td></tr>
+    <tr><td><code>--elevate-ease</code></td><td>ease</td></tr>
+    <tr><td><code>--shadow-hover</code></td><td>0 20px 46px -20px rgba(0,0,0,.55)</td></tr>
+  </table>
+  <div class="demo">
+    <div class="glass-card"><div class="card-eyebrow">Solid card</div><div class="card-desc">Hover me — 3px lift, deeper shadow.</div></div>
+    <div class="glass-card"><div class="card-eyebrow">Stat card</div><div class="card-desc">Same values as the photo cards.</div></div>
+    <div class="glass-card"><div class="card-eyebrow">Principle</div><div class="card-desc">No scale, no glow, no border change.</div></div>
+  </div>
+</div>
+</body>
+</html>

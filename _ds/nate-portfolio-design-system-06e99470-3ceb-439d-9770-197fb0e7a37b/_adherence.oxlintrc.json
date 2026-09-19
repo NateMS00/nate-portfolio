@@ -1,0 +1,278 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/content/**",
+              "components/navigation/**",
+              "components/surfaces/**",
+              "ui_kits/portfolio/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Inter Tight|Poppins))/i]",
+        "message": "Font not provided by the design system. Available: Inter Tight, Poppins."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Badge'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|arrow|tone|key|ref|className|style|children)$/]",
+        "message": "<Badge> doesn't accept that prop. Declared props: children, arrow, tone."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Badge'] > JSXAttribute[name.name='arrow'] > Literal[value!=/^(?:up|down|none)$/]",
+        "message": "<Badge> arrow must be one of 'up' | 'down' | 'none'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Badge'] > JSXAttribute[name.name='tone'] > Literal[value!=/^(?:success|neutral)$/]",
+        "message": "<Badge> tone must be one of 'success' | 'neutral'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='FooterLink'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|href|key|ref|className|style|children)$/]",
+        "message": "<FooterLink> doesn't accept that prop. Declared props: label, href."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='GlassCard'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|eyebrow|stat|title|children|footer|as|style|key|ref|className|style|children)$/]",
+        "message": "<GlassCard> doesn't accept that prop. Declared props: icon, eyebrow, stat, title, children, footer, as, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MetaTag'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|label|value|key|ref|className|style|children)$/]",
+        "message": "<MetaTag> doesn't accept that prop. Declared props: icon, label, value."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='NavLink'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|href|key|ref|className|style|children)$/]",
+        "message": "<NavLink> doesn't accept that prop. Declared props: label, href."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='PhotoCard'] > JSXAttribute > JSXIdentifier[name!=/^(?:photo|alt|meta|title|children|footer|href|showGo|minHeight|style|key|ref|className|style|children)$/]",
+        "message": "<PhotoCard> doesn't accept that prop. Declared props: photo, alt, meta, title, children, footer, href, showGo, minHeight, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SectionEyebrow'] > JSXAttribute > JSXIdentifier[name!=/^(?:number|children|key|ref|className|style|children)$/]",
+        "message": "<SectionEyebrow> doesn't accept that prop. Declared props: number, children."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Badge": {
+        "replaces": []
+      },
+      "FooterLink": {
+        "replaces": []
+      },
+      "GlassCard": {
+        "replaces": []
+      },
+      "MetaTag": {
+        "replaces": []
+      },
+      "NavLink": {
+        "replaces": []
+      },
+      "PhotoCard": {
+        "replaces": []
+      },
+      "SectionEyebrow": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--accent-fill",
+      "--accent-on-fill",
+      "--accent-tint",
+      "--badge-border",
+      "--bg",
+      "--bg-foot",
+      "--bg-hero",
+      "--bg-ok",
+      "--border-card",
+      "--border-hairline",
+      "--border-strong",
+      "--card",
+      "--card-radius",
+      "--content-max-width",
+      "--faint",
+      "--font-sans",
+      "--font-signature",
+      "--fs-body",
+      "--fs-body-sm",
+      "--fs-h1",
+      "--fs-h2",
+      "--fs-h3",
+      "--fs-hero",
+      "--fs-label",
+      "--fs-logo",
+      "--fw-body",
+      "--fw-h1",
+      "--fw-h2",
+      "--fw-h3",
+      "--fw-hero",
+      "--fw-label",
+      "--fw-logo",
+      "--glass-blur",
+      "--glass-fill",
+      "--ink",
+      "--ink-soft",
+      "--lh-body",
+      "--lh-body-sm",
+      "--lh-h1",
+      "--lh-h2",
+      "--lh-h3",
+      "--lh-hero",
+      "--lh-label",
+      "--lh-logo",
+      "--line",
+      "--line-soft",
+      "--ls-label",
+      "--menu-bg",
+      "--menu-border",
+      "--muted",
+      "--radius",
+      "--radius-pill",
+      "--shadow-card",
+      "--shadow-card-dark",
+      "--shadow-elevation",
+      "--shadow-hover",
+      "--space-1",
+      "--space-2",
+      "--space-3",
+      "--space-4",
+      "--space-5",
+      "--space-6",
+      "--space-7",
+      "--surface-card",
+      "--surface-footer",
+      "--surface-hero",
+      "--surface-menu",
+      "--surface-page",
+      "--text-accent",
+      "--text-body",
+      "--text-faint",
+      "--text-heading",
+      "--text-meta",
+      "--tx-ok",
+      "--yellow",
+      "--yellow-deep",
+      "--yellow-tx"
+    ],
+    "tokenKinds": {
+      "--bg": "color",
+      "--bg-hero": "color",
+      "--bg-foot": "color",
+      "--ink": "color",
+      "--ink-soft": "color",
+      "--muted": "color",
+      "--faint": "color",
+      "--line": "color",
+      "--line-soft": "color",
+      "--card": "color",
+      "--border-strong": "color",
+      "--menu-bg": "color",
+      "--menu-border": "color",
+      "--yellow": "color",
+      "--yellow-deep": "color",
+      "--yellow-tx": "color",
+      "--bg-ok": "color",
+      "--tx-ok": "color",
+      "--badge-border": "color",
+      "--surface-page": "color",
+      "--surface-hero": "color",
+      "--surface-card": "color",
+      "--surface-footer": "color",
+      "--surface-menu": "color",
+      "--text-heading": "font",
+      "--text-body": "font",
+      "--text-meta": "font",
+      "--text-faint": "font",
+      "--text-accent": "font",
+      "--border-card": "color",
+      "--border-hairline": "color",
+      "--accent-fill": "color",
+      "--accent-on-fill": "color",
+      "--glass-fill": "color",
+      "--glass-blur": "other",
+      "--accent-tint": "color",
+      "--font-sans": "font",
+      "--font-signature": "font",
+      "--fs-hero": "font",
+      "--lh-hero": "other",
+      "--fw-hero": "other",
+      "--fs-h1": "font",
+      "--lh-h1": "other",
+      "--fw-h1": "other",
+      "--fs-h2": "font",
+      "--lh-h2": "other",
+      "--fw-h2": "other",
+      "--fs-h3": "font",
+      "--lh-h3": "other",
+      "--fw-h3": "other",
+      "--fs-body": "font",
+      "--lh-body": "other",
+      "--fw-body": "other",
+      "--fs-body-sm": "font",
+      "--lh-body-sm": "other",
+      "--fs-label": "font",
+      "--lh-label": "other",
+      "--fw-label": "other",
+      "--ls-label": "other",
+      "--fs-logo": "font",
+      "--lh-logo": "other",
+      "--fw-logo": "other",
+      "--space-1": "spacing",
+      "--space-2": "spacing",
+      "--space-3": "spacing",
+      "--space-4": "spacing",
+      "--space-5": "spacing",
+      "--space-6": "spacing",
+      "--space-7": "spacing",
+      "--content-max-width": "spacing",
+      "--radius": "radius",
+      "--card-radius": "radius",
+      "--radius-pill": "radius",
+      "--shadow-card": "shadow",
+      "--shadow-card-dark": "shadow",
+      "--shadow-hover": "shadow",
+      "--shadow-elevation": "shadow"
+    },
+    "fontFamilies": [
+      "Inter Tight",
+      "Poppins"
+    ]
+  }
+}

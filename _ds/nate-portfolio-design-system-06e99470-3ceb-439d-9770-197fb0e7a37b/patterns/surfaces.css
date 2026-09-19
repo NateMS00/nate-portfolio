@@ -1,0 +1,327 @@
+/* Surface & card patterns — Nate Portfolio Design System
+   Added after the original import. Load after tokens/. */
+:root{
+/* Corner glow is now DARK-MODE-ONLY. A radial glow doesn't read correctly
+   on white — nothing can appear "brighter" than white, so it just looks
+   like a beige stain rather than a light source. Light mode dropped the
+   glow entirely and relies on the existing 1px border + card shadow alone
+   to define these containers (both already do that job on their own).
+   Dark mode keeps it exactly as-is (bright yellow, reads correctly there). */
+--glow-light:none;
+--glow-dark:radial-gradient(ellipse 320px 220px at 0% 0%,rgba(245,197,66,.10),transparent 70%);
+/* Corner glow, section-container variant — bigger & brighter than the card
+   glow above since it spans a full-width dark band, not a ~400px card. Own
+   token so turning this up never brightens GlassCard's dark-mode glow. */
+--glow-section:radial-gradient(ellipse 520px 300px at 0% 0%,rgba(245,197,66,.20),transparent 65%);
+/* Work band */
+--work-band-pad:76px;
+--work-band-title-gap:40px;
+--work-band-radius:36px;
+/* Project-card date */
+--card-date-size:30px;
+--card-date-color:rgba(255,255,255,.55);
+}
+
+/* ---- Pattern: GlassCard corner glow --------------------------------------
+   The yellow glow used to sit in the section background (.section-surface).
+   It now belongs to each solid card, one glow per card, top-left corner.
+   Photo cards (PhotoCard) never take it — their tint gradient is the only
+   gradient allowed over photography.                                        */
+.glass-card{background:var(--glow-light),var(--card);}
+[data-theme="dark"] .glass-card{background:var(--glow-dark),rgba(255,255,255,.06);}
+/* Sections go flat: no glow, no gradient behind content. */
+.section-surface{background:none;}
+
+/* ---- Pattern: corner glow on full-width dark section containers ---------
+   Distinct from the GlassCard glow above (which lives on individual solid
+   cards): a full-bleed dark section — e.g. the work band — gets the SAME
+   top-left radial treatment, using --glow-dark (10%) since the container is
+   always on --bg-foot regardless of theme. Keep it small and corner-pinned
+   so it never reaches centered/left-aligned title text and washes out white
+   type. PhotoCard still never takes any glow — its tint gradient is the
+   only gradient allowed over a photo.
+
+   CONTRAST CHECK (do this every time --glow-section or the band's title
+   markup changes): the glow must stay corner-pinned and faded out well
+   before it reaches the centered/left-aligned title — verify white title
+   text still holds >=3:1 against the composited background. If a stronger
+   or bigger glow ever fails that check, pull its opacity or ellipse size
+   back down until it passes; never dim the title text instead.
+
+   BORDER, independent of background contrast: a 1px var(--border-strong)
+   hairline on top/left/right (no bottom — it's flush against the footer)
+   always defines the container's rounded top edge. Background contrast
+   with whatever sits above it (white hero in light mode, near-identical
+   dark hero in dark mode) is NOT guaranteed, so the shape must never rely
+   on it alone — the border is what reads as "a container starts here" in
+   both themes. Any future full-width dark section with this glow gets the
+   same border. */
+.work-band{background:var(--glow-section),var(--bg-foot);color:#fff;border-radius:var(--work-band-radius) var(--work-band-radius) 0 0;border:1px solid var(--border-strong);border-bottom:none;}
+
+/* ---- Pattern: Selected work band ----------------------------------------
+   Full-bleed dark container (footer background, both themes) holding the
+   featured project cards, with the section title centered above them.
+   Max two background values per page still holds: the band reuses --bg-foot.
+   Vertical rhythm: the gap from the container's top edge to the title equals
+   the gap from the title to the first card (--work-band-title-gap, both),
+   independent of the bottom padding (--work-band-pad). */
+.work-band .work-band-in{padding:var(--work-band-title-gap) 0 var(--work-band-pad);}
+.work-band .work-band-title{
+text-align:center;
+font-size:clamp(22px,2.6vw,30px);
+font-weight:600;
+letter-spacing:-.01em;
+color:#fff;
+margin:0;
+}
+/* Title flanked by short accent lines, same look as the Home hero's
+   "Hi, I'm Nate" line (.hero-hello .deco): 5px thick, --yellow, capped at
+   130px, flex:1 so each side grows toward that cap and no further. */
+.work-title-row{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 0 var(--work-band-title-gap);}
+.work-title-line{flex:1;max-width:130px;height:5px;border-radius:3px;background:var(--yellow);position:relative;overflow:hidden;}
+.work-title-line span{position:absolute;inset:0;filter:url(#paint-line);opacity:.5;}
+
+/* ---- Pattern: flush dark-section stacking --------------------------------
+   When a full-bleed dark section (the work band, a full-bleed next-project
+   card) sits immediately before the footer with nothing else between them,
+   add .flush to .foot-sec to remove the standard top margin so the two read
+   as one continuous dark block. Toggle the class from the page router
+   (add on pages that close on a full-bleed dark section; leave off e.g. the
+   About page, which closes on a bordered CTA row and keeps the normal gap). */
+.foot-sec.flush{margin-top:0;}
+
+/* ---- Pattern: full-bleed link focus ring ---------------------------------
+   .card-fullbleed sits edge-to-edge with no surrounding whitespace, often
+   flush against the footer — an outset :focus-visible ring would get
+   visually cramped or read as touching the section below. Draw it inset
+   instead, in the bright yellow (not --yellow-deep) so it stays visible over
+   both photography and a dark footer. */
+.card.card-fullbleed:focus-visible{outline:3px solid var(--yellow);outline-offset:-3px;}
+
+/* ---- Pattern: individually-hoverable stacked photos ----------------------
+   A pile of overlapping photo cards (e.g. About hero) where EACH photo lifts
+   and comes to front on its own hover, independent of its siblings — not the
+   .glass-card/[data-ds-elevate] group lift, which assumes a single flat
+   transform. Each photo keeps its own rotation via --photo-rotate (set
+   inline or per-class), so hover adds translateY without erasing the tilt.
+   Same timing as GlassCard's hover elevation (--elevate-duration/--elevate-
+   ease/--elevate-lift/--shadow-hover) — reuse those tokens, don't restate. */
+.stack-photo{position:absolute;transform:rotate(var(--photo-rotate,0deg));transition:transform var(--elevate-duration) var(--elevate-ease),box-shadow var(--elevate-duration) var(--elevate-ease);}
+.stack-photo:hover{transform:rotate(var(--photo-rotate,0deg)) translateY(var(--elevate-lift));box-shadow:var(--shadow-hover);z-index:5;}
+@media (prefers-reduced-motion:reduce){
+.stack-photo:hover{transform:rotate(var(--photo-rotate,0deg));}
+}
+@media (hover:none){
+.stack-photo:hover{transform:rotate(var(--photo-rotate,0deg));box-shadow:none;z-index:auto;}
+}
+
+/* ---- Pattern: project-card date ------------------------------------------
+   The year leaves the meta row and sits in the card's top-right corner at
+   title size, white at ~55% so it reads as scale, not emphasis.             */
+.card-date{
+position:absolute;
+top:20px;
+right:26px;
+z-index:1;
+font-size:var(--card-date-size);
+font-weight:600;
+letter-spacing:-.01em;
+line-height:1;
+color:var(--card-date-color);
+}
+
+/* ---- Pattern: full-bleed next-project card -------------------------------
+   The closing card breaks the 1400px wrap and runs edge to edge with the
+   viewport: no max-width, no side margin/padding, square corners, height
+   hugging its content instead of a fixed 280px.
+
+   REGRESSION NOTE: this rule previously lost to the base .card{border-
+   radius:var(--card-radius)} rule because both were single-class selectors
+   and the page's own <style> (loaded after this file) won the tie on source
+   order — corners quietly went rounded again. Selector is now `.card.
+   card-fullbleed` (two classes) specifically so it always outranks `.card`
+   regardless of load order. Do not simplify this back to `.card-fullbleed`
+   alone. */
+.card.card-fullbleed{
+width:100%;
+max-width:none;
+margin:0;
+border-radius:0;
+height:auto;
+}
+.card-fullbleed .card-body{height:auto;max-width:min(70%,900px);padding:56px 48px;}
+@media (max-width:760px){
+.card-fullbleed .card-body{max-width:88%;padding:40px 22px;}
+.card-date{font-size:24px;top:16px;right:18px;}
+}
+
+/* ---- Pattern: no leftover bottom padding after a full-bleed closer ------
+   .pg-proj section{padding:64px 0} is the generic project-section rhythm —
+   it still applies to the bare <section> wrapping the "Next project" full-
+   bleed card (that card has no section of its own). Its top half of that
+   padding is fine (breathing room above the card); the BOTTOM half used to
+   leave a dead gap before the footer even though .foot-sec.flush zeroes
+   its own margin-top. Give that wrapping section the next-project-section
+   class and zero ONLY its padding-bottom — never edit the generic
+   .pg-proj section rule itself, which every other project block still
+   needs on both edges. */
+
+/* ---- Pattern: categorized skills block -----------------------------------
+   Replaces a flat pill list with N labelled rows: a category heading (real
+   h3, not bold text) on the left, its items as a semantic ul/li styled with
+   the existing .tag pill (border/radius/spacing unchanged — categorizing
+   never invents a new pill style). Stacks to a single column under 640px. */
+.skills-grid{display:flex;flex-direction:column;gap:22px;}
+.skills-row{display:grid;grid-template-columns:160px 1fr;gap:20px;align-items:baseline;}
+.skills-row .about-label{margin:0;}
+@media (max-width:640px){.skills-row{grid-template-columns:1fr;gap:8px;}}
+
+/* ---- Pattern: connected timeline for multi-role companies ----------------
+   A company with 2+ roles gets a vertical timeline: a thin connecting line
+   (--yellow-deep) running the height of .exp-timeline, with a small dot
+   (same color, ::before on .exp-role) at each role's top-left. Both are
+   drawn as generated content on non-interactive containers — never real
+   DOM nodes with information of their own — so they carry no text and stay
+   out of the accessibility tree by construction; that's the aria-hidden
+   intent for this pattern. Each role: h4 title, a secondary date/location
+   line, then the achievement paragraph — no other structure.
+   A company with exactly one role (e.g. BluePixel) stays a plain block:
+   no .exp-timeline, no dot, no line — just the same title/date-location/
+   paragraph structure directly under the company's intro line. Don't add a
+   timeline to a single-role company "for consistency" — it implies a
+   history that isn't there. */
+.exp-intro{font-size:14px;line-height:1.65;color:var(--ink-soft);margin:0 0 6px;max-width:70ch;}
+.exp-timeline{padding-left:20px;border-left:1.5px solid var(--yellow-deep);display:flex;flex-direction:column;gap:24px;margin-top:16px;}
+.exp-role{position:relative;}
+.exp-role::before{content:'';position:absolute;left:-25.5px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--yellow-deep);border:2px solid var(--bg);}
+
+/* ---- Pattern: compact standard footer height -----------------------------
+   New default footer rhythm, replacing the earlier taller spacing scale:
+   .foot-in padding 52px/34px (was 76/46), .foot-bottom top margin+border-
+   padding 32px/22px (was 56/26). The email CTA, the static role line and
+   the social row now sit closer together; only the LinkedIn/Behance link
+   touch targets keep their prior size — tighten surrounding whitespace,
+   never the tappable area itself. The static role line (.foot-roles) is a
+   plain, non-rotating rendering of the SAME role list that drives the hero
+   role rotator — always generate both from one array/data source so they
+   can't drift out of sync; a middle-dot .sep (opacity:.5, matching
+   .card-meta .sep) separates the inline roles, consistent with the sep
+   style used elsewhere in the site. */
+.foot-roles{font-size:15px;color:#a39c8f;margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px;}
+.foot-roles .sep{opacity:.5;}
+
+/* ---- Pattern: sitewide subtitle = project-page eyebrow, no number --------
+   The plain uppercase-gray label ("SKILLS", "EXPERIENCE"...) is retired.
+   Every section subtitle sitewide, including About's, now reuses the
+   project-page eyebrow (.section-eyebrow: short accent .rule + label in
+   .num's type treatment) with the numeral simply omitted — this is the one
+   standard subtitle treatment, not an About-specific variant. Category-
+   level sub-labels one level down (e.g. "Design"/"Tools" inside the skills
+   block) stay the smaller plain .about-label caption — the eyebrow is for
+   section-level headers only, never nested one per row. */
+.about-eyebrow{margin:0 0 18px;}
+.about-eyebrow .num{font-size:12px;letter-spacing:.08em;}
+
+/* ---- Pattern: role date/location under the title, not far-right ---------
+   Standard for any experience/timeline entry: title (h4) then the date and
+   location directly below it, left-aligned, in the secondary-text
+   treatment (--ink-soft, 13px) used elsewhere for supporting copy — never
+   space-between'd to the far edge of a wide row, which forces the eye to
+   travel to connect date to title. Applies at both the role level and the
+   company-header level (name + years sit together, left-aligned, not
+   pinned across a full-width row). */
+.exp-role-head{display:flex;flex-direction:column;align-items:flex-start;gap:3px;}
+
+/* ---- Pattern: nav item interactive state matrix --------------------------
+   Definitive spec for every main nav item (Work / About / Let's talk /
+   Resume) — apply the shared .nv class to each, distinct from the .btn-y
+   CTA style, which never carries a border or underline in any state:
+   - default: plain text, transparent background, transparent 1.5px pill
+     border. Padding/border-width RESERVED but invisible in every non-hover
+     state, so no state change ever shifts or resizes surrounding nav items.
+   - active (.talk): the 1.5px border turns solid --ink (adapts in dark
+     mode) — a full pill outline, no fill, no underline. ROUTE-ONLY: this
+     class is applied by the router exclusively to the nav item whose
+     NAV_ACTIVE entry matches the CURRENT PAGE/ROUTE. Home has no entry —
+     no nav item is "on" while viewing Home, because none of Work/Let's
+     talk/Resume is itself a distinct page; they're actions/anchors. Never
+     add a NAV_ACTIVE mapping for a CTA-style action item, only for items
+     that represent a real route the user can be "on."
+   - hover (any item) AND focus-visible (identical treatment, never hover-
+     only): the SAME solid yellow fill as the hero .btn-y CTA — the exact
+     radial-gradient(circle at 40% 35%,#FBDB6E,#F5C542 60%,#E8B32E), no
+     transparency, no blur — with --yellow-tx (ink) text. One fill
+     definition, shared by the Home CTA and every nav item; don't restate
+     it as a flat color. If also active, the --ink border stays visible on
+     top of the solid fill — both signals show at once.
+   - hover-lift travels with the fill: translateY(-3px) + the same
+     box-shadow (0 20px 46px -20px rgba(0,0,0,.55)) and .22s ease timing
+     used for .card:hover elsewhere on the site — nav hover is the same
+     elevation pattern as the card family, just on a pill instead of a
+     card. Mobile popover scales the lift down (-2px / a tighter shadow)
+     to suit its smaller row height.
+   RETIRED: an earlier version tried a translucent glass fill (backdrop-
+   filter blur) on hover, flagged from the start as an explicit exception
+   to "glass only over a photo." It read washed-out over flat backgrounds
+   in review and was abandoned — nav hover is solid, full stop; don't
+   reintroduce blur here. */
+
+/* ---- Pattern: CTA buttons share the nav's pill radius + hover-lift ------
+   .btn-y (Home hero "Let's talk", About "Resume", any future primary CTA)
+   uses the same 999px pill radius as .nav a.nv — no more rectangular
+   buttons — and the same hover elevation as nav items and .card:
+   translateY(-3px) + box-shadow 0 20px 46px -20px rgba(0,0,0,.55) on .22s
+   ease. One hover-lift definition, three surfaces (CTA button, nav pill,
+   card) — this is the definitive CTA shape/interaction now, not the
+   earlier smaller-radius, lift-only-no-shadow version. */
+
+/* ---- Pattern: shared achievement-paragraph measure in Experience --------
+   Every role's achievement paragraph across every company (multi-role
+   Veevart and single-role BluePixel alike) shares one max-width (720px,
+   ≈75-80 characters/line) — Veevart no longer stretches edge-to-edge and
+   BluePixel is no longer narrower by comparison; both companies read at
+   the same measure. */
+
+/* ---- Pattern: every company gets the dot + line, even with one role ----
+   REVISES the earlier "single-role companies stay a plain block" rule.
+   Every company entry — regardless of role count — now wraps its role(s)
+   in .exp-timeline for the yellow-deep dot + connecting line, aria-hidden
+   generated content as before. A single-role company (BluePixel) simply
+   renders one dot and a line segment the height of that one role, instead
+   of a connected multi-dot sequence — same visual language, less content. */
+
+/* ---- Pattern: floating decorative stickers (hero photo only) ------------
+   A category of its own — distinct from PhotoCard and GlassCard, and the
+   ONE deliberate exception to "yellow stays rare": each sticker is a large
+   solid-yellow-fill square (its own painterly-textured background, shipped
+   verbatim in the source image — never stripped or recolored), used only
+   as illustrative/decorative flourish around the Home hero photo. Not a
+   UI surface, carries no interactive affordance despite the cursor
+   iconography, and never appears anywhere else on the site.
+   Structure: the hero photo's wrapper drops overflow:hidden (only the
+   inner photo box keeps it, so the photo itself still crops with rounded
+   corners) so each sticker can sit HALF over the photo, half hanging past
+   its edge — one per edge (top/right/bottom), anchored and translated to
+   center on that edge, never drifting toward the text column. Each sticker:
+   14px corner radius, border in --ink (not a literal black, so it adapts
+   in dark mode), a small lift shadow, and its own slight rotation
+   alternating direction (arrow -6deg, hand +5deg, hourglass -4deg) so the
+   three don't read as a repeated stamp. alt="" — purely decorative, skipped
+   by screen readers. Shrinks (64→48→36px) and pulls its overhang in at
+   760px/480px so it never overlaps the text column as the photo shrinks. */
+.hero-portrait-wrap{position:relative;}
+.hero-sticker{position:absolute;width:64px;height:64px;object-fit:cover;border-radius:14px;border:2px solid var(--ink);box-shadow:0 8px 20px -8px rgba(0,0,0,.35);z-index:3;}
+
+/* ---- Pattern: About stacked-photo pile is exactly 3 images --------------
+   back/mid/front, no more — a 4th "accent" tile was tried and reverted.
+   Square (1:1), not portrait — superseding the earlier portrait spec.
+   Sized responsively via clamp() at every tier (container and each card),
+   never a fixed pixel size — a fixed px stack was tried and reintroduced
+   dead space between the text column and the photos; clamp() keeps them
+   close and proportional at any width. .about-photo (the img itself, no
+   wrapper) always gets object-fit:cover + object-position:center so any
+   real photo or illustration crops to the square slot instead of
+   stretching (fill) or letterboxing (contain) — set once on the shared
+   class, never per-image. The pile never reuses an image already used
+   elsewhere on the page (e.g. the Home hero portrait) — each of the 3 is
+   unique content. */

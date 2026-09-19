@@ -1,0 +1,4 @@
+/* Inter Tight 400/500/600/700 + italic 500/600; Poppins 500 (wordmark only).
+   No font binaries were provided with the source system — the portfolio itself
+   loads both families from Google Fonts, so this system does the same. */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@500&display=swap');

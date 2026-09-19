@@ -1,0 +1,63 @@
+/* Motion tokens & patterns — Nate Portfolio Design System */
+:root{
+/* Scroll reveal */
+--reveal-distance:20px;
+--reveal-duration:550ms;
+--reveal-ease:ease-out;
+--reveal-stagger:90ms;
+/* Hover elevation (shared by PhotoCard and GlassCard) */
+--elevate-lift:-3px;
+--elevate-duration:.22s;
+--elevate-ease:ease;
+/* Shadows also ship in tokens/shadow.css; restated here so motion.css works standalone */
+--shadow-card:0 1px 2px rgba(0,0,0,.03),0 16px 32px -22px rgba(0,0,0,.22);
+--shadow-card-dark:0 1px 2px rgba(0,0,0,.2),0 16px 32px -22px rgba(0,0,0,.5);
+--shadow-hover:0 20px 46px -20px rgba(0,0,0,.55);
+--shadow-elevation:var(--shadow-card);
+/* Existing slot-machine values, named for reuse */
+--rotate-interval:2000ms;
+--rotate-duration:1.5s;
+--rotate-ease:cubic-bezier(.16,1,.3,1);
+}
+[data-theme="dark"]{--shadow-elevation:var(--shadow-card-dark);}
+
+/* ---- Pattern: Scroll reveal ----------------------------------------------
+   Section headings and subtitles fade up once, the first time they enter the
+   viewport. The .ds-reveal class is added by motion/scroll-reveal.js, never
+   authored in markup: with JS off (or prefers-reduced-motion on) the content
+   is simply visible. Stagger is applied as an inline transition-delay by the
+   same script, one --reveal-stagger step per sibling.                        */
+.ds-reveal{
+opacity:0;
+transform:translateY(var(--reveal-distance));
+transition:opacity var(--reveal-duration) var(--reveal-ease),transform var(--reveal-duration) var(--reveal-ease);
+will-change:opacity,transform;
+}
+.ds-reveal.is-revealed{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+.ds-reveal,.ds-reveal.is-revealed{opacity:1;transform:none;transition:none;}
+}
+
+/* ---- Pattern: Hover elevation --------------------------------------------
+   Same lift the photo cards use, extended to solid cards. Opt in with the
+   .glass-card class or the data-ds-elevate attribute. Color/border/radius are
+   untouched — only transform and shadow move.                               */
+.glass-card,[data-ds-elevate]{
+transition:transform var(--elevate-duration) var(--elevate-ease),box-shadow var(--elevate-duration) var(--elevate-ease);
+}
+.glass-card:hover,[data-ds-elevate]:hover{
+transform:translateY(var(--elevate-lift));
+box-shadow:var(--shadow-hover);
+}
+/* Dark theme restates the resting shadow at a higher specificity, so the hover
+   shadow has to match it to win. */
+[data-theme="dark"] .glass-card:hover,[data-theme="dark"] [data-ds-elevate]:hover{
+box-shadow:var(--shadow-hover);
+}
+@media (prefers-reduced-motion:reduce){
+.glass-card:hover,[data-ds-elevate]:hover{transform:none;}
+}
+/* Non-interactive containers keep the lift off touch devices, where :hover sticks */
+@media (hover:none){
+.glass-card:hover,[data-ds-elevate]:hover{transform:none;box-shadow:var(--shadow-elevation);}
+}

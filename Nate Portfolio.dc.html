@@ -101,6 +101,11 @@ html[data-page="ds"] .pg-ds{display:block;}
 .hero-sec{background:var(--bg-hero);transition:background .3s ease;}
 .nav-sticky-bar{position:sticky;top:0;z-index:100;background:color-mix(in srgb, var(--card) 72%, transparent);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--border-strong);}
 .hero{display:grid;grid-template-columns:1fr 340px;gap:60px;align-items:stretch;padding:56px 0 100px;}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;gap:40px;padding:40px 0 64px;}
+  .hero-portrait-wrap{width:min(78vw,320px);margin:0 auto;}
+  .hero-portrait{min-height:0;aspect-ratio:1/1;}
+}
 .hero-left{min-width:0;}
 .hero-portrait-wrap{position:relative;align-self:stretch;}
 .hero-portrait{position:relative;height:100%;width:100%;min-height:440px;background:rgba(0,0,0,0.04);border:0.5px solid var(--line);border-radius:20px;overflow:hidden;}
@@ -111,10 +116,10 @@ html[data-page="ds"] .pg-ds{display:block;}
 .sticker-hand{right:-32px;top:50%;transform:translateY(-50%) rotate(5deg);}
 .sticker-hourglass{bottom:-32px;left:50%;transform:translateX(-50%) rotate(-4deg);}
 @media (max-width:760px){
-  .hero-sticker{width:48px;height:48px;border-radius:11px;}
-  .sticker-arrow{top:-20px;}
-  .sticker-hand{right:-20px;}
-  .sticker-hourglass{bottom:-20px;}
+  .hero-sticker{width:44px;height:44px;border-radius:10px;}
+  .sticker-arrow{top:-18px;}
+  .sticker-hand{right:-18px;}
+  .sticker-hourglass{bottom:-18px;}
 }
 @media (max-width:480px){
   .hero-sticker{width:36px;height:36px;border-radius:9px;}
@@ -204,8 +209,8 @@ html[data-page="ds"] .pg-ds{display:block;}
   .about-hero{gap:24px;}
   .about-hero-photos{width:195px;height:195px;}
   .about-photo-back{width:195px;height:195px;}
-  .about-photo-mid{width:195px;height:195px;top:37px;left:63px;}
-  .about-photo-front{width:195px;height:195px;top:70px;left:111px;}
+  .about-photo-mid{width:195px;height:195px;}
+  .about-photo-front{width:195px;height:195px;}
 }
 .about-hero h1{font-size:clamp(30px,4.2vw,44px);font-weight:600;letter-spacing:-0.02em;line-height:1.15;margin:0 0 22px;max-width:20ch;color:var(--on-hero);}
 .about-hero .bio{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:64ch;margin:0 0 14px;}
@@ -214,12 +219,13 @@ html[data-page="ds"] .pg-ds{display:block;}
 .about-photo{border-radius:12px;overflow:hidden;background:rgba(0,0,0,0.04);object-fit:cover;object-position:center;display:block;aspect-ratio:1/1;width:clamp(210px,22vw,260px);height:clamp(210px,22vw,260px);}
 [data-theme="dark"] .about-photo{background:rgba(255,255,255,0.05);}
 .about-photo-back{--photo-rotate:-8deg;top:0;left:0;z-index:0;}
-.about-photo-mid{--photo-rotate:6deg;top:50px;left:85px;z-index:1;box-shadow:0 14px 30px -14px rgba(0,0,0,.3);}
-.about-photo-front{--photo-rotate:-3deg;top:95px;left:150px;z-index:2;box-shadow:0 20px 44px -16px rgba(0,0,0,.4);}
+.about-photo-mid{--photo-rotate:6deg;top:23%;left:39%;z-index:1;box-shadow:0 14px 30px -14px rgba(0,0,0,.3);}
+.about-photo-front{--photo-rotate:-3deg;top:44%;left:69%;z-index:2;box-shadow:0 20px 44px -16px rgba(0,0,0,.4);}
 [data-theme="dark"] .about-photo-mid{box-shadow:0 14px 30px -14px rgba(0,0,0,.5);}
 [data-theme="dark"] .about-photo-front{box-shadow:0 20px 44px -16px rgba(0,0,0,.65);}
 .about-section{padding:44px 0;border-bottom:0.5px solid var(--line);}
 .about-section:last-of-type{border-bottom:none;}
+.pg-about{overflow-x:hidden;}
 .about-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:0 0 18px;}
 .about-eyebrow{margin:0 0 18px;}
 .about-eyebrow .num{font-size:12px;letter-spacing:.08em;}
@@ -257,8 +263,8 @@ html[data-page="ds"] .pg-ds{display:block;}
   .about-hero .bio{max-width:100%;text-align:left;}
   .about-hero-photos{order:-1;align-self:center;margin:0 auto 24px;width:200px;height:200px;}
   .about-photo-back{width:165px;height:165px;}
-  .about-photo-mid{width:165px;height:165px;top:33px;left:55px;}
-  .about-photo-front{width:165px;height:165px;top:62px;left:98px;}
+  .about-photo-mid{width:165px;height:165px;}
+  .about-photo-front{width:165px;height:165px;}
   .exp-head{flex-direction:column;align-items:flex-start;}
   .about-cta{justify-content:center;}
 }

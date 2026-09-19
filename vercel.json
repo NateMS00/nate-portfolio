@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/Nate Portfolio.dc.html" }
+  ]
+}

@@ -59,11 +59,11 @@ html:not([data-page]) .pg-home,
 html[data-page="home"] .pg-home,
 html[data-page="about"] .pg-about,
 html[data-page="pos"] .pg-pos,
-html[data-page="platform"] .pg-platform,
-html[data-page="ds"] .pg-ds{display:block;}
+html[data-page="ds"] .pg-ds,
+html[data-page="online-services"] .pg-online-services{display:block;}
 
 /* ---- header ---- */
-.site-head{display:flex;justify-content:space-between;align-items:center;padding:24px 0;}
+.site-head{display:flex;justify-content:space-between;align-items:center;padding:16px 0;}
 .brand{position:relative;display:inline-block;line-height:1;font-family:'Poppins',sans-serif;font-weight:400;font-size:25px;letter-spacing:.01em;color:var(--on-hero);isolation:isolate;}
 .brand .dot{position:absolute;right:-10px;top:-4px;width:18px;height:18px;z-index:0;}
 .nav{display:flex;gap:24px;align-items:center;font-size:15px;}
@@ -160,6 +160,7 @@ html[data-page="ds"] .pg-ds{display:block;}
 /* ---- photo cards ---- */
 .card{position:relative;border-radius:var(--card-radius);overflow:hidden;display:block;transition:transform .22s ease,box-shadow .22s ease;}
 .card:hover{transform:translateY(-3px);box-shadow:0 20px 46px -20px rgba(0,0,0,.55);}
+.card.next-card:hover{transform:none;}
 .card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
 .card:hover .card-img{transform:scale(1.04);}
 .card-tint{position:absolute;inset:0;background:linear-gradient(to right,rgba(14,11,8,.84) 0%,rgba(14,11,8,.56) 42%,rgba(14,11,8,.12) 72%,rgba(14,11,8,0) 100%);}
@@ -287,6 +288,7 @@ h1.title{font-size:clamp(34px,5vw,56px);line-height:1.05;font-weight:600;letter-
 .pg-proj section.tight{padding:44px 0;}
 .pg-proj section.next-project-section{padding-bottom:0;}
 h2.section-title{font-size:clamp(22px,2.4vw,28px);font-weight:600;letter-spacing:-0.01em;margin:0 0 28px;max-width:640px;color:var(--on-hero);}
+h3.subsection-title{font-size:clamp(17px,1.6vw,19px);font-weight:600;letter-spacing:-0.005em;margin:0 0 16px;max-width:640px;color:var(--on-hero);}
 .section-eyebrow{display:flex;align-items:center;gap:12px;margin:0 0 14px;}
 .section-eyebrow .rule{width:28px;height:2px;background:var(--yellow-deep);border-radius:2px;}
 .section-eyebrow .num{font-size:13px;font-weight:600;color:var(--yellow-deep);letter-spacing:.04em;text-transform:uppercase;}
@@ -300,7 +302,35 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 .card-grid{display:grid;gap:20px;}
 .card-grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr));}
 .card-grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr));}
-@media (max-width:860px){.card-grid.cols-3,.card-grid.cols-2{grid-template-columns:1fr;}}
+.card-grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media (max-width:860px){.card-grid.cols-3,.card-grid.cols-2,.card-grid.cols-4{grid-template-columns:1fr;}}
+@media (min-width:861px) and (max-width:1180px){.card-grid.cols-4{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.persona-card-bright .card-tint{background:linear-gradient(to right,rgba(14,11,8,.92) 0%,rgba(14,11,8,.74) 48%,rgba(14,11,8,.34) 78%,rgba(14,11,8,.08) 100%);}
+.pg-home .card-date{color:rgba(255,255,255,.9);}
+.carousel-frame-wrap{position:relative;width:1024px;max-width:100%;margin:0 auto;}
+.carousel-frame-wrap .carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;}
+.carousel-frame-wrap .carousel-arrow.prev{left:16px;}
+.carousel-frame-wrap .carousel-arrow.next{right:16px;}
+.carousel-arrow{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--card);border:0.5px solid var(--border-strong);color:var(--ink);font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);}
+.carousel-arrow:hover{background:var(--bg-hero);}
+.carousel-slide.hidden{display:none;}
+.carousel-label{text-align:center;font-size:14px;color:var(--muted);margin-top:14px;}
+.carousel-dots{display:flex;gap:8px;justify-content:center;margin-top:16px;}
+.carousel-dot{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:var(--border-strong);cursor:pointer;}
+.carousel-dot.active{background:var(--yellow-deep);}
+[data-theme="dark"] .carousel-dot.active{background:var(--yellow);}
+.pull-quote{border-left:3px solid var(--yellow-deep);padding-left:22px;margin:28px 0 0;font-size:21px;font-style:italic;line-height:1.5;color:var(--ink);max-width:720px;}
+[data-theme="dark"] .pull-quote{border-left-color:var(--yellow);}
+
+/* ---- frame-iphone: reusable Design System component ----
+   Generic iPhone device bezel (notch + rounded screen), same usage pattern
+   as frame-ipad/frame-desktop: a fixed-size shell with a `.screen` (or
+   `.notch` + `.screen`) inner target for a live iframe, image or image-slot.
+   Toggle visibility with `.hidden` (display:none), same as frame-ipad. */
+.frame-iphone{margin:0 auto;width:280px;flex-shrink:0;aspect-ratio:9/19.5;background:#0b0b0c;border-radius:46px;padding:12px;border:0.5px solid var(--line);position:relative;overflow:hidden;}
+.frame-iphone .notch{position:absolute;top:26px;left:50%;transform:translateX(-50%);width:84px;height:24px;border-radius:14px;background:#0b0b0c;z-index:2;}
+.frame-iphone .screen{width:100%;height:100%;border-radius:34px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;background:#F5F5F5;position:relative;}
+.frame-iphone.hidden{display:none;}
 .card-eyebrow{font-size:13px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em;}
 .card-desc{font-size:15px;line-height:1.6;color:var(--ink-soft);}
 .chip{display:inline-flex;align-items:center;gap:6px;margin-top:14px;}
@@ -319,15 +349,14 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 [data-theme="dark"] .device-toggle{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.18);}
 .device-toggle button{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:inherit;font-size:14px;font-weight:500;padding:9px 20px;border-radius:999px;cursor:pointer;}
 .device-toggle button.active{background:var(--ink);color:var(--bg);}
-.zoom-control{display:inline-flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);}
-.zoom-control button{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--border-strong);background:rgba(20,18,15,0.10);color:var(--ink);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-[data-theme="dark"] .zoom-control button{background:rgba(255,255,255,0.14);}
-.zoom-value{min-width:42px;text-align:center;font-variant-numeric:tabular-nums;}
-.frame-ipad{margin:0 auto;width:min(100%,792px);aspect-ratio:2360/1640;background:var(--bg-foot);border-radius:34px;padding:16px;box-shadow:0 30px 60px -20px rgba(0,0,0,0.35);position:relative;}
+.frame-ipad{margin:0 auto;aspect-ratio:2360/1640;background:var(--bg-foot);border-radius:34px;padding:16px;box-shadow:0 30px 60px -20px rgba(0,0,0,0.35);position:relative;}
 .frame-ipad::before{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.14);}
-.frame-ipad .screen{width:100%;height:100%;border-radius:20px;overflow:hidden;background:#F5F5F5;position:relative;}
+.frame-ipad .screen{width:100%;height:100%;border-radius:20px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;background:#F5F5F5;position:relative;}
 .frame-ipad.hidden{display:none;}
 .frame-desktop{margin:0 auto;width:100%;max-width:792px;border-radius:12px;box-shadow:0 30px 60px -20px rgba(0,0,0,0.35);border:0.5px solid var(--line);overflow:hidden;background:#F5F5F5;display:none;flex-direction:column;}
+.frame-desktop-lg{padding:20px;border-radius:20px;background:var(--bg-hero);box-shadow:0 34px 70px -22px rgba(0,0,0,0.42);border:0.5px solid var(--line);position:relative;}
+.frame-desktop-lg .browser-chrome{border-radius:10px 10px 0 0;}
+.frame-desktop-lg .browser-body{border-radius:0 0 10px 10px;}
 .frame-desktop.active{display:flex;}
 .browser-chrome{height:44px;flex:0 0 auto;background:var(--bg);border-bottom:0.5px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 16px;}
 .traffic-lights{display:flex;gap:7px;}
@@ -337,7 +366,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 .traffic-lights span:nth-child(3){background:#61c454;}
 .address-bar{flex:1;height:26px;border-radius:7px;background:rgba(20,18,15,0.10);border:0.5px solid var(--border-strong);display:flex;align-items:center;padding:0 12px;font-size:12px;color:var(--ink-soft);max-width:360px;}
 [data-theme="dark"] .address-bar{background:rgba(255,255,255,0.14);}
-.browser-body{aspect-ratio:2360/1640;position:relative;overflow:hidden;background:#F5F5F5;}
+.browser-body{aspect-ratio:2360/1640;position:relative;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;background:#F5F5F5;}
 .proto-iframe{position:absolute;top:0;left:50%;width:2360px;height:1640px;border:0;transform-origin:top center;}
 
 /* ---- marked placeholders (contenido pendiente) ---- */
@@ -420,7 +449,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <a class="card" href="#/pos" aria-label="Point-of-sale redesign — case study">
             <img class="card-img" src="assets/cover-pos.jpg" alt="Point-of-sale redesign cover">
             <div class="card-tint"></div><div class="card-blur"></div>
-            <span class="card-date">2025</span>
+            <span class="card-date">2026</span>
             <div class="card-body">
               <div class="card-meta"><span>Product Design</span><span class="sep">·</span><span>Veevart</span></div>
               <h3>Point-of-sale redesign</h3>
@@ -429,27 +458,27 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             </div>
             <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
           </a>
-          <a class="card" href="#/platform" aria-label="Platform unification — case study">
-            <img class="card-img" src="assets/cover-platform.jpg" alt="Platform unification cover">
+          <a class="card" href="#/design-system" aria-label="Unifying Veevart's design system — case study">
+            <img class="card-img" src="assets/cover-designsystem.jpg" alt="Unifying Veevart's design system cover">
             <div class="card-tint"></div><div class="card-blur"></div>
-            <span class="card-date">2024</span>
+            <span class="card-date">2025</span>
             <div class="card-body">
               <div class="card-meta"><span>Product Design</span><span class="sep">·</span><span>Veevart</span></div>
-              <h3>Platform unification</h3>
-              <p>Merging 5 legacy platforms into one product ecosystem</p>
+              <h3>Unifying Veevart's design system</h3>
+              <p>Merging 5 legacy platforms into one ecosystem, powered by a shared design system</p>
               <span class="metric"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg>+40% adoption</span>
             </div>
             <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
           </a>
-          <a class="card" href="#/design-system" aria-label="Design system — case study">
-            <img class="card-img" src="assets/cover-designsystem.jpg" alt="Design system cover">
+          <a class="card" href="#/online-services" aria-label="Veevart's online apps redesign — case study">
+            <image-slot id="cover-online-services" class="card-img" shape="rect" src="assets/cover-online-apps.jpg" placeholder="Cover — Veevart's online apps redesign" style="position:absolute;inset:0;"></image-slot>
             <div class="card-tint"></div><div class="card-blur"></div>
-            <span class="card-date">2024</span>
+            <span class="card-date">2025</span>
             <div class="card-body">
-              <div class="card-meta"><span>Design Systems</span><span class="sep">·</span><span>Veevart</span></div>
-              <h3>Design system · 120 components</h3>
-              <p>Shared standards that let the team ship 10x faster</p>
-              <span class="metric"><svg viewBox="0 0 24 24"><polyline points="3 7 9 13 13 9 21 17"></polyline><polyline points="15 17 21 17 21 11"></polyline></svg>−70% handoff time</span>
+              <div class="card-meta"><span>Product Design</span><span class="sep">·</span><span>Veevart</span></div>
+              <h3>Veevart's online apps redesign</h3>
+              <p>Redesigning ticketing, donations, and membership signup for the people using them</p>
+              <span class="metric"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg>+50% satisfaction</span>
             </div>
             <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
           </a>
@@ -595,7 +624,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
         <div class="meta-row">
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">Product Designer</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg><div><div class="label">Team</div><div class="value">Product, Customer Success &amp; Engineering</div></div></div>
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg><div><div class="label">Timeline</div><div class="value">9 months</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg><div><div class="label">Timeline</div><div class="value">6 months</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Modernizing the interface, flows and systems behind a multi-platform, modern POS</div></div></div>
         </div>
       </div>
@@ -706,31 +735,26 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
         <h2 class="section-title">The flow — final screens</h2>
-        <p class="body-text" style="margin-bottom:8px">The prototype below is interactive — try it.</p>
+        <p class="body-text" style="margin-bottom:8px">The prototype below is live — try it. It's embedded at a fixed width so the sidebar stays icon-only and Quick access shows its compact 2-column layout, matching how it looks on a smaller screen.</p>
         <div class="flow-controls">
           <div class="device-toggle" role="tablist" aria-label="Switch device">
             <button type="button" class="active" data-mode="ipad" role="tab" aria-selected="true">iPad</button>
             <button type="button" data-mode="desktop" role="tab" aria-selected="false">Desktop</button>
           </div>
-          <div class="zoom-control">
-            <button type="button" id="zoomOut" aria-label="Zoom out">−</button>
-            <span class="zoom-value" id="zoomValue">100%</span>
-            <button type="button" id="zoomIn" aria-label="Zoom in">+</button>
-          </div>
         </div>
-        <div class="frame-ipad" id="ipadFrame">
+        <div style="overflow-x:auto;">
+        <div class="frame-ipad" id="ipadFrame" style="width:1056px;box-shadow:none;">
           <div class="screen" id="ipadScreen">
-            <iframe class="proto-iframe" id="ipadIframe" data-src="Veevart_POS_prototipo_optimizado.html" title="Veevart POS prototype — iPad"></iframe>
+            <iframe id="posLiveIframe" src="Veevart_POS_prototipo_optimizado.html" title="Veevart POS prototype — live" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
           </div>
         </div>
-        <div class="frame-desktop" id="desktopFrame">
+        <div class="frame-desktop frame-desktop-lg" id="desktopFrame" style="width:1240px;max-width:1240px;box-shadow:none;">
           <div class="browser-chrome">
             <span class="traffic-lights"><span></span><span></span><span></span></span>
             <div class="address-bar">app.veevart.com/pos</div>
           </div>
-          <div class="browser-body" id="desktopScreen">
-            <iframe class="proto-iframe" id="desktopIframe" data-src="Veevart_POS_prototipo_optimizado.html" title="Veevart POS prototype — Desktop"></iframe>
-          </div>
+          <div class="browser-body" id="desktopScreen"></div>
+        </div>
         </div>
       </div>
     </section>
@@ -739,6 +763,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
         <h2 class="section-title">Results</h2>
+        <p class="body-text" style="margin-bottom:24px">The redesign replaced a fragmented, hard-to-learn system with one built around how staff actually work at the counter — with measurable gains in speed and adoption. Ticket and membership sales got 35% faster, staff satisfaction rose 33.8% relative to the previous POS, and use of previously hard-to-find features — membership renewals, tax exemptions, per-item discounts — grew 40%.</p>
         <div class="card-grid cols-3">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 12l5-3M4 13a8 8 0 1 1 16 0"></path></svg></div>
@@ -767,12 +792,12 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="next-project-section">
       <div>
-        <a class="card next-card card-fullbleed" href="#/platform" aria-label="Next project — Platform unification">
-          <img class="card-img" src="assets/cover-platform.jpg" alt="Platform unification cover">
+        <a class="card next-card card-fullbleed" href="#/design-system" aria-label="Next project — Unifying Veevart's design system">
+          <img class="card-img" src="assets/cover-designsystem.jpg" alt="Unifying Veevart's design system cover">
           <div class="card-tint"></div><div class="card-blur"></div>
           <div class="card-body next-card-body">
             <div class="card-meta"><span>Next project</span></div>
-            <h3>Platform unification</h3>
+            <h3>Unifying Veevart's design system</h3>
           </div>
           <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
         </a>
@@ -780,18 +805,18 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
     </section>
   </div>
 
-  <!-- ===================== PROJECT · PLATFORM UNIFICATION ===================== -->
-  <div class="pg pg-proj pg-platform" data-screen-label="Project — Platform unification">
+  <!-- ===================== PROJECT · DESIGN SYSTEM ===================== -->
+  <div class="pg pg-proj pg-ds" data-screen-label="Project — Unifying Veevart's design system">
     <section class="cover section-surface">
       <div class="wrap">
         <div class="kicker">Product Design</div>
-        <h1 class="title">Platform unification</h1>
-        <p class="dek">Merging 5 legacy platforms into one product ecosystem.</p>
+        <h1 class="title">Unifying Veevart's design system</h1>
+        <p class="dek">Merging 5 legacy platforms into one product ecosystem, powered by a shared design system.</p>
         <div class="meta-row">
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">Lead UX Designer</div></div></div>
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg><div><div class="label">Team</div><div class="value">Placeholder — por definir</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg><div><div class="label">Team</div><div class="value">Product, PMs &amp; Engineering</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg><div><div class="label">Timeline</div><div class="value">4 months</div></div></div>
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Unifying 5 legacy Veevart platforms into one scalable ecosystem</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Unifying 5 legacy Veevart platforms into one ecosystem through a shared design system</div></div></div>
         </div>
       </div>
     </section>
@@ -804,19 +829,17 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 0 0 3.5 20.5h17a1.5 1.5 0 0 0 1.39-2.46L13.71 3.86a1.5 1.5 0 0 0-2.42 0z"></path></svg></div>
             <div class="card-eyebrow">Problem</div>
-            <div class="card-desc">Veevart's product lived across 5 legacy platforms.</div>
-            <div class="ph" style="margin-top:14px;padding:14px;font-size:13.5px"><b>Placeholder</b>Detalle del problema pendiente.</div>
+            <div class="card-desc">Veevart's legacy platforms were outdated and inconsistent in their components and flows across all products.</div>
           </div>
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2z"></path></svg></div>
             <div class="card-eyebrow">Insight</div>
-            <div class="ph" style="padding:14px;font-size:13.5px"><b>Placeholder</b>Insight de research pendiente.</div>
+            <div class="card-desc">Veevart lacked a design system that simplified and gave direction to its products.</div>
           </div>
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg></div>
             <div class="card-eyebrow">Impact</div>
-            <div class="card-desc">One ecosystem instead of five platforms — higher adoption and faster onboarding.</div>
-            <div class="badges chip"><span class="badge">↗ +40% adoption</span><span class="badge">↓ −15% onboarding</span></div>
+            <div class="card-desc">One ecosystem instead of five platforms, with 40% higher adoption and 15% less onboarding time, delivered in 4 months.</div>
           </div>
         </div>
       </div>
@@ -826,7 +849,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">02</span></div>
         <h2 class="section-title">Context — why it matters</h2>
-        <div class="ph"><b>Placeholder</b>Contexto pendiente: por qué la unificación importaba para los museos y para el equipo de producto.</div>
+        <p class="body-text">Led the end-to-end UX/UI design of the design system, focused on making components easy to use across multiple platforms. Worked closely with developers and PMs to understand each product's needs. The company was carrying technical debt, facing pressure to match competitors' quality, and needed to reinvent itself to satisfy investors.</p>
       </div>
     </section>
 
@@ -834,11 +857,58 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">03</span></div>
         <h2 class="section-title">The problem, with evidence</h2>
-        <div class="problem-grid">
-          <div class="ph"><b>Placeholder</b>Evidencia pendiente: métricas, casos de soporte o task times que sustentan el problema.</div>
-          <div>
-            <div class="slot-box"><image-slot id="plat-evidence" shape="rect" placeholder="Evidencia / pantalla 'before' de las plataformas legacy"></image-slot></div>
-            <div class="evidence-caption">Before — placeholder pendiente de imagen.</div>
+        <p class="body-text">Veevart was seeing churn at double the expected rate — more than half of those cases tied to confusing flows and the fact that the same task worked differently depending on which part of the platform you were in. Over 20 clients raised leaving for simpler competitor platforms, citing both the confusing flows and how visually dated Veevart felt in comparison.</p>
+      </div>
+    </section>
+
+    <section class="tight section-surface">
+      <div class="wrap">
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">04</span></div>
+        <h2 class="section-title">Research</h2>
+        <h3 class="subsection-title">Research methods</h3>
+        <p class="body-text" style="margin-bottom:24px">Conducted interviews and surveys with museum staff, benchmarking, and usage analysis, alongside conversations with investors about their vision for the product.</p>
+        <div class="card-grid cols-4">
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8 10c0-2.5 1.8-4 4-4s4 1.5 4 4-1.8 4.5-4 4.5-4-2-4-4.5z"></path><path d="M4 20c0-3 3-5 8-5s8 2 8 5"></path></svg></div>
+            <div class="card-eyebrow">Interviews &amp; surveys</div>
+            <div class="card-desc">25+ employees across 15 museums, plus every member of Veevart's implementation and customer success teams (20+ people).</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20V7"></path></svg></div>
+            <div class="card-eyebrow">Benchmarking</div>
+            <div class="card-desc">Compared Veevart's flows against the competitor platforms customers were considering switching to.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></div>
+            <div class="card-eyebrow">Usage analysis</div>
+            <div class="card-desc">Reviewed how staff actually completed tasks across the 5 legacy platforms — not just how they were designed to.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"></circle><path d="M5 20c0-3.3 3-5.5 7-5.5s7 2.2 7 5.5"></path><path d="M9 3.5l1.5 1.5-1.5 1.5M15 3.5l-1.5 1.5 1.5 1.5"></path></svg></div>
+            <div class="card-eyebrow">Stakeholder alignment</div>
+            <div class="card-desc">Conversations with investors about the vision and goals they needed the platform to support.</div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top:48px">Who we designed for</h3>
+        <div class="card-grid cols-2">
+          <div class="card persona-card-photo persona-card-bright">
+            <image-slot id="ds-persona-museum" class="card-img" shape="rect" src="assets/ds-persona-museum.jpg" placeholder="Empleado de museo de cara al cliente en un mostrador" style="position:absolute;inset:0;"></image-slot>
+            <div class="card-tint"></div><div class="card-blur"></div>
+            <div class="card-body">
+              <div class="card-meta"><span>Research</span></div>
+              <h3>Museum staff</h3>
+              <p>Front-desk and back-office museum employees who rely on Veevart daily to manage ticketing, memberships, and donations — often switching between multiple modules to complete a single task.</p>
+            </div>
+          </div>
+          <div class="card persona-card-photo persona-card-bright">
+            <image-slot id="ds-persona-team" class="card-img" shape="rect" src="assets/ds-persona-team.jpg" placeholder="Equipo de Veevart trabajando junto en una oficina" style="position:absolute;inset:0;"></image-slot>
+            <div class="card-tint"></div><div class="card-blur"></div>
+            <div class="card-body">
+              <div class="card-meta"><span>Research</span></div>
+              <h3>Veevart team</h3>
+              <p>Implementation, customer success, and product teams who support museums through onboarding and daily use, and who felt the inconsistency firsthand every time they had to explain the same action done differently in different modules.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -846,18 +916,30 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="tight section-surface">
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">04</span></div>
-        <h2 class="section-title">Research — who we designed for</h2>
-        <div class="slot-box" style="aspect-ratio:auto;height:340px"><image-slot id="plat-persona" shape="rect" placeholder="Foto de la persona / usuario principal"></image-slot></div>
-        <div class="ph" style="margin-top:20px"><b>Placeholder</b>Perfil de usuario pendiente.</div>
-      </div>
-    </section>
-
-    <section class="tight section-surface">
-      <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">05</span></div>
         <h2 class="section-title">Design principles</h2>
-        <div class="ph"><b>Placeholder</b>Principios de diseño pendientes.</div>
+        <div class="card-grid cols-4">
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.2"></rect><rect x="14" y="3" width="7" height="7" rx="1.2"></rect><rect x="3" y="14" width="7" height="7" rx="1.2"></rect><rect x="14" y="14" width="7" height="7" rx="1.2"></rect></svg></div>
+            <div class="card-eyebrow">Reusability &amp; modularity</div>
+            <div class="card-desc">Every component built once, then reused across all five platforms — instead of five different ways to solve the same interaction.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14.5-4.6M20 12a8 8 0 0 1-14.5 4.6"></path><polyline points="18 4 18.5 7.4 15.1 6.9"></polyline><polyline points="6 20 5.5 16.6 8.9 17.1"></polyline></svg></div>
+            <div class="card-eyebrow">Flexibility &amp; adaptability</div>
+            <div class="card-desc">A system flexible enough to serve very different product needs, without forking into five separate design languages.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.2"></circle></svg></div>
+            <div class="card-eyebrow">Clarity &amp; simplicity</div>
+            <div class="card-desc">Fewer ways to do the same thing, so staff and customers alike spend less time relearning how something works.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><polygon points="12 3 21 8 12 13 3 8"></polygon><polyline points="3 14 12 19 21 14"></polyline></svg></div>
+            <div class="card-eyebrow">Consistency</div>
+            <div class="card-desc">One set of patterns, whether you're in ticketing, memberships, or donations — so switching modules doesn't feel like switching products.</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -865,7 +947,10 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">06</span></div>
         <h2 class="section-title">Key decisions</h2>
-        <div class="ph"><b>Placeholder</b>Decisiones clave pendientes.</div>
+        <ol class="decision-list">
+          <li><span class="decision-num">1</span><p>Some development teams had to rebuild their flows based on a pattern another team had already solved better — a hard trade-off that meant giving up ownership of a flow for the sake of consistency.</p></li>
+          <li><span class="decision-num">2</span><p>Getting stakeholders to understand this would be a long process, requiring significant customer success effort to guide clients through the new platform.</p></li>
+        </ol>
       </div>
     </section>
 
@@ -873,13 +958,30 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
         <h2 class="section-title">The flow — final screens</h2>
-        <p class="body-text" style="margin-bottom:24px">Arrastra tus screenshots a estos slots cuando los tengas.</p>
-        <div class="slot-grid">
-          <div class="slot-box"><image-slot id="plat-screen-1" shape="rect" placeholder="Pantalla final 1"></image-slot></div>
-          <div class="slot-box"><image-slot id="plat-screen-2" shape="rect" placeholder="Pantalla final 2"></image-slot></div>
-          <div class="slot-box"><image-slot id="plat-screen-3" shape="rect" placeholder="Pantalla final 3"></image-slot></div>
-          <div class="slot-box"><image-slot id="plat-screen-4" shape="rect" placeholder="Pantalla final 4"></image-slot></div>
+        <p class="body-text" style="margin-bottom:24px">Different modules of the same system — donor management, memberships, subscriptions — now share the same visual language and the same components.</p>
+        <div class="carousel-frame-wrap">
+          <button type="button" class="carousel-arrow prev" id="dsCarouselPrev" aria-label="Previous screen">‹</button>
+          <div class="frame-desktop active">
+            <div class="browser-chrome">
+              <span class="traffic-lights"><span></span><span></span><span></span></span>
+              <div class="address-bar" id="dsCarouselUrl">app.veevart.com/donors</div>
+            </div>
+            <div class="browser-body" id="dsCarouselBody" style="cursor:pointer;">
+              <img id="ds-flow-1" class="carousel-slide" src="assets/ds-flow-1-donor-profile.png" alt="Contact/donor profile" style="display:block;width:100%;height:auto;">
+              <img id="ds-flow-2" class="carousel-slide" src="assets/ds-flow-2-recurring-donations.png" alt="Recurring donation detail" style="display:none;width:100%;height:auto;">
+              <img id="ds-flow-3" class="carousel-slide" src="assets/ds-flow-3-membership-setup.png" alt="New membership program setup" style="display:none;width:100%;height:auto;">
+              <img id="ds-flow-4" class="carousel-slide" src="assets/ds-flow-4-new-subscription.png" alt="New subscription flow" style="display:none;width:100%;height:auto;">
+            </div>
+          </div>
+          <button type="button" class="carousel-arrow next" id="dsCarouselNext" aria-label="Next screen">›</button>
         </div>
+        <div class="carousel-dots" id="dsCarouselDots">
+          <button type="button" class="carousel-dot active" data-i="0" aria-label="Donor profile"></button>
+          <button type="button" class="carousel-dot" data-i="1" aria-label="Recurring donations"></button>
+          <button type="button" class="carousel-dot" data-i="2" aria-label="Membership setup"></button>
+          <button type="button" class="carousel-dot" data-i="3" aria-label="New subscription"></button>
+        </div>
+        <div class="carousel-label" id="dsCarouselLabel">Donor profile</div>
       </div>
     </section>
 
@@ -887,6 +989,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
         <h2 class="section-title">Results</h2>
+        <p class="body-text" style="margin-bottom:24px">Bringing five platforms under one shared design system didn't just make the product look more consistent — it changed how quickly teams could ship, and how confidently customers could use what they built. Adoption grew 40% and onboarding time dropped 15% within 4 months of launch.</p>
         <div class="card-grid cols-3">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5z"></path><path d="M3 8v8l9 5 9-5V8M12 13v8"></path></svg></div>
@@ -899,13 +1002,13 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg></div>
             <div class="stat-label">Onboarding time</div>
             <div class="result-number">−15%</div>
-            <div class="card-desc">Time for new users to get productive</div>
+            <div class="card-desc">Time for new users to get productive, in 4 months</div>
             <div class="badges chip"><span class="badge">↓ vs. before</span></div>
           </div>
           <div class="glass-card stat-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg></div>
-            <div class="stat-label">Third metric</div>
-            <div class="ph" style="padding:14px;font-size:13.5px"><b>Placeholder</b>Cifra pendiente.</div>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14s1.2 2 3.5 2 3.5-2 3.5-2M9 9h.01M15 9h.01"></path><circle cx="12" cy="12" r="9"></circle></svg></div>
+            <div class="stat-label">Client feedback</div>
+            <div class="card-desc">Received consistently positive feedback from dozens of clients about how much they liked the platform's new look and feel.</div>
           </div>
         </div>
       </div>
@@ -913,12 +1016,12 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="next-project-section">
       <div>
-        <a class="card next-card card-fullbleed" href="#/design-system" aria-label="Next project — Design system">
-          <img class="card-img" src="assets/cover-designsystem.jpg" alt="Design system cover">
+        <a class="card next-card card-fullbleed" href="#/online-services" aria-label="Next project — Veevart's online apps redesign">
+          <image-slot id="cover-online-services-next" class="card-img" shape="rect" src="assets/cover-online-apps.jpg" placeholder="Cover — Veevart's online apps redesign" style="position:absolute;inset:0;"></image-slot>
           <div class="card-tint"></div><div class="card-blur"></div>
           <div class="card-body next-card-body">
             <div class="card-meta"><span>Next project</span></div>
-            <h3>Design system</h3>
+            <h3>Veevart's online apps redesign</h3>
           </div>
           <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
         </a>
@@ -926,18 +1029,18 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
     </section>
   </div>
 
-  <!-- ===================== PROJECT · DESIGN SYSTEM ===================== -->
-  <div class="pg pg-proj pg-ds" data-screen-label="Project — Design system">
+  <!-- ===================== PROJECT · ONLINE SERVICES ===================== -->
+  <div class="pg pg-proj pg-online-services" data-screen-label="Project — Veevart's online apps redesign">
     <section class="cover section-surface">
       <div class="wrap">
-        <div class="kicker">Design Systems</div>
-        <h1 class="title">Design system · 120 components</h1>
-        <p class="dek">Shared standards that let the team ship 10x faster.</p>
+        <div class="kicker">Product Design</div>
+        <h1 class="title">Veevart's online apps redesign</h1>
+        <p class="dek">Redesigning Veevart's customer-facing pages — ticketing, donations, and membership signup — for the people using them, not just the staff behind them.</p>
         <div class="meta-row">
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">Lead UX Designer</div></div></div>
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg><div><div class="label">Team</div><div class="value">Placeholder — por definir</div></div></div>
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg><div><div class="label">Timeline</div><div class="value">Placeholder — por definir</div></div></div>
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Building a 120-component design system with shared standards across the team</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg><div><div class="label">Team</div><div class="value">Product, PMs &amp; Engineering</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg><div><div class="label">Timeline</div><div class="value">5 months</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Redesigning Veevart's end-user pages for accessibility and ease of use across a wide range of visitors</div></div></div>
         </div>
       </div>
     </section>
@@ -950,18 +1053,17 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 0 0 3.5 20.5h17a1.5 1.5 0 0 0 1.39-2.46L13.71 3.86a1.5 1.5 0 0 0-2.42 0z"></path></svg></div>
             <div class="card-eyebrow">Problem</div>
-            <div class="ph" style="padding:14px;font-size:13.5px"><b>Placeholder</b>Problema pendiente.</div>
+            <div class="card-desc">Veevart's customer-facing pages were outdated, unattractive, and had real usability problems — and their aging codebase made it hard to add the functionality customers were asking for.</div>
           </div>
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2z"></path></svg></div>
             <div class="card-eyebrow">Insight</div>
-            <div class="ph" style="padding:14px;font-size:13.5px"><b>Placeholder</b>Insight pendiente.</div>
+            <div class="card-desc">The average museum visitor was a student or a parent — very different kinds of users — so the platform needed to be accessible, visually appealing, and easy to use for the widest possible range of people.</div>
           </div>
           <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="3 7 9 13 13 9 21 17"></polyline><polyline points="15 17 21 17 21 11"></polyline></svg></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg></div>
             <div class="card-eyebrow">Impact</div>
-            <div class="card-desc">Shared standards across the team — less handoff, faster delivery.</div>
-            <div class="badges chip"><span class="badge">↓ −70% handoff time</span><span class="badge">↗ 10x faster delivery</span></div>
+            <div class="card-desc">Positive reception from museums so far; over 160 clients will begin rolling these pages out to their thousands of customers over the coming year.</div>
           </div>
         </div>
       </div>
@@ -971,7 +1073,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">02</span></div>
         <h2 class="section-title">Context — why it matters</h2>
-        <div class="ph"><b>Placeholder</b>Contexto pendiente.</div>
+        <p class="body-text">Led the end-to-end UX/UI design of Veevart's customer-facing pages, working with the same product, PM, and engineering teams as the design system project. The focus shifted from internal staff tools to the pages thousands of museum visitors interact with directly.</p>
       </div>
     </section>
 
@@ -979,11 +1081,16 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">03</span></div>
         <h2 class="section-title">The problem, with evidence</h2>
-        <div class="problem-grid">
-          <div class="ph"><b>Placeholder</b>Evidencia pendiente: inconsistencias, tiempos de handoff, duplicación de componentes.</div>
+        <div class="card-grid cols-2">
           <div>
-            <div class="slot-box"><image-slot id="ds-evidence" shape="rect" placeholder="Evidencia / inconsistencias antes del sistema"></image-slot></div>
-            <div class="evidence-caption">Before — placeholder pendiente de imagen.</div>
+            <div class="card-eyebrow" style="margin-bottom:10px">Ticketing</div>
+            <div class="slot-box"><image-slot id="os-evidence-ticketing" shape="rect" src="assets/os-ticketing-before-checkout.png" placeholder="Antes — pantalla de selección de tickets"></image-slot></div>
+            <div class="evidence-caption">Before — outdated layout, mixed languages, and a broken image placeholder on a live product page.</div>
+          </div>
+          <div>
+            <div class="card-eyebrow" style="margin-bottom:10px">Membership</div>
+            <div class="slot-box"><image-slot id="os-evidence-membership" shape="rect" src="assets/os-membership-before-select.png" placeholder="Antes — pantalla de selección de membresía"></image-slot></div>
+            <div class="evidence-caption">Before — a dense, multi-step flow with inconsistent copy and dated visual design.</div>
           </div>
         </div>
       </div>
@@ -992,8 +1099,42 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
     <section class="tight section-surface">
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">04</span></div>
-        <h2 class="section-title">Research — who we designed for</h2>
-        <div class="ph"><b>Placeholder</b>Research pendiente: diseñadores y equipo de ingeniería como usuarios del sistema.</div>
+        <h2 class="section-title">Research</h2>
+        <h3 class="subsection-title">Research methods</h3>
+        <p class="body-text" style="margin-bottom:24px">Conducted interviews and surveys with end users, benchmarking, and usage analysis, alongside conversations with investors about their vision for the product.</p>
+        <div class="card-grid cols-4">
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8 10c0-2.5 1.8-4 4-4s4 1.5 4 4-1.8 4.5-4 4.5-4-2-4-4.5z"></path><path d="M4 20c0-3 3-5 8-5s8 2 8 5"></path></svg></div>
+            <div class="card-eyebrow">Interviews &amp; surveys</div>
+            <div class="card-desc">100+ end users surveyed and interviewed across 15 museums.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20V7"></path></svg></div>
+            <div class="card-eyebrow">Benchmarking</div>
+            <div class="card-desc">Compared Veevart's flows against the competitor platforms customers were considering switching to.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></div>
+            <div class="card-eyebrow">Usage analysis</div>
+            <div class="card-desc">Reviewed how staff actually completed tasks across the 5 legacy platforms — not just how they were designed to.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"></circle><path d="M5 20c0-3.3 3-5.5 7-5.5s7 2.2 7 5.5"></path><path d="M9 3.5l1.5 1.5-1.5 1.5M15 3.5l-1.5 1.5 1.5 1.5"></path></svg></div>
+            <div class="card-eyebrow">Stakeholder alignment</div>
+            <div class="card-desc">Conversations with investors about the vision and goals they needed the platform to support.</div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top:48px">Who we designed for</h3>
+        <div class="card persona-card-photo persona-card-bright">
+          <img class="card-img" src="assets/os-persona-visitors.jpg" alt="Museum visitors looking at a painting in a gallery.">
+          <div class="card-tint"></div><div class="card-blur"></div>
+          <div class="card-body">
+            <div class="card-meta"><span>Research</span></div>
+            <h3>Museum visitors</h3>
+            <p>Students, parents, and casual visitors browsing exhibitions, buying tickets, or joining a membership online — often for the first time, with no prior familiarity with Veevart's system.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1001,7 +1142,28 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">05</span></div>
         <h2 class="section-title">Design principles</h2>
-        <div class="ph"><b>Placeholder</b>Principios pendientes.</div>
+        <div class="card-grid cols-4">
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.8"></circle><path d="M4 8.5l8 1.2 8-1.2M12 9.7v5M8.5 21l3.5-6.3L15.5 21"></path></svg></div>
+            <div class="card-eyebrow">Accessibility</div>
+            <div class="card-desc">Designed for the widest possible range of visitors — students, parents, and everyone in between — not just tech-savvy power users.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path><path d="M4 20h16"></path></svg></div>
+            <div class="card-eyebrow">Control &amp; feedback</div>
+            <div class="card-desc">Every action, from adding a ticket to submitting payment, gives clear, immediate feedback so people always know what happened.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M6 3l14 8-6 1.3L11 19z"></path></svg></div>
+            <div class="card-eyebrow">Visual hierarchy</div>
+            <div class="card-desc">The most important action on each screen — buying, joining, paying — is always the most obvious one.</div>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.2"></circle></svg></div>
+            <div class="card-eyebrow">User focus</div>
+            <div class="card-desc">Built around how real visitors actually browse and buy, not around what was easiest to build.</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1009,7 +1171,10 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">06</span></div>
         <h2 class="section-title">Key decisions</h2>
-        <div class="ph"><b>Placeholder</b>Decisiones clave pendientes.</div>
+                <ol class="decision-list">
+          <li><span class="decision-num">1</span><p>Some teams had to redesign their customer-facing flows around a pattern that had already proven itself elsewhere in the system, rather than building something new from scratch.</p></li>
+          <li><span class="decision-num">2</span><p>Getting stakeholders on board meant accepting that this would take time — museums would need real support helping their customers adjust to the new experience.</p></li>
+        </ol>
       </div>
     </section>
 
@@ -1017,13 +1182,84 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
         <h2 class="section-title">The flow — final screens</h2>
-        <p class="body-text" style="margin-bottom:24px">Arrastra tus screenshots de la librería a estos slots cuando los tengas.</p>
-        <div class="slot-grid">
-          <div class="slot-box"><image-slot id="ds-screen-1" shape="rect" placeholder="Librería de componentes 1"></image-slot></div>
-          <div class="slot-box"><image-slot id="ds-screen-2" shape="rect" placeholder="Librería de componentes 2"></image-slot></div>
-          <div class="slot-box"><image-slot id="ds-screen-3" shape="rect" placeholder="Tokens / fundamentos"></image-slot></div>
-          <div class="slot-box"><image-slot id="ds-screen-4" shape="rect" placeholder="Documentación"></image-slot></div>
+
+        <h3 class="subsection-title">Ticketing</h3>
+        <div class="flow-controls">
+          <div class="device-toggle" role="tablist" aria-label="Switch device" data-carousel="tk">
+            <button type="button" class="active" data-mode="desktop" role="tab" aria-selected="true">Desktop</button>
+            <button type="button" data-mode="mobile" role="tab" aria-selected="false">Mobile</button>
+          </div>
         </div>
+        <div class="carousel-frame-wrap">
+          <button type="button" class="carousel-arrow prev" id="tkPrev" aria-label="Previous screen">‹</button>
+          <div style="display:flex;flex-direction:column;align-items:center;">
+            <div class="frame-desktop active" id="tkDesktopFrame">
+              <div class="browser-chrome">
+                <span class="traffic-lights"><span></span><span></span><span></span></span>
+                <div class="address-bar" id="tkUrl">veevart.com/tickets</div>
+              </div>
+              <div class="browser-body" id="tkDesktopScreen" style="cursor:pointer">
+                <img id="tk-1" class="carousel-slide" src="assets/tk-desktop-1-catalog.png" alt="Catalog view" style="display:block;width:100%;height:auto;">
+                <img id="tk-2" class="carousel-slide" src="assets/tk-desktop-2-cart.png" alt="Item in cart" style="display:none;width:100%;height:auto;">
+                <img id="tk-3" class="carousel-slide" src="assets/tk-desktop-3-checkout.png" alt="Checkout" style="display:none;width:100%;height:auto;">
+              </div>
+            </div>
+            <div class="frame-iphone hidden" id="tkMobileFrame">
+              <div class="notch"></div>
+              <div class="screen" id="tkMobileScreen" style="cursor:pointer">
+                <img id="tk-m-1" class="carousel-slide" src="assets/tk-mobile-1-catalog.png" alt="Catalog view (mobile)" style="display:block;width:100%;height:auto;">
+                <img id="tk-m-2" class="carousel-slide" src="assets/tk-mobile-2-tickets.png" alt="Item in cart (mobile)" style="display:none;width:100%;height:auto;">
+                <img id="tk-m-3" class="carousel-slide" src="assets/tk-mobile-3-checkout.png" alt="Checkout (mobile)" style="display:none;width:100%;height:auto;">
+              </div>
+            </div>
+          </div>
+          <button type="button" class="carousel-arrow next" id="tkNext" aria-label="Next screen">›</button>
+        </div>
+        <div class="carousel-dots" id="tkDots">
+          <button type="button" class="carousel-dot active" data-i="0" aria-label="Browsing exhibitions"></button>
+          <button type="button" class="carousel-dot" data-i="1" aria-label="Selecting tickets"></button>
+          <button type="button" class="carousel-dot" data-i="2" aria-label="Checkout"></button>
+        </div>
+        <div class="carousel-label" id="tkLabel">Browsing exhibitions</div>
+
+        <h3 class="subsection-title" style="margin-top:56px">Membership</h3>
+        <div class="flow-controls">
+          <div class="device-toggle" role="tablist" aria-label="Switch device" data-carousel="mb">
+            <button type="button" class="active" data-mode="desktop" role="tab" aria-selected="true">Desktop</button>
+            <button type="button" data-mode="mobile" role="tab" aria-selected="false">Mobile</button>
+          </div>
+        </div>
+        <div class="carousel-frame-wrap">
+          <button type="button" class="carousel-arrow prev" id="mbPrev" aria-label="Previous screen">‹</button>
+          <div style="display:flex;flex-direction:column;align-items:center;">
+            <div class="frame-desktop active" id="mbDesktopFrame">
+              <div class="browser-chrome">
+                <span class="traffic-lights"><span></span><span></span><span></span></span>
+                <div class="address-bar" id="mbUrl">veevart.com/membership</div>
+              </div>
+              <div class="browser-body" id="mbDesktopScreen" style="cursor:pointer">
+                <img id="mb-1" class="carousel-slide" src="assets/mb-desktop-1-plans.png" alt="Memberships list" style="display:block;width:100%;height:auto;">
+                <img id="mb-2" class="carousel-slide" src="assets/mb-desktop-2-members.png" alt="Member selection" style="display:none;width:100%;height:auto;">
+                <img id="mb-3" class="carousel-slide" src="assets/mb-desktop-3-checkout.png" alt="Checkout" style="display:none;width:100%;height:auto;">
+              </div>
+            </div>
+            <div class="frame-iphone hidden" id="mbMobileFrame">
+              <div class="notch"></div>
+              <div class="screen" id="mbMobileScreen" style="cursor:pointer">
+                <img id="mb-m-1" class="carousel-slide" src="assets/mb-mobile-1-plans.png" alt="Memberships list (mobile)" style="display:block;width:100%;height:auto;">
+                <img id="mb-m-2" class="carousel-slide" src="assets/mb-mobile-2-members.png" alt="Member selection (mobile)" style="display:none;width:100%;height:auto;">
+                <img id="mb-m-3" class="carousel-slide" src="assets/mb-mobile-3-checkout.png" alt="Checkout (mobile)" style="display:none;width:100%;height:auto;">
+              </div>
+            </div>
+          </div>
+          <button type="button" class="carousel-arrow next" id="mbNext" aria-label="Next screen">›</button>
+        </div>
+        <div class="carousel-dots" id="mbDots">
+          <button type="button" class="carousel-dot active" data-i="0" aria-label="Choosing a plan"></button>
+          <button type="button" class="carousel-dot" data-i="1" aria-label="Adding household members"></button>
+          <button type="button" class="carousel-dot" data-i="2" aria-label="Checkout"></button>
+        </div>
+        <div class="carousel-label" id="mbLabel">Choosing a plan</div>
       </div>
     </section>
 
@@ -1031,27 +1267,26 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
         <h2 class="section-title">Results</h2>
+        <p class="body-text" style="margin-bottom:24px">The new customer-facing pages replaced an outdated, hard-to-navigate experience with one built around how real visitors — students, parents, casual guests — actually browse and buy. In testing, satisfaction with the new pages was 50% higher than with the old ones, and over 160 museums are set to roll them out to their customers.</p>
         <div class="card-grid cols-3">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><polygon points="12 3 21 8 12 13 3 8"></polygon><polyline points="3 14 12 19 21 14"></polyline></svg></div>
-            <div class="stat-label">Library size</div>
-            <div class="result-number">120</div>
-            <div class="card-desc">Components with shared standards</div>
+            <div class="stat-label">Museums adopting</div>
+            <div class="result-number">160+</div>
+            <div class="card-desc">Museums rolling out the new pages</div>
             <div class="badges chip"><span class="badge">↗ shipped</span></div>
           </div>
           <div class="glass-card stat-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"></path></svg></div>
-            <div class="stat-label">Handoff time</div>
-            <div class="result-number">−70%</div>
-            <div class="card-desc">Design to engineering handoff</div>
-            <div class="badges chip"><span class="badge">↓ vs. before</span></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14s1.2 2 3.5 2 3.5-2 3.5-2M9 9h.01M15 9h.01"></path><circle cx="12" cy="12" r="9"></circle></svg></div>
+            <div class="stat-label">Satisfaction</div>
+            <div class="result-number">+50%</div>
+            <div class="card-desc">Vs. the old pages in testing</div>
+            <div class="badges chip"><span class="badge">↗ vs. before</span></div>
           </div>
           <div class="glass-card stat-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg></div>
-            <div class="stat-label">Delivery speed</div>
-            <div class="result-number">10x</div>
-            <div class="card-desc">Faster delivery across the team</div>
-            <div class="badges chip"><span class="badge">↗ vs. before</span></div>
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5z"></path><path d="M3 8v8l9 5 9-5V8M12 13v8"></path></svg></div>
+            <div class="stat-label">Rollout</div>
+            <div class="card-desc">Over 160 museums will roll out the new online pages to their customers over the coming year.</div>
           </div>
         </div>
       </div>
@@ -1092,21 +1327,19 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;system&quot;,&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;system&quot;,&quot;tsType&quot;:&quot;'system'|'light'|'dark'&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;roleRotationMs&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2000,&quot;min&quot;:1200,&quot;max&quot;:6000,&quot;step&quot;:200,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
-const ROUTES = {'':'home','/':'home','/about':'about','/pos':'pos','/platform':'platform','/design-system':'ds'};
+const ROUTES = {'':'home','/':'home','/about':'about','/pos':'pos','/design-system':'ds','/online-services':'online-services'};
 const TITLES = {
   home:"Nathan Manuel — Product Designer",
   about:"About — Nathan Manuel",
   pos:"Veevart's POS — Nathan Manuel",
-  platform:"Platform unification — Nathan Manuel",
-  ds:"Design system — Nathan Manuel"
+  ds:"Unifying Veevart's design system — Nathan Manuel",
+  'online-services':"Veevart's online apps redesign — Nathan Manuel"
 };
-const NAV_ACTIVE = {about:'.nv-about', pos:'.nv-work', platform:'.nv-work', ds:'.nv-work'};
+const NAV_ACTIVE = {about:'.nv-about', pos:'.nv-work', ds:'.nv-work', 'online-services':'.nv-work'};
 const ROLES = ['Product Designer', 'UX Designer', 'UI Designer'];
 
 class Component extends DCLogic {
   componentDidMount(){
-    this.zoom = 1;
-    this.protoReady = false;
     this.initTheme();
     this.initNav();
     this.initRoles();
@@ -1119,6 +1352,114 @@ class Component extends DCLogic {
     waitReveal();
     const yr = document.getElementById('yr');
     if (yr) yr.textContent = new Date().getFullYear();
+    this.initDsCarousel();
+    this.initPosLiveProto();
+    this.initFlowCarousel({prefix:'tk', slideIds:['tk-1','tk-2','tk-3'], mobileSlideIds:['tk-m-1','tk-m-2','tk-m-3'], labels:['Browsing exhibitions','Selecting tickets','Checkout'], urls:['veevart.com/tickets','veevart.com/tickets/cart','veevart.com/checkout']});
+    this.initFlowCarousel({prefix:'mb', slideIds:['mb-1','mb-2','mb-3'], mobileSlideIds:['mb-m-1','mb-m-2','mb-m-3'], labels:['Choosing a plan','Adding household members','Checkout'], urls:['veevart.com/membership','veevart.com/membership/members','veevart.com/checkout']});
+  }
+
+  initFlowCarousel(cfg){
+    const slideEls = cfg.slideIds.map(function(id){ return document.getElementById(id); });
+    const mobileEls = (cfg.mobileSlideIds || []).map(function(id){ return document.getElementById(id); });
+    if (!slideEls[0]) return;
+    let idx = 0;
+    const labelEl = document.getElementById(cfg.prefix + 'Label');
+    const urlEl = document.getElementById(cfg.prefix + 'Url');
+    const dots = document.querySelectorAll('#' + cfg.prefix + 'Dots .carousel-dot');
+    const desktopFrame = document.getElementById(cfg.prefix + 'DesktopFrame');
+    const mobileFrame = document.getElementById(cfg.prefix + 'MobileFrame');
+    function render(){
+      slideEls.forEach(function(el, i){ if (el) el.style.display = (i === idx) ? 'block' : 'none'; });
+      mobileEls.forEach(function(el, i){ if (el) el.style.display = (i === idx) ? 'block' : 'none'; });
+      if (labelEl) labelEl.textContent = cfg.labels[idx];
+      if (urlEl && cfg.urls) urlEl.textContent = cfg.urls[idx];
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+    }
+    function next(){ idx = (idx + 1) % slideEls.length; render(); }
+    function prev(){ idx = (idx - 1 + slideEls.length) % slideEls.length; render(); }
+    const prevBtn = document.getElementById(cfg.prefix + 'Prev');
+    const nextBtn = document.getElementById(cfg.prefix + 'Next');
+    if (prevBtn) prevBtn.addEventListener('click', prev);
+    if (nextBtn) nextBtn.addEventListener('click', next);
+    const desktopScreen = document.getElementById(cfg.prefix + 'DesktopScreen');
+    const mobileScreen = document.getElementById(cfg.prefix + 'MobileScreen');
+    if (desktopScreen) desktopScreen.addEventListener('click', next);
+    if (mobileScreen) mobileScreen.addEventListener('click', next);
+    dots.forEach(function(d, i){ d.addEventListener('click', function(){ idx = i; render(); }); });
+    const toggleBtns = document.querySelectorAll('.device-toggle[data-carousel="' + cfg.prefix + '"] button');
+    toggleBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        toggleBtns.forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        if (btn.dataset.mode === 'mobile'){
+          if (desktopFrame) desktopFrame.classList.remove('active');
+          if (mobileFrame) mobileFrame.classList.remove('hidden');
+        } else {
+          if (mobileFrame) mobileFrame.classList.add('hidden');
+          if (desktopFrame) desktopFrame.classList.add('active');
+        }
+      });
+    });
+    render();
+  }
+
+  initPosLiveProto(){
+    const f = document.getElementById('posLiveIframe');
+    if (!f) return;
+    f.addEventListener('load', function(){
+      setTimeout(function(){
+        try { f.contentWindow.dispatchEvent(new Event('resize')); } catch(e){}
+      }, 300);
+    });
+    const buttons = document.querySelectorAll('.pg-pos .device-toggle button');
+    const ipadFrame = document.getElementById('ipadFrame');
+    const desktopFrame = document.getElementById('desktopFrame');
+    const ipadScreen = document.getElementById('ipadScreen');
+    const desktopScreen = document.getElementById('desktopScreen');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        buttons.forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected','true');
+        if (btn.dataset.mode === 'ipad'){
+          if (ipadScreen && f.parentElement !== ipadScreen) ipadScreen.appendChild(f);
+          if (ipadFrame) ipadFrame.classList.remove('hidden');
+          if (desktopFrame) desktopFrame.classList.remove('active');
+        } else {
+          if (desktopScreen && f.parentElement !== desktopScreen) desktopScreen.appendChild(f);
+          if (ipadFrame) ipadFrame.classList.add('hidden');
+          if (desktopFrame) desktopFrame.classList.add('active');
+        }
+      });
+    });
+  }
+
+  initDsCarousel(){
+    const dsSlides = ['ds-flow-1','ds-flow-2','ds-flow-3','ds-flow-4'];
+    const dsLabels = ['Donor profile','Recurring donations','Membership setup','New subscription'];
+    const dsUrls = ['app.veevart.com/donors','app.veevart.com/donors/recurring','app.veevart.com/memberships/new','app.veevart.com/subscriptions/new'];
+    let dsIdx = 0;
+    const dsLabelEl = document.getElementById('dsCarouselLabel');
+    const dsUrlEl = document.getElementById('dsCarouselUrl');
+    const dsDots = document.querySelectorAll('#dsCarouselDots .carousel-dot');
+    function renderDsCarousel(){
+      dsSlides.forEach(function(id, i){
+        const el = document.getElementById(id);
+        if (el) el.style.display = (i === dsIdx) ? 'block' : 'none';
+      });
+      if (dsLabelEl) dsLabelEl.textContent = dsLabels[dsIdx];
+      if (dsUrlEl) dsUrlEl.textContent = dsUrls[dsIdx];
+      dsDots.forEach(function(dot, i){ dot.classList.toggle('active', i === dsIdx); });
+    }
+    const dsPrev = document.getElementById('dsCarouselPrev');
+    const dsNext = document.getElementById('dsCarouselNext');
+    const dsBody = document.getElementById('dsCarouselBody');
+    if (dsPrev) dsPrev.addEventListener('click', function(){ dsIdx = (dsIdx - 1 + dsSlides.length) % dsSlides.length; renderDsCarousel(); });
+    if (dsNext) dsNext.addEventListener('click', function(){ dsIdx = (dsIdx + 1) % dsSlides.length; renderDsCarousel(); });
+    if (dsBody) dsBody.addEventListener('click', function(){ dsIdx = (dsIdx + 1) % dsSlides.length; renderDsCarousel(); });
+    dsDots.forEach(function(dot, i){ dot.addEventListener('click', function(){ dsIdx = i; renderDsCarousel(); }); });
+    renderDsCarousel();
   }
 
   initTheme(){
@@ -1206,7 +1547,6 @@ class Component extends DCLogic {
       if (active){ active.classList.add('talk'); active.setAttribute('aria-current','page'); }
       const foot = document.querySelector('.foot-sec');
       if (foot) foot.classList.toggle('flush', page !== 'about');
-      if (page === 'pos') self.initProto();
       if (window.NateScrollReveal) window.NateScrollReveal.refresh();
       requestAnimationFrame(function(){
         if (scrollTo){
@@ -1215,7 +1555,6 @@ class Component extends DCLogic {
         } else {
           window.scrollTo(0, 0);
         }
-        self.resizeProto();
       });
     };
     window.addEventListener('hashchange', function(){ self.go(); });
@@ -1228,61 +1567,6 @@ class Component extends DCLogic {
       else self.go(target);
     });
     this.go();
-  }
-
-  initProto(){
-    if (this.protoReady) return;
-    this.protoReady = true;
-    const self = this;
-    ['ipadIframe','desktopIframe'].forEach(function(id){
-      const f = document.getElementById(id);
-      if (f && !f.src) f.src = f.getAttribute('data-src');
-    });
-    const buttons = document.querySelectorAll('.pg-pos .device-toggle button');
-    const ipadFrame = document.getElementById('ipadFrame');
-    const desktopFrame = document.getElementById('desktopFrame');
-    const zoomValueEl = document.getElementById('zoomValue');
-    buttons.forEach(function(btn){
-      btn.addEventListener('click', function(){
-        buttons.forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected','true');
-        if (btn.dataset.mode === 'ipad'){
-          ipadFrame.classList.remove('hidden');
-          desktopFrame.classList.remove('active');
-        } else {
-          ipadFrame.classList.add('hidden');
-          desktopFrame.classList.add('active');
-        }
-        requestAnimationFrame(function(){ self.resizeProto(); });
-      });
-    });
-    const setZoom = function(next){
-      self.zoom = next;
-      if (zoomValueEl) zoomValueEl.textContent = Math.round(next * 100) + '%';
-      self.resizeProto();
-    };
-    const zi = document.getElementById('zoomIn');
-    const zo = document.getElementById('zoomOut');
-    if (zi) zi.addEventListener('click', function(){ setZoom(Math.min(2.2, +(self.zoom + 0.1).toFixed(2))); });
-    if (zo) zo.addEventListener('click', function(){ setZoom(Math.max(1.0, +(self.zoom - 0.1).toFixed(2))); });
-    window.addEventListener('resize', function(){ self.resizeProto(); });
-    setTimeout(function(){ self.resizeProto(); }, 60);
-    setTimeout(function(){ self.resizeProto(); }, 400);
-  }
-
-  resizeProto(){
-    const NATIVE_W = 2360;
-    const zoom = this.zoom || 1;
-    const pairs = [['ipadScreen','ipadIframe'], ['desktopScreen','desktopIframe']];
-    for (const pair of pairs){
-      const screenEl = document.getElementById(pair[0]);
-      const iframeEl = document.getElementById(pair[1]);
-      if (!screenEl || !iframeEl) continue;
-      const w = screenEl.getBoundingClientRect().width;
-      if (!w) continue;
-      iframeEl.style.transform = 'translateX(-50%) scale(' + ((w / NATIVE_W) * zoom) + ')';
-    }
   }
 
   componentWillUnmount(){

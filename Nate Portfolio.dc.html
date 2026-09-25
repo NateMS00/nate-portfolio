@@ -104,7 +104,11 @@ html[data-page="kids-advisor"] .pg-kids-advisor{display:block;}
 
 /* ---- home hero ---- */
 .hero-sec{background:var(--bg-hero);transition:background .3s ease;}
-.nav-sticky-bar{position:sticky;top:0;z-index:100;background:color-mix(in srgb, var(--card) 72%, transparent);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--border-strong);}
+.nav-sticky-bar{position:sticky;top:0;z-index:100;background:color-mix(in srgb, var(--card) 72%, transparent);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--border-strong);transition:top .35s ease,margin .35s ease,border-radius .35s ease,box-shadow .35s ease,border-color .35s ease;}
+.nav-sticky-bar.floating{top:16px;margin:0 24px;border-radius:999px;border-bottom-color:transparent;border:1px solid var(--border-strong);box-shadow:0 12px 34px -12px rgba(0,0,0,.28);background:color-mix(in srgb, var(--card) 82%, transparent);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);}
+.nav-sticky-bar.floating .site-head{padding:10px 0;}
+.nav-sticky-bar.floating .wrap{padding:0 28px;}
+@media (max-width:760px){.nav-sticky-bar.floating{margin:0 12px;}.nav-sticky-bar.floating .wrap{padding:0 16px;}}
 .hero{display:grid;grid-template-columns:1fr 340px;gap:60px;align-items:stretch;padding:56px 0 100px;}
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;gap:40px;padding:40px 0 64px;}
@@ -356,6 +360,19 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 .frame-iphone.hidden{display:none;}
 .card-eyebrow{font-size:13px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em;}
 .card-desc{font-size:15px;line-height:1.6;color:var(--ink-soft);}
+.fc{background:var(--card);border:1px solid var(--border-strong);border-radius:12px;padding:24px;display:flex;flex-direction:column;}
+.fc-eyebrow{font-size:13px;font-weight:600;color:var(--yellow-deep);letter-spacing:.04em;text-transform:uppercase;margin-bottom:12px;}
+[data-theme="dark"] .fc-eyebrow{color:var(--yellow);}
+.fc-title{font-size:18px;font-weight:700;letter-spacing:-0.005em;color:var(--on-hero);margin:0 0 8px;}
+.fc-desc{font-size:14.5px;line-height:1.6;color:var(--ink-soft);margin:0;}
+.fc-rule{width:28px;height:2px;background:var(--yellow-deep);border-radius:2px;margin:18px 0 16px;}
+[data-theme="dark"] .fc-rule{background:var(--yellow);}
+.fc-tags{display:flex;flex-wrap:wrap;gap:16px;margin-top:auto;}
+.fc-tag{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);}
+.fc-tag svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0;}
+.fc-decision .fc-title{margin-bottom:8px;}
+.fc-attrib{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-top:12px;}
+.fc-attrib svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0;}
 .chip{display:inline-flex;align-items:center;gap:6px;margin-top:14px;}
 .problem-grid{display:grid;grid-template-columns:1.3fr minmax(0,1fr);gap:40px;align-items:start;}
 @media (max-width:760px){.problem-grid{grid-template-columns:1fr;}}
@@ -538,7 +555,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <h2 class="work-band-title" data-reveal="">Featured Projects</h2>
           <span class="work-title-line"><span></span></span>
         </div>
-        <div class="cards">
+        <div class="cards" id="homeCards">
           <a class="card" href="#/pos" aria-label="Point-of-sale redesign — case study">
             <img class="card-img" src="assets/cover-pos.jpg" alt="Point-of-sale redesign cover">
             <div class="card-tint"></div><div class="card-blur"></div>
@@ -554,7 +571,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <div class="card-tint"></div><div class="card-blur"></div>
             <div class="card-body">
               <div class="card-meta"><span>UX Design</span><span class="sep">·</span><span>Veevart</span><span class="sep">·</span><span>2025</span></div>
-              <h3>+40% platform adoption in CRM</h3>
+              <h3>50% less churn in CRM</h3>
               <p>Unifying Veevart's design system</p>
             </div>
             <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
@@ -724,7 +741,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">Product Designer</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg><div><div class="label">Team</div><div class="value">Product, Customer Success &amp; Engineering</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg><div><div class="label">Timeline</div><div class="value">6 months</div></div></div>
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Modernizing the interface, flows and systems behind a multi-platform, modern POS</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Modernizing the interface, systems and accessibility behind a faster, multi-platform POS</div></div></div>
         </div>
       </div>
     </section>
@@ -737,7 +754,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 0 0 3.5 20.5h17a1.5 1.5 0 0 0 1.39-2.46L13.71 3.86a1.5 1.5 0 0 0-2.42 0z"></path></svg></div>
             <div class="card-eyebrow">Problem</div>
-            <div class="card-desc">The existing POS was slow, hard to scale, not multi-platform, and difficult to use day to day.</div>
+            <div class="card-desc">The existing POS was slow, hard to scale, and difficult for the many older volunteer staff to use — small text and touch targets that were easy to miss made every sale take longer.</div>
           </div>
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2z"></path></svg></div>
@@ -758,7 +775,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">02</span></div>
         <h2 class="section-title">Context — why it matters</h2>
-        <p class="body-text">The POS is where a museum's day-to-day actually happens: ticket sales, memberships, donations, souvenirs, check-ins. When it works well, it's not just staff who benefit — supporters get their tickets and memberships faster, with clearer information, right at the front desk.</p>
+        <p class="body-text">The POS is where a museum's day-to-day actually happens: ticket sales, memberships, donations, souvenirs, check-ins — usually run by a small team of volunteers, many of them older adults, doing their best to keep the line moving. When it works well, it's not just staff who benefit — supporters get their tickets and memberships faster, with clearer information, right at the front desk.</p>
       </div>
     </section>
 
@@ -791,6 +808,28 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <p>Often volunteers, frequently older adults with basic technology literacy. Limited familiarity with advanced features. Some degree of limited vision or dexterity is common.</p>
           </div>
         </div>
+
+        <h3 class="subsection-title" style="margin-top:48px">Research methods</h3>
+        <div class="card-grid cols-3">
+          <div class="fc">
+            <div class="fc-eyebrow">— Interviews &amp; surveys</div>
+            <p class="fc-desc">Talked with the museum staff and volunteers who use the POS every day, including different age groups and comfort levels with technology.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg>20+ staff &amp; volunteers</span></div>
+          </div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Benchmarking</div>
+            <p class="fc-desc">Compared Veevart's POS against other point-of-sale platforms serving similar institutions.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>Competitor POS</span></div>
+          </div>
+          <div class="fc">
+            <div class="fc-eyebrow">— A/B testing</div>
+            <p class="fc-desc">Tested the new system against the old one with different groups of staff to measure real gains in speed and ease of use.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg>New vs. old system</span></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -799,20 +838,26 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
         <div class="section-eyebrow"><span class="rule"></span><span class="num">05</span></div>
         <h2 class="section-title">Design principles</h2>
         <div class="card-grid cols-3">
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.8"></circle><path d="M4 8.5l8 1.2 8-1.2M12 9.7v5M8.5 21l3.5-6.3L15.5 21"></path></svg></div>
-            <div class="card-eyebrow">Accessibility</div>
-            <div class="card-desc">Design for the staff we actually met in research — not just the average user.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Accessibility</div>
+            <h3 class="fc-title">"Design for the hands using it, not the ones judging it"</h3>
+            <p class="fc-desc">Every choice was weighed against staff who are older and less tech-fluent, not against how sharp it looked on a wide screen.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart POS · Design principle</div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M6 3l14 8-6 1.3L11 19z"></path></svg></div>
-            <div class="card-eyebrow">Usability</div>
-            <div class="card-desc">Every feature has to be findable in the moment a visitor is waiting at the counter.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Performance</div>
+            <h3 class="fc-title">"Speed is the metric, not the pixel"</h3>
+            <p class="fc-desc">Every screen decision was measured against one thing: how much faster a sale could go.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart POS · Design principle</div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><polygon points="12 3 21 8 12 13 3 8"></polygon><polyline points="3 14 12 19 21 14"></polyline></svg></div>
-            <div class="card-eyebrow">Consistency</div>
-            <div class="card-desc">One system, one set of patterns — whether staff are on an iPad or a desktop.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Consistency</div>
+            <h3 class="fc-title">"One flow, every device"</h3>
+            <p class="fc-desc">The same sale process had to work identically across the platforms staff actually used, not just the primary one.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart POS · Design principle</div>
           </div>
         </div>
       </div>
@@ -822,11 +867,38 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">06</span></div>
         <h2 class="section-title">Key decisions</h2>
-        <ol class="decision-list">
-          <li><span class="decision-num">1</span><p>A system where type size scales, built for staff who struggle to read small text.</p></li>
-          <li><span class="decision-num">2</span><p>A design that adapts easily to each museum's own branding.</p></li>
-          <li><span class="decision-num">3</span><p>A redesign that doesn't just modernize the previous system's functions, but genuinely improves them.</p></li>
-        </ol>
+        <div class="card-grid cols-3">
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Accessibility</div>
+            <h3 class="fc-title">Type that scales</h3>
+            <p class="fc-desc">A system where type size scales, built for staff who struggle to read small text.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M12 4v16M8 20h8"></path></svg>Typography</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.8"></circle><path d="M4 8.5l8 1.2 8-1.2M12 9.7v5M8.5 21l3.5-6.3L15.5 21"></path></svg>Legibility</span>
+            </div>
+          </div>
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Flexibility</div>
+            <h3 class="fc-title">Branding, museum by museum</h3>
+            <p class="fc-desc">A design that adapts easily to each museum's own branding.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14.5-4.6M20 12a8 8 0 0 1-14.5 4.6"></path><polyline points="18 4 18.5 7.4 15.1 6.9"></polyline><polyline points="6 20 5.5 16.6 8.9 17.1"></polyline></svg>Branding</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>Multi-tenant</span>
+            </div>
+          </div>
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Scope</div>
+            <h3 class="fc-title">Improve, don't just modernize</h3>
+            <p class="fc-desc">A redesign that doesn't just modernize the previous system's functions, but genuinely improves them.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg>Functionality</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5z"></path><path d="M3 8v8l9 5 9-5V8M12 13v8"></path></svg>Redesign</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -937,7 +1009,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="card-tint"></div><div class="card-blur"></div>
           <div class="card-body next-card-body">
             <div class="card-meta"><span>Next project</span></div>
-            <h3>+40% platform adoption in CRM</h3>
+            <h3>50% less churn in CRM</h3>
           </div>
           <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
         </a>
@@ -952,13 +1024,13 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="cover-photo-tint"></div>
       <div class="wrap">
         <div class="kicker">UX Design</div>
-        <h1 class="title">+40% platform adoption in CRM</h1>
+        <h1 class="title">50% less churn in CRM</h1>
         <p class="dek">Merging 5 legacy platforms into one product ecosystem, powered by a shared design system.</p>
         <div class="meta-row">
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">Lead UX Designer</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg><div><div class="label">Team</div><div class="value">Product, PMs &amp; Engineering</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg><div><div class="label">Timeline</div><div class="value">4 months</div></div></div>
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Unifying 5 legacy Veevart platforms into one ecosystem through a shared design system</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Unifying 5 legacy Veevart platforms into one ecosystem through a shared design system, bringing runaway churn back under control</div></div></div>
         </div>
       </div>
     </section>
@@ -971,7 +1043,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 0 0 3.5 20.5h17a1.5 1.5 0 0 0 1.39-2.46L13.71 3.86a1.5 1.5 0 0 0-2.42 0z"></path></svg></div>
             <div class="card-eyebrow">Problem</div>
-            <div class="card-desc">Veevart's legacy platforms were outdated and inconsistent in their components and flows across all products.</div>
+            <div class="card-desc">Veevart's legacy platforms were outdated and inconsistent in their components and flows across all products — and it was costing them clients, with churn running at double the expected rate.</div>
           </div>
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2z"></path></svg></div>
@@ -981,7 +1053,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="glass-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg></div>
             <div class="card-eyebrow">Impact</div>
-            <div class="card-desc">One ecosystem instead of five platforms, with 40% higher adoption and 15% less onboarding time, delivered in 4 months.</div>
+            <div class="card-desc">One ecosystem instead of five platforms — churn cut in half, back to the expected rate — plus 40% higher adoption and 15% less onboarding time, all delivered in 4 months.</div>
           </div>
         </div>
       </div>
@@ -1010,25 +1082,29 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
         <h3 class="subsection-title">Research methods</h3>
         <p class="body-text" style="margin-bottom:24px">Conducted interviews and surveys with museum staff, benchmarking, and usage analysis, alongside conversations with investors about their vision for the product.</p>
         <div class="card-grid cols-4">
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8 10c0-2.5 1.8-4 4-4s4 1.5 4 4-1.8 4.5-4 4.5-4-2-4-4.5z"></path><path d="M4 20c0-3 3-5 8-5s8 2 8 5"></path></svg></div>
-            <div class="card-eyebrow">Interviews &amp; surveys</div>
-            <div class="card-desc">25+ employees across 15 museums, plus every member of Veevart's implementation and customer success teams (20+ people).</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Interviews &amp; surveys</div>
+            <p class="fc-desc">25+ employees across 15 museums, plus every member of Veevart's implementation and customer success teams (20+ people).</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg>45+ people</span></div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20V7"></path></svg></div>
-            <div class="card-eyebrow">Benchmarking</div>
-            <div class="card-desc">Compared Veevart's flows against the competitor platforms customers were considering switching to.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Benchmarking</div>
+            <p class="fc-desc">Compared Veevart's flows against the competitor platforms customers were considering switching to.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>Competitor platforms</span></div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></div>
-            <div class="card-eyebrow">Usage analysis</div>
-            <div class="card-desc">Reviewed how staff actually completed tasks across the 5 legacy platforms — not just how they were designed to.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Usage analysis</div>
+            <p class="fc-desc">Reviewed how staff actually completed tasks across the 5 legacy platforms — not just how they were designed to.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>5 legacy platforms</span></div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"></circle><path d="M5 20c0-3.3 3-5.5 7-5.5s7 2.2 7 5.5"></path><path d="M9 3.5l1.5 1.5-1.5 1.5M15 3.5l-1.5 1.5 1.5 1.5"></path></svg></div>
-            <div class="card-eyebrow">Stakeholder alignment</div>
-            <div class="card-desc">Conversations with investors about the vision and goals they needed the platform to support.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Stakeholder alignment</div>
+            <p class="fc-desc">Conversations with investors about the vision and goals they needed the platform to support.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Investors</span></div>
           </div>
         </div>
 
@@ -1061,25 +1137,33 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
         <div class="section-eyebrow"><span class="rule"></span><span class="num">05</span></div>
         <h2 class="section-title">Design principles</h2>
         <div class="card-grid cols-4">
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.2"></rect><rect x="14" y="3" width="7" height="7" rx="1.2"></rect><rect x="3" y="14" width="7" height="7" rx="1.2"></rect><rect x="14" y="14" width="7" height="7" rx="1.2"></rect></svg></div>
-            <div class="card-eyebrow">Reusability &amp; modularity</div>
-            <div class="card-desc">Every component built once, then reused across all five platforms — instead of five different ways to solve the same interaction.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Consistency</div>
+            <h3 class="fc-title">"One task, one way, everywhere"</h3>
+            <p class="fc-desc">The same action had to work identically across all five platforms — that consistency is what brought churn back down.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart 2.0 · Design principle</div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14.5-4.6M20 12a8 8 0 0 1-14.5 4.6"></path><polyline points="18 4 18.5 7.4 15.1 6.9"></polyline><polyline points="6 20 5.5 16.6 8.9 17.1"></polyline></svg></div>
-            <div class="card-eyebrow">Flexibility &amp; adaptability</div>
-            <div class="card-desc">A system flexible enough to serve very different product needs, without forking into five separate design languages.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Onboarding</div>
+            <h3 class="fc-title">"Simple enough to skip the manual"</h3>
+            <p class="fc-desc">Patterns simple enough that new clients didn't need to relearn each product from scratch.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart 2.0 · Design principle</div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.2"></circle></svg></div>
-            <div class="card-eyebrow">Clarity &amp; simplicity</div>
-            <div class="card-desc">Fewer ways to do the same thing, so staff and customers alike spend less time relearning how something works.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Foundation</div>
+            <h3 class="fc-title">"Extend, don't reinvent"</h3>
+            <p class="fc-desc">Built on Veevart's existing component foundation, shaped around its own tokens, instead of starting from zero.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart 2.0 · Design principle</div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><polygon points="12 3 21 8 12 13 3 8"></polygon><polyline points="3 14 12 19 21 14"></polyline></svg></div>
-            <div class="card-eyebrow">Consistency</div>
-            <div class="card-desc">One set of patterns, whether you're in ticketing, memberships, or donations — so switching modules doesn't feel like switching products.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Scalability</div>
+            <h3 class="fc-title">"Built to fit five products, not just one"</h3>
+            <p class="fc-desc">Every component had to flex across different products' needs, not just the one it was designed for first.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart 2.0 · Design principle</div>
           </div>
         </div>
       </div>
@@ -1089,10 +1173,38 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">06</span></div>
         <h2 class="section-title">Key decisions</h2>
-        <ol class="decision-list">
-          <li><span class="decision-num">1</span><p>Some development teams had to rebuild their flows based on a pattern another team had already solved better — a hard trade-off that meant giving up ownership of a flow for the sake of consistency.</p></li>
-          <li><span class="decision-num">2</span><p>Getting stakeholders to understand this would be a long process, requiring significant customer success effort to guide clients through the new platform.</p></li>
-        </ol>
+        <div class="card-grid cols-3">
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Trade-off</div>
+            <h3 class="fc-title">Give up ownership for consistency</h3>
+            <p class="fc-desc">Some development teams had to rebuild their flows based on a pattern another team had already solved better — a hard trade-off that meant giving up ownership of a flow for the sake of consistency.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg>Ownership</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg>Consistency</span>
+            </div>
+          </div>
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Consistency</div>
+            <h3 class="fc-title">Ship one pattern, not five</h3>
+            <p class="fc-desc">Standardizing shared components and interaction patterns across every platform meant the same task worked the same way everywhere — directly addressing the inconsistency driving churn.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg>Components</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>Platforms</span>
+            </div>
+          </div>
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Onboarding</div>
+            <h3 class="fc-title">Fewer patterns to relearn</h3>
+            <p class="fc-desc">Simplifying interaction patterns across the shared design system meant new clients no longer had to relearn a different logic for each product — directly cutting onboarding time.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg>Patterns</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg>Onboarding</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1308,8 +1420,15 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
         <h2 class="section-title">Results</h2>
-        <p class="body-text" style="margin-bottom:24px">Bringing five platforms under one shared design system didn't just make the product look more consistent — it changed how quickly teams could ship, and how confidently customers could use what they built. Adoption grew <strong>40%</strong> and onboarding time dropped <strong>15%</strong> within 4 months of launch.</p>
+        <p class="body-text" style="margin-bottom:24px">Standardizing on one design system brought churn back down to the expected rate — roughly half of what it had been — while adoption rose 40%. Simpler, consistent patterns across every product also meant new clients no longer had to relearn each one from scratch, cutting average onboarding time by 15% compared to clients who joined before the redesign — all within 4 months.</p>
         <div class="card-grid cols-3">
+          <div class="glass-card stat-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14s1.2 2 3.5 2 3.5-2 3.5-2M9 9h.01M15 9h.01"></path><circle cx="12" cy="12" r="9"></circle></svg></div>
+            <div class="stat-label">Churn</div>
+            <div class="result-number">−50%</div>
+            <div class="card-desc">Back to the expected rate</div>
+            <div class="badges chip"><span class="badge">↓ less churn</span></div>
+          </div>
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5z"></path><path d="M3 8v8l9 5 9-5V8M12 13v8"></path></svg></div>
             <div class="stat-label">Adoption</div>
@@ -1323,11 +1442,6 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <div class="result-number">−15%</div>
             <div class="card-desc">Time for new users to get productive, in 4 months</div>
             <div class="badges chip"><span class="badge">↓ vs. before</span></div>
-          </div>
-          <div class="glass-card stat-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14s1.2 2 3.5 2 3.5-2 3.5-2M9 9h.01M15 9h.01"></path><circle cx="12" cy="12" r="9"></circle></svg></div>
-            <div class="stat-label">Client feedback</div>
-            <div class="card-desc">Received consistently positive feedback from dozens of clients about how much they liked the platform's new look and feel.</div>
           </div>
         </div>
       </div>
@@ -1403,6 +1517,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
         <div class="section-eyebrow"><span class="rule"></span><span class="num">03</span></div>
         <h2 class="section-title">The problem, with evidence</h2>
         <p class="body-text" style="margin-bottom:24px">The old checkout required filling in every member of a family membership upfront, and didn't clearly show what each membership included before asking visitors to commit. On the ticketing side, buyers had no time-slot selector inside each event, and had to go through a separate cart-review step before reaching checkout.</p>
+        <p class="body-text" style="margin-bottom:24px">There was a consistent drop-off point in family memberships when visitors were asked to add each member upfront, and a similar drop-off in ticketing right at the old "Review cart" step before checkout. Reducing that drop-off was one of the central goals of this redesign.</p>
         <div class="card-grid cols-2">
           <div>
             <div class="card-eyebrow" style="margin-bottom:10px">Ticketing</div>
@@ -1424,26 +1539,24 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
         <h2 class="section-title">Research</h2>
         <h3 class="subsection-title">Research methods</h3>
         <p class="body-text" style="margin-bottom:24px">Conducted interviews and surveys with end users, benchmarking, and usage analysis, alongside conversations with investors about their vision for the product.</p>
-        <div class="card-grid cols-4">
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8 10c0-2.5 1.8-4 4-4s4 1.5 4 4-1.8 4.5-4 4.5-4-2-4-4.5z"></path><path d="M4 20c0-3 3-5 8-5s8 2 8 5"></path></svg></div>
-            <div class="card-eyebrow">Interviews &amp; surveys</div>
-            <div class="card-desc">100+ end users surveyed and interviewed across 15 museums.</div>
+        <div class="card-grid cols-3">
+          <div class="fc">
+            <div class="fc-eyebrow">— Interviews &amp; surveys</div>
+            <p class="fc-desc">100+ end users surveyed and interviewed across 15 museums.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg>Museum visitors</span></div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20V7"></path></svg></div>
-            <div class="card-eyebrow">Benchmarking</div>
-            <div class="card-desc">Compared Veevart's flows against the competitor platforms customers were considering switching to.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Benchmarking</div>
+            <p class="fc-desc">Compared checkout and ticketing against other museum ticketing platforms and membership subscription services.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a1 1 0 0 0 0 2v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a1 1 0 0 0 0-2z"></path></svg>Ticketing &amp; memberships</span></div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></div>
-            <div class="card-eyebrow">Usage analysis</div>
-            <div class="card-desc">Reviewed how staff actually completed tasks across the 5 legacy platforms — not just how they were designed to.</div>
-          </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"></circle><path d="M5 20c0-3.3 3-5.5 7-5.5s7 2.2 7 5.5"></path><path d="M9 3.5l1.5 1.5-1.5 1.5M15 3.5l-1.5 1.5 1.5 1.5"></path></svg></div>
-            <div class="card-eyebrow">Stakeholder alignment</div>
-            <div class="card-desc">Conversations with investors about the vision and goals they needed the platform to support.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Usage analysis</div>
+            <p class="fc-desc">Analyzed where — and how often — visitors dropped off in the old checkout and ticketing flows.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags"><span class="fc-tag"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg>Drop-off analysis</span></div>
           </div>
         </div>
 
@@ -1455,6 +1568,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <div class="card-meta"><span>Research</span></div>
             <h3>Museum visitors</h3>
             <p>Students, parents, and casual visitors browsing exhibitions, buying tickets, or joining a membership online — often for the first time, with no prior familiarity with Veevart's system.</p>
+            <p class="pull-quote">The average museum visitor was a student or a parent — very different kinds of users — so the platform needed to be accessible, visually appealing, and easy to use for the widest possible range of people.</p>
           </div>
         </div>
       </div>
@@ -1465,25 +1579,33 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
         <div class="section-eyebrow"><span class="rule"></span><span class="num">05</span></div>
         <h2 class="section-title">Design principles</h2>
         <div class="card-grid cols-4">
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.8"></circle><path d="M4 8.5l8 1.2 8-1.2M12 9.7v5M8.5 21l3.5-6.3L15.5 21"></path></svg></div>
-            <div class="card-eyebrow">Accessibility</div>
-            <div class="card-desc">Designed for the widest possible range of visitors — students, parents, and everyone in between — not just tech-savvy power users.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Conversion</div>
+            <h3 class="fc-title">"Every field costs a visitor"</h3>
+            <p class="fc-desc">Requested information had to earn its place at checkout, or it got moved out of the way.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart Apps · Design principle</div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path><path d="M4 20h16"></path></svg></div>
-            <div class="card-eyebrow">Control &amp; feedback</div>
-            <div class="card-desc">Every action, from adding a ticket to submitting payment, gives clear, immediate feedback so people always know what happened.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Simplification</div>
+            <h3 class="fc-title">"Remove the step, don't just redesign it"</h3>
+            <p class="fc-desc">The old cart-review step didn't get a facelift — it got eliminated once time slots lived inside the event itself.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart Apps · Design principle</div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M6 3l14 8-6 1.3L11 19z"></path></svg></div>
-            <div class="card-eyebrow">Visual hierarchy</div>
-            <div class="card-desc">The most important action on each screen — buying, joining, paying — is always the most obvious one.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— Efficiency</div>
+            <h3 class="fc-title">"Reuse what already works"</h3>
+            <p class="fc-desc">Letting members manage their own family list through the existing portal, instead of building something new from scratch.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart Apps · Design principle</div>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.2"></circle></svg></div>
-            <div class="card-eyebrow">User focus</div>
-            <div class="card-desc">Built around how real visitors actually browse and buy, not around what was easiest to build.</div>
+          <div class="fc">
+            <div class="fc-eyebrow">— User focus</div>
+            <h3 class="fc-title">"Design for whoever's paying, not just whoever's staff"</h3>
+            <p class="fc-desc">Built around students and parents — very different visitors — not around internal power users.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-attrib"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"></path><path d="M9 21v-6h6v6"></path></svg>Veevart Apps · Design principle</div>
           </div>
         </div>
       </div>
@@ -1493,10 +1615,38 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">06</span></div>
         <h2 class="section-title">Key decisions</h2>
-                <ol class="decision-list">
-          <li><span class="decision-num">1</span><p>Some teams had to redesign their customer-facing flows around a pattern that had already proven itself elsewhere in the system, rather than building something new from scratch.</p></li>
-          <li><span class="decision-num">2</span><p>Getting stakeholders on board meant accepting that this would take time — museums would need real support helping their customers adjust to the new experience.</p></li>
-        </ol>
+        <div class="card-grid cols-3">
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Efficiency</div>
+            <h3 class="fc-title">Adopt, don't reinvent</h3>
+            <p class="fc-desc">Some teams had to redesign their customer-facing flows around a pattern that had already proven itself elsewhere in the system, rather than building something new from scratch.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg>Existing pattern</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>Checkout</span>
+            </div>
+          </div>
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Simplification</div>
+            <h3 class="fc-title">Defer to the portal</h3>
+            <p class="fc-desc">Members could now add the other people on their family membership through the existing user portal, instead of filling everyone in upfront during checkout — cutting the amount of information requested at that step.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg>User portal</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg>Family membership</span>
+            </div>
+          </div>
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Simplification</div>
+            <h3 class="fc-title">Cut the review, keep the summary</h3>
+            <p class="fc-desc">An improved time-slot selector built directly into each ticketed event removed the need for a separate cart-review step altogether, paired with a summary cart that stayed visible throughout the flow.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a1 1 0 0 0 0 2v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a1 1 0 0 0 0-2z"></path></svg>Ticketing</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>Cart</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1580,14 +1730,14 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
         <h2 class="section-title">Results</h2>
-        <p class="body-text" style="margin-bottom:24px">The new customer-facing pages replaced an outdated, hard-to-navigate experience with one built around how real visitors — students, parents, casual guests — actually browse and buy. Drop-off fell <strong>30%</strong> overall, satisfaction in testing was <strong>50%</strong> higher than with the old pages, and over <strong>160+</strong> museums are set to roll them out to their customers.</p>
-        <div class="card-grid cols-3">
+        <p class="body-text" style="margin-bottom:24px">A pilot across more than 20 museums validated the redesign through usability testing and before/after analytics: checkout and membership drop-off fell by 30%, and visitor satisfaction rose by 50%.</p>
+        <div class="card-grid cols-2">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><polygon points="12 3 21 8 12 13 3 8"></polygon><polyline points="3 14 12 19 21 14"></polyline></svg></div>
-            <div class="stat-label">Museums adopting</div>
-            <div class="result-number">160+</div>
-            <div class="card-desc">Museums rolling out the new pages</div>
-            <div class="badges chip"><span class="badge">↗ shipped</span></div>
+            <div class="stat-label">Drop-off</div>
+            <div class="result-number">-30%</div>
+            <div class="card-desc">Checkout and membership drop-off</div>
+            <div class="badges chip"><span class="badge">↓ less drop-off</span></div>
           </div>
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14s1.2 2 3.5 2 3.5-2 3.5-2M9 9h.01M15 9h.01"></path><circle cx="12" cy="12" r="9"></circle></svg></div>
@@ -1596,12 +1746,8 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <div class="card-desc">Vs. the old pages in testing</div>
             <div class="badges chip"><span class="badge">↗ vs. before</span></div>
           </div>
-          <div class="glass-card stat-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5z"></path><path d="M3 8v8l9 5 9-5V8M12 13v8"></path></svg></div>
-            <div class="stat-label">Rollout</div>
-            <div class="card-desc">Over 160 museums will roll out the new online pages to their customers over the coming year.</div>
-          </div>
         </div>
+        <p class="body-text" style="margin-top:24px">Following the pilot, all of Veevart's 160+ museum clients will begin rolling these pages out to their own visitors over the coming year.</p>
       </div>
     </section>
 
@@ -1765,6 +1911,8 @@ class Component extends DCLogic {
     this.initTheme();
     this.initScrollTop();
     this.initNav();
+    this.initFloatingNav();
+    this.initHomeCardsStack();
     this.initRoles();
     this.initRouter();
     this.revealTries = 0;
@@ -2047,6 +2195,86 @@ class Component extends DCLogic {
       btn.classList.toggle('visible', show);
     });
     btn.addEventListener('click', function(){ window.scrollTo({top:0, left:0, behavior:'smooth'}); });
+  }
+
+  initFloatingNav(){
+    const bar = document.querySelector('.nav-sticky-bar');
+    if (!bar) return;
+    const onScroll = function(){
+      bar.classList.toggle('floating', window.scrollY > 40);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+  }
+
+  initHomeCardsStack(){
+    const wrap = document.getElementById('homeCards');
+    if (!wrap) return;
+    const cards = Array.prototype.slice.call(wrap.children);
+    if (cards.length < 2) return;
+    const desktopMq = window.matchMedia('(min-width:761px)');
+    const reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let deltas = null;
+    let active = false;
+    const measure = function(){
+      cards.forEach(function(c){ c.style.transform = ''; });
+      const rects = cards.map(function(c){ return c.getBoundingClientRect(); });
+      const wrapRect = wrap.getBoundingClientRect();
+      const cx = wrapRect.left + wrapRect.width / 2;
+      const cy = wrapRect.top + wrapRect.height / 2;
+      deltas = rects.map(function(r, i){
+        const rcx = r.left + r.width / 2;
+        const rcy = r.top + r.height / 2;
+        return { x: (cx - rcx) + i * 14, y: (cy - rcy) + i * 14 };
+      });
+    };
+    const reset = function(){
+      cards.forEach(function(c){ c.style.transform = ''; c.style.opacity = ''; c.style.zIndex = ''; });
+    };
+    const apply = function(){
+      if (!deltas) return;
+      const rect = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const start = vh;
+      const end = vh * 0.5;
+      let progress = (start - rect.top) / (start - end);
+      progress = Math.max(0, Math.min(1, progress));
+      cards.forEach(function(c, i){
+        c.style.zIndex = String(cards.length - i);
+        if (progress >= 0.999) {
+          c.style.transform = '';
+          c.style.opacity = '';
+          return;
+        }
+        const d = deltas[i];
+        const x = d.x * (1 - progress);
+        const y = d.y * (1 - progress);
+        const baseOpacity = 1 - i * 0.13;
+        const opacity = baseOpacity + (1 - baseOpacity) * progress;
+        c.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+        c.style.opacity = String(opacity);
+      });
+    };
+    const onScroll = function(){
+      if (!active) return;
+      window.requestAnimationFrame(apply);
+    };
+    const setup = function(){
+      if (desktopMq.matches && !reduceMq.matches) {
+        if (!active) { active = true; measure(); }
+        apply();
+      } else {
+        active = false;
+        reset();
+      }
+    };
+    window.addEventListener('scroll', onScroll);
+    window.addEventListener('resize', function(){
+      if (active) measure();
+      setup();
+    });
+    if (reduceMq.addEventListener) reduceMq.addEventListener('change', setup);
+    setup();
   }
 
   renderVals(){ return {}; }

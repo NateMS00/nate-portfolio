@@ -9,6 +9,10 @@
 <x-dc>
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="assets/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="assets/favicon-16x16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&amp;family=Poppins:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -286,9 +290,24 @@ h1.title{font-size:clamp(34px,5vw,56px);line-height:1.05;font-weight:600;letter-
 [data-theme="dark"] .meta-icon{stroke:var(--yellow);}
 .meta-tag .label{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
 .meta-tag .value{font-size:14.5px;max-width:240px;line-height:1.4;color:var(--on-hero);font-weight:500;}
+.cover-photo{position:relative;overflow:hidden;}
+.cover-photo-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+.cover-photo-tint{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(12,10,8,.93) 0%,rgba(12,10,8,.88) 55%,rgba(12,10,8,.72) 78%,rgba(12,10,8,.4) 100%);}
+.cover-photo .wrap{position:relative;z-index:2;}
+.cover-photo .kicker{color:rgba(245,242,236,.6);}
+.cover-photo .title,.cover-photo .dek,.cover-photo .meta-tag .value{color:#f5f2ec;}
+.cover-photo .meta-tag .label{color:rgba(245,242,236,.55);}
+.cover-photo .meta-icon{stroke:var(--yellow);}
 .pg-proj section{padding:64px 0;}
 .pg-proj section.tight{padding:44px 0;}
 .pg-proj section.next-project-section{padding-bottom:0;}
+@keyframes pgFadeIn{from{opacity:0;}to{opacity:1;}}
+.pg-fade-in{animation:pgFadeIn .45s ease both;}
+.next-card-body{padding-left:48px;padding-right:48px;}
+.next-card .go{right:48px;}
+.scroll-top-btn{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--card);border:0.5px solid var(--border-strong);box-shadow:0 1px 2px rgba(0,0,0,.03),0 16px 32px -22px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);z-index:40;opacity:0;visibility:hidden;transition:opacity .2s ease;}
+.scroll-top-btn.visible{opacity:1;visibility:visible;}
+.scroll-top-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
 h2.section-title{font-size:clamp(22px,2.4vw,28px);font-weight:600;letter-spacing:-0.01em;margin:0 0 28px;max-width:640px;color:var(--on-hero);}
 h3.subsection-title{font-size:clamp(17px,1.6vw,19px);font-weight:600;letter-spacing:-0.005em;margin:0 0 16px;max-width:640px;color:var(--on-hero);}
 .section-eyebrow{display:flex;align-items:center;gap:12px;margin:0 0 14px;}
@@ -308,7 +327,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 @media (max-width:860px){.card-grid.cols-3,.card-grid.cols-2,.card-grid.cols-4{grid-template-columns:1fr;}}
 @media (min-width:861px) and (max-width:1180px){.card-grid.cols-4{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .persona-card-bright .card-tint{background:linear-gradient(to right,rgba(14,11,8,.92) 0%,rgba(14,11,8,.74) 48%,rgba(14,11,8,.34) 78%,rgba(14,11,8,.08) 100%);}
-.carousel-frame-wrap{position:relative;width:1024px;max-width:100%;margin:0 auto;}
+.carousel-frame-wrap{position:relative;width:100%;max-width:792px;margin:0 auto;}
 .carousel-frame-wrap .carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;}
 .carousel-frame-wrap .carousel-arrow.prev{left:16px;}
 .carousel-frame-wrap .carousel-arrow.next{right:16px;}
@@ -377,6 +396,31 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 .browser-body{aspect-ratio:2360/1640;position:relative;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;background:#F5F5F5;}
 .explore-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:8px;}
 @media (max-width:860px){.explore-row{grid-template-columns:1fr;}}
+.explore-split{display:grid;grid-template-columns:1.3fr minmax(0,1fr);gap:40px;align-items:start;margin:8px 0 0;}
+@media (max-width:760px){.explore-split{grid-template-columns:1fr;gap:24px;}}
+.explore-title{font-size:19px;font-weight:600;color:var(--on-hero);margin:0 0 12px;letter-spacing:-0.01em;}
+.explore-desc{font-size:15px;line-height:1.65;color:var(--ink-soft);max-width:440px;margin:0;}
+.click-advance{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="white" stroke="%23282825" stroke-width="1.3"/><path d="M9 7l7 5-7 5" fill="none" stroke="%23282825" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>') 15 15,pointer;}
+.explore-split .browser-body{aspect-ratio:auto;overflow:visible;height:auto;}
+.explore-split .carousel-frame-wrap{max-width:100%;}
+.filmstrip-marquee{position:relative;overflow:hidden;margin-top:8px;background:var(--line-soft);border-radius:14px;padding:20px;}
+[data-theme="dark"] .filmstrip-marquee{background:rgba(255,255,255,0.05);}
+.filmstrip-track{display:flex;align-items:flex-start;gap:16px;width:max-content;animation:filmstrip-scroll 32s linear infinite;}
+.filmstrip-marquee:hover .filmstrip-track,.filmstrip-marquee.paused .filmstrip-track{animation-play-state:paused;}
+.filmstrip-thumb{flex:0 0 auto;height:380px;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.06);}
+.filmstrip-thumb.desktop-frame{width:608px;display:flex;flex-direction:column;background:#F5F5F5;border:0.5px solid var(--line);}
+.filmstrip-thumb.desktop-frame .fs-chrome{height:30px;flex:0 0 auto;background:var(--bg);border-bottom:0.5px solid var(--line);display:flex;align-items:center;gap:6px;padding:0 12px;}
+.filmstrip-thumb.desktop-frame .fs-chrome span{width:8px;height:8px;border-radius:50%;background:var(--border-strong);display:inline-block;}
+.filmstrip-thumb.desktop-frame .fs-body{flex:1;min-height:0;overflow:hidden;}
+.filmstrip-thumb.desktop-frame .fs-body img{display:block;width:100%;height:100%;object-fit:cover;}
+.filmstrip-thumb.mobile-frame{width:180px;background:#0b0b0c;padding:9px;position:relative;border-radius:28px;border:0.5px solid var(--line);}
+.filmstrip-thumb.mobile-frame .fs-notch{position:absolute;top:15px;left:50%;transform:translateX(-50%);width:48px;height:12px;border-radius:7px;background:#0b0b0c;z-index:2;}
+.filmstrip-thumb.mobile-frame .fs-screen{width:100%;height:100%;border-radius:20px;overflow:hidden;background:#F5F5F5;}
+.filmstrip-thumb.mobile-frame .fs-screen img{display:block;width:100%;height:100%;object-fit:cover;}
+.filmstrip-playpause{position:absolute;top:14px;right:14px;z-index:2;width:32px;height:32px;border-radius:50%;background:var(--card);border:0.5px solid var(--border-strong);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12);}
+.filmstrip-playpause:hover{background:var(--bg-hero);}
+.filmstrip-playpause svg{width:14px;height:14px;}
+@keyframes filmstrip-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .explore-item .frame-desktop{max-width:100%;}
 .explore-item .frame-desktop .browser-chrome{height:28px;gap:8px;padding:0 10px;}
 .explore-item .frame-desktop .traffic-lights span{width:8px;height:8px;}
@@ -418,8 +462,15 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 .slot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
 @media (max-width:760px){.slot-grid{grid-template-columns:1fr;}}
 .slot-box{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/10;border:0.5px solid var(--border-strong);}
+.swatch-box{width:100%;height:34px;border-radius:8px;margin-bottom:10px;}
+.ds-panel{height:340px;display:grid;align-content:center;overflow:hidden;margin-top:4px;}
+.ds-panel.comp-panel{display:flex;align-items:center;justify-content:center;background:var(--line-soft);border-radius:18px;box-shadow:none;}
+[data-theme="dark"] .ds-panel.comp-panel{background:rgba(255,255,255,0.05);}
+@media (max-width:860px){.ds-panel{height:auto;overflow:visible;}}
 </style>
 </helmet>
+
+<button type="button" class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
 
 <svg class="defs" aria-hidden="true"><defs>
   <radialGradient id="yg" cx="42%" cy="38%" r="70%"><stop offset="0%" stop-color="#FBDB6E"></stop><stop offset="60%" stop-color="#F5C542"></stop><stop offset="100%" stop-color="#E8B32E"></stop></radialGradient>
@@ -493,9 +544,8 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <div class="card-tint"></div><div class="card-blur"></div>
             <div class="card-body">
               <div class="card-meta"><span>Product Design</span><span class="sep">·</span><span>Veevart</span><span class="sep">·</span><span>2026</span></div>
-              <h3>Point-of-sale redesign</h3>
-              <p>Cutting friction from ticketing, subscriptions and inventory</p>
-              <span class="metric"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg>+35% faster sales</span>
+              <h3>35% faster sales in POS</h3>
+              <p>Veevart's point-of-sale redesign</p>
             </div>
             <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
           </a>
@@ -503,10 +553,9 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <img class="card-img" src="assets/cover-designsystem.jpg" alt="Unifying Veevart's design system cover">
             <div class="card-tint"></div><div class="card-blur"></div>
             <div class="card-body">
-              <div class="card-meta"><span>Product Design</span><span class="sep">·</span><span>Veevart</span><span class="sep">·</span><span>2025</span></div>
-              <h3>Unifying Veevart's design system</h3>
-              <p>Merging 5 legacy platforms into one ecosystem, powered by a shared design system</p>
-              <span class="metric"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg>+40% adoption</span>
+              <div class="card-meta"><span>UX Design</span><span class="sep">·</span><span>Veevart</span><span class="sep">·</span><span>2025</span></div>
+              <h3>+40% platform adoption in CRM</h3>
+              <p>Unifying Veevart's design system</p>
             </div>
             <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
           </a>
@@ -515,9 +564,8 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <div class="card-tint"></div><div class="card-blur"></div>
             <div class="card-body">
               <div class="card-meta"><span>Product Design</span><span class="sep">·</span><span>Veevart</span><span class="sep">·</span><span>2025</span></div>
-              <h3>Veevart's online apps redesign</h3>
-              <p>Redesigning ticketing, donations, and membership signup for the people using them</p>
-              <span class="metric"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg>+50% satisfaction</span>
+              <h3>30% less drop-off in online sales</h3>
+              <p>Ticketing &amp; membership redesign</p>
             </div>
             <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
           </a>
@@ -525,7 +573,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <img class="card-img" src="assets/cover-kidsadvisor.png" alt="Kids Advisor cover">
             <div class="card-tint"></div><div class="card-blur"></div>
             <div class="card-body">
-              <div class="card-meta"><span>Product Design</span><span class="sep">·</span><span>Bluepixel</span><span class="sep">·</span><span>2021</span></div>
+              <div class="card-meta"><span>UX Design</span><span class="sep">·</span><span>Bluepixel</span><span class="sep">·</span><span>2021</span></div>
               <h3>Kids Advisor</h3>
               <p>Connecting parents with trusted schools, health services, and activities for their kids</p>
             </div>
@@ -665,10 +713,12 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
   <!-- ===================== PROJECT · POS ===================== -->
   <div class="pg pg-proj pg-pos" data-screen-label="Project — POS redesign">
-    <section class="cover section-surface">
+    <section class="cover section-surface cover-photo">
+      <img class="cover-photo-img" src="assets/cover-pos.jpg" alt="">
+      <div class="cover-photo-tint"></div>
       <div class="wrap">
         <div class="kicker">Product Design</div>
-        <h1 class="title">Veevart's POS</h1>
+        <h1 class="title">35% faster sales in POS</h1>
         <p class="dek">Complete redesign of a Point of Sale for day to day activities in cultural institutions and non-profits.</p>
         <div class="meta-row">
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">Product Designer</div></div></div>
@@ -782,48 +832,33 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="tight">
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
-        <h2 class="section-title">Design exploration</h2>
-        <p class="body-text">The redesign happened in stages — first restructuring the layout, then bringing the new visual identity all the way through.</p>
-        <div class="explore-row">
-          <div class="explore-item">
-            <div class="explore-label">Original POS</div>
-            <div class="frame-desktop active">
-              <div class="browser-chrome">
-                <span class="traffic-lights"><span></span><span></span><span></span></span>
-                <div class="address-bar">app.veevart.com/pos</div>
-              </div>
-              <div class="browser-body">
-                <img src="assets/pos-explore-original.webp" alt="Original POS with top navigation and list-style product cards" style="display:block;width:100%;height:auto;">
-              </div>
-            </div>
-            <p class="explore-caption">The original point-of-sale — top navigation, list-style product cards, and a color palette with no connection to Veevart's brand.</p>
+        <div class="explore-split">
+          <div>
+            <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
+            <h2 class="section-title">Design exploration</h2>
+            <p class="body-text" style="margin-bottom:20px">The redesign happened in stages — first restructuring the layout, then bringing the new visual identity all the way through.</p>
+            <h3 class="explore-title" id="posExploreTitle">Restructuring the layout</h3>
+            <p class="explore-desc" id="posExploreDesc">The first move was structural — sidebar navigation, top-aligned product photos — before touching color or branding.</p>
           </div>
-          <div class="explore-item">
-            <div class="explore-label">Restructuring the layout</div>
-            <div class="frame-desktop active">
-              <div class="browser-chrome">
-                <span class="traffic-lights"><span></span><span></span><span></span></span>
-                <div class="address-bar">app.veevart.com/pos</div>
+          <div>
+            <div class="carousel-frame-wrap">
+              <button type="button" class="carousel-arrow prev" id="posExplorePrev" aria-label="Previous screen">‹</button>
+              <div class="frame-desktop active">
+                <div class="browser-chrome">
+                  <span class="traffic-lights"><span></span><span></span><span></span></span>
+                  <div class="address-bar" id="posExploreUrl">app.veevart.com/pos</div>
+                </div>
+                <div class="browser-body click-advance" id="posExploreBody">
+                  <img id="posExplore-1" class="carousel-slide" src="assets/pos-restructuring-layout.png" alt="Sidebar navigation and top-aligned product cards, still in the original blue palette" style="display:block;width:100%;height:auto;">
+                  <img id="posExplore-2" class="carousel-slide" src="assets/pos-visual-identity.png" alt="Sidebar navigation and product cards with the new orange brand identity applied" style="display:none;width:100%;height:auto;">
+                </div>
               </div>
-              <div class="browser-body">
-                <img src="assets/pos-restructuring-layout.png" alt="Sidebar navigation and top-aligned product cards, still in the original blue palette" style="display:block;width:100%;height:auto;">
-              </div>
+              <button type="button" class="carousel-arrow next" id="posExploreNext" aria-label="Next screen">›</button>
             </div>
-            <p class="explore-caption">The first move was structural — sidebar navigation, top-aligned product photos — before touching color or branding.</p>
-          </div>
-          <div class="explore-item">
-            <div class="explore-label">Applying the new visual identity</div>
-            <div class="frame-desktop active">
-              <div class="browser-chrome">
-                <span class="traffic-lights"><span></span><span></span><span></span></span>
-                <div class="address-bar">app.veevart.com/pos</div>
-              </div>
-              <div class="browser-body">
-                <img src="assets/pos-visual-identity.png" alt="Sidebar navigation and product cards with the new orange brand identity applied" style="display:block;width:100%;height:auto;">
-              </div>
+            <div class="carousel-dots" id="posExploreDots">
+              <button type="button" class="carousel-dot active" data-i="0" aria-label="Restructuring the layout"></button>
+              <button type="button" class="carousel-dot" data-i="1" aria-label="Applying the new visual identity"></button>
             </div>
-            <p class="explore-caption">Once the navigation and card layout moved to the new structure, the sale summary panel was the last piece still carrying over old patterns.</p>
           </div>
         </div>
       </div>
@@ -861,8 +896,8 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
         <h2 class="section-title">Results</h2>
-        <p class="body-text" style="margin-bottom:24px">The redesign replaced a fragmented, hard-to-learn system with one built around how staff actually work at the counter — with measurable gains in speed and adoption. Ticket and membership sales got 35% faster, staff satisfaction rose 33.8% relative to the previous POS, and use of previously hard-to-find features — membership renewals, tax exemptions, per-item discounts — grew 40%.</p>
-        <div class="card-grid cols-3">
+        <p class="body-text" style="margin-bottom:24px">The redesign replaced a fragmented, hard-to-learn system with one built around how staff actually work at the counter — with measurable gains in speed and adoption. Ticket and membership sales got <strong>35%</strong> faster, staff satisfaction rose <strong>33.8%</strong> relative to the previous POS, and use of previously hard-to-find features — membership renewals, tax exemptions, per-item discounts — grew <strong>40%</strong>.</p>
+        <div class="card-grid cols-4">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 12l5-3M4 13a8 8 0 1 1 16 0"></path></svg></div>
             <div class="stat-label">Sales speed</div>
@@ -884,6 +919,13 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
             <div class="card-desc">Use of features that were previously hard to find — membership renewals, tax exemptions, per-item discounts</div>
             <div class="badges chip"><span class="badge">↗ shipped</span></div>
           </div>
+          <div class="glass-card stat-card">
+            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a7 7 0 1 1 14 0c0 5.5-7 10-7 10z"></path><circle cx="12" cy="11" r="2.2"></circle></svg></div>
+            <div class="stat-label">NPS</div>
+            <div class="result-number">6 → 8</div>
+            <div class="card-desc">Net Promoter Score</div>
+            <div class="badges chip"><span class="badge">↑ vs. before</span></div>
+          </div>
         </div>
       </div>
     </section>
@@ -895,7 +937,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="card-tint"></div><div class="card-blur"></div>
           <div class="card-body next-card-body">
             <div class="card-meta"><span>Next project</span></div>
-            <h3>Unifying Veevart's design system</h3>
+            <h3>+40% platform adoption in CRM</h3>
           </div>
           <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
         </a>
@@ -905,10 +947,12 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
   <!-- ===================== PROJECT · DESIGN SYSTEM ===================== -->
   <div class="pg pg-proj pg-ds" data-screen-label="Project — Unifying Veevart's design system">
-    <section class="cover section-surface">
+    <section class="cover section-surface cover-photo">
+      <img class="cover-photo-img" src="assets/cover-designsystem.jpg" alt="">
+      <div class="cover-photo-tint"></div>
       <div class="wrap">
-        <div class="kicker">Product Design</div>
-        <h1 class="title">Unifying Veevart's design system</h1>
+        <div class="kicker">UX Design</div>
+        <h1 class="title">+40% platform adoption in CRM</h1>
         <p class="dek">Merging 5 legacy platforms into one product ecosystem, powered by a shared design system.</p>
         <div class="meta-row">
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">Lead UX Designer</div></div></div>
@@ -1052,27 +1096,209 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       </div>
     </section>
 
-    <section>
+    <section class="section-surface">
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
-        <h2 class="section-title">The flow — final screens</h2>
-        <p class="body-text" style="margin-bottom:24px">Different modules of the same system — donor management, memberships, subscriptions — now share the same visual language and the same components.</p>
-        <div class="screen-tabs" id="dsTabs" role="tablist" aria-label="Select screen">
-          <button type="button" class="active" data-i="0" role="tab" aria-selected="true">Donor profile</button>
-          <button type="button" data-i="1" role="tab" aria-selected="false">Recurring donations</button>
-          <button type="button" data-i="2" role="tab" aria-selected="false">Membership setup</button>
-          <button type="button" data-i="3" role="tab" aria-selected="false">New subscription</button>
+        <h2 class="section-title">Design system foundations &amp; components</h2>
+        <p class="body-text" style="margin-bottom:28px">The component library is built on HeroUI. The work here was taking that foundation and shaping it around Veevart's own tokens — color, typography, radius, elevation — and the specific needs of its products and users, so every component reads as a coherent, purpose-built system rather than a generic kit with a new coat of paint. Here is a sample of it.</p>
+
+        <h3 class="subsection-title">Foundations</h3>
+        <div class="screen-tabs" id="dsFoundationTabs" role="tablist" aria-label="Select foundation">
+          <button type="button" class="active" data-i="0" role="tab" aria-selected="true">Colors</button>
+          <button type="button" data-i="1" role="tab" aria-selected="false">Typography</button>
+          <button type="button" data-i="2" role="tab" aria-selected="false">Radius &amp; shadows</button>
         </div>
-        <div class="frame-desktop active">
-          <div class="browser-chrome">
-            <span class="traffic-lights"><span></span><span></span><span></span></span>
-            <div class="address-bar" id="dsCarouselUrl">app.veevart.com/donors</div>
+
+        <div id="dsFoundation-0" class="ds-panel">
+          <div class="card-grid cols-3">
+            <div class="glass-card"><div class="swatch-box" style="background:#c14615;"></div><div class="card-eyebrow" style="margin-bottom:2px">Primary</div><div class="card-desc">#c14615 · 5.05:1 on white</div></div>
+            <div class="glass-card"><div class="swatch-box" style="background:#b62214;"></div><div class="card-eyebrow" style="margin-bottom:2px">Danger</div><div class="card-desc">#b62214 · 6.51:1 on white</div></div>
+            <div class="glass-card"><div class="swatch-box" style="background:#057a54;"></div><div class="card-eyebrow" style="margin-bottom:2px">Success</div><div class="card-desc">#057a54 · 5.36:1 on white</div></div>
+            <div class="glass-card"><div class="swatch-box" style="background:#71717a;"></div><div class="card-eyebrow" style="margin-bottom:2px">Neutral</div><div class="card-desc">#71717a · 4.83:1 on white</div></div>
+            <div class="glass-card"><div class="swatch-box" style="background:#ebebec;border:0.5px solid var(--border-strong);"></div><div class="card-eyebrow" style="margin-bottom:2px">Default</div><div class="card-desc">#ebebec · 12.41:1 with ink text</div></div>
+            <div class="glass-card"><div class="swatch-box" style="background:#ffffff;border:0.5px solid var(--border-strong);"></div><div class="card-eyebrow" style="margin-bottom:2px">Surface</div><div class="card-desc">#ffffff · 14.78:1 with ink text</div></div>
           </div>
-          <div class="browser-body" id="dsCarouselBody">
-            <img id="ds-flow-1" class="carousel-slide" src="assets/ds-flow-1-donor-profile.png" alt="Contact/donor profile" style="display:block;width:100%;height:auto;">
-            <img id="ds-flow-2" class="carousel-slide" src="assets/ds-flow-2-recurring-donations.png" alt="Recurring donation detail" style="display:none;width:100%;height:auto;">
-            <img id="ds-flow-3" class="carousel-slide" src="assets/ds-flow-3-membership-setup.png" alt="New membership program setup" style="display:none;width:100%;height:auto;">
-            <img id="ds-flow-4" class="carousel-slide" src="assets/ds-flow-4-new-subscription.png" alt="New subscription flow" style="display:none;width:100%;height:auto;">
+        </div>
+
+        <div id="dsFoundation-1" class="ds-panel" style="display:none;flex-direction:column;">
+          <div class="glass-card" style="font-family:'PP Neue Montreal',var(--font-body,sans-serif);max-height:280px;overflow-y:auto;">
+            <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:0.5px solid var(--line);"><div style="font-size:36px;line-height:112%;font-weight:600;color:var(--on-hero);">Front Desk</div><div class="card-desc" style="margin-top:4px;">Heading 1 — 36px / 112%</div></div>
+            <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:0.5px solid var(--line);"><div style="font-size:24px;line-height:134%;font-weight:600;color:var(--on-hero);">Today's summary</div><div class="card-desc" style="margin-top:4px;">Heading 2 — 24px / 134%</div></div>
+            <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:0.5px solid var(--line);"><div style="font-size:20px;line-height:160%;font-weight:600;color:var(--on-hero);">Membership renewed</div><div class="card-desc" style="margin-top:4px;">Heading 3 — 20px / 160%</div></div>
+            <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:0.5px solid var(--line);"><div style="font-size:18px;line-height:150%;font-weight:600;color:var(--on-hero);">Search products, tickets, members</div><div class="card-desc" style="margin-top:4px;">Heading 4 — 18px / 150%</div></div>
+            <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:0.5px solid var(--line);"><div style="font-size:16px;line-height:150%;font-weight:500;color:var(--on-hero);">Your membership renews in 12 days.</div><div class="card-desc" style="margin-top:4px;">Body base medium — 16px / 150%</div></div>
+            <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:0.5px solid var(--line);"><div style="font-size:16px;line-height:150%;font-weight:400;color:var(--on-hero);">Add a small donation and help us create meaningful impact.</div><div class="card-desc" style="margin-top:4px;">Body base — 16px / 150%</div></div>
+            <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:0.5px solid var(--line);"><div style="font-size:14px;line-height:143%;font-weight:500;color:var(--on-hero);">5 × Family Membership</div><div class="card-desc" style="margin-top:4px;">Body sm medium — 14px / 143%</div></div>
+            <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:0.5px solid var(--line);"><div style="font-size:14px;line-height:143%;font-weight:400;color:var(--on-hero);">Prices are shown in USD.</div><div class="card-desc" style="margin-top:4px;">Body sm — 14px / 143%</div></div>
+            <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:0.5px solid var(--line);"><div style="font-size:12px;line-height:134%;font-weight:500;color:var(--on-hero);">IN STOCK</div><div class="card-desc" style="margin-top:4px;">Body xs medium — 12px / 134%</div></div>
+            <div><div style="font-size:12px;line-height:134%;font-weight:400;color:var(--on-hero);">Auto-charged · 28th of each month</div><div class="card-desc" style="margin-top:4px;">Body xs — 12px / 134%</div></div>
+          </div>
+          <p class="carousel-label" style="margin-top:12px;text-align:left;">PP Neue Montreal is Veevart's product typeface — distinct from Inter Tight, used on this portfolio.</p>
+        </div>
+
+        <div id="dsFoundation-2" class="ds-panel" style="display:none;">
+          <div class="card-grid cols-2">
+            <div class="glass-card">
+              <div class="card-eyebrow" style="margin-bottom:14px">Radius scale</div>
+              <div style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;">
+                <div style="text-align:center;"><div style="width:48px;height:48px;background:#c14615;border-radius:4px;"></div><div class="carousel-label" style="margin-top:6px;">4px</div></div>
+                <div style="text-align:center;"><div style="width:48px;height:48px;background:#c14615;border-radius:8px;"></div><div class="carousel-label" style="margin-top:6px;">8px</div></div>
+                <div style="text-align:center;"><div style="width:48px;height:48px;background:#c14615;border-radius:12px;"></div><div class="carousel-label" style="margin-top:6px;">12px</div></div>
+                <div style="text-align:center;"><div style="width:48px;height:48px;background:#c14615;border-radius:16px;"></div><div class="carousel-label" style="margin-top:6px;">16px</div></div>
+                <div style="text-align:center;"><div style="width:48px;height:48px;background:#c14615;border-radius:999px;"></div><div class="carousel-label" style="margin-top:6px;">Full / pill</div></div>
+              </div>
+            </div>
+            <div class="glass-card" style="background:var(--border-strong);padding:40px 28px;display:flex;align-items:center;justify-content:center;">
+              <div style="background:rgba(255,255,255,0.82);backdrop-filter:blur(10px);border-radius:16px;padding:20px 24px;box-shadow:0 1px 2px rgba(0,0,0,.08), 0 20px 40px -18px rgba(0,0,0,.35), inset 0 1px 2px rgba(255,255,255,.6);width:100%;">
+                <div style="font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:4px;">Layered elevation</div>
+                <div style="font-size:13px;color:#4a4a4a;">Drop-shadow + background blur + a subtle inner highlight, stacked on one surface.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top:48px">Components</h3>
+        <div class="screen-tabs" id="dsComponentTabs" role="tablist" aria-label="Select component">
+          <button type="button" class="active" data-i="0" role="tab" aria-selected="true">Button</button>
+          <button type="button" data-i="1" role="tab" aria-selected="false">TextField</button>
+          <button type="button" data-i="2" role="tab" aria-selected="false">Calendar</button>
+          <button type="button" data-i="3" role="tab" aria-selected="false">Menu</button>
+          <button type="button" data-i="4" role="tab" aria-selected="false">Modal</button>
+          <button type="button" data-i="5" role="tab" aria-selected="false">Card</button>
+          <button type="button" data-i="6" role="tab" aria-selected="false">Alert + Chip</button>
+          <button type="button" data-i="7" role="tab" aria-selected="false">Form controls</button>
+        </div>
+
+        <div id="dsComponent-0" class="ds-panel comp-panel">
+          <div class="glass-card" style="display:inline-flex;gap:14px;flex-wrap:wrap;align-items:center;">
+            <button type="button" style="border:0;border-radius:10px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:600;background:#c14615;color:#fff;cursor:default;">Primary</button>
+            <button type="button" style="border:0;border-radius:10px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:600;background:#057a54;color:#fff;cursor:default;">Success</button>
+            <button type="button" style="border:0;border-radius:10px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:600;background:#b62214;color:#fff;cursor:default;">Danger</button>
+            <button type="button" style="border:1.5px solid #c14615;border-radius:10px;padding:9.5px 20px;font-family:inherit;font-size:14px;font-weight:600;background:transparent;color:#c14615;cursor:default;">Outline</button>
+            <button type="button" style="border:0;border-radius:10px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:600;background:transparent;color:#71717a;cursor:default;">Ghost</button>
+          </div>
+        </div>
+
+        <div id="dsComponent-1" class="ds-panel comp-panel" style="display:none;">
+          <div class="glass-card" style="width:360px;">
+            <label style="display:block;font-size:13.5px;font-weight:500;color:var(--on-hero);margin-bottom:7px;">Email address <span style="color:#b62214;">*</span></label>
+            <div style="display:flex;align-items:center;gap:8px;border:1.5px solid #71717a;border-radius:10px;padding:10px 14px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+              <span style="font-size:14px;color:var(--faint);">name@museum.org</span>
+            </div>
+            <div style="font-size:12.5px;color:var(--muted);margin-top:7px;">We'll only use this to send your receipt.</div>
+          </div>
+        </div>
+
+        <div id="dsComponent-2" class="ds-panel comp-panel" style="display:none;">
+          <div class="glass-card" style="width:340px;">
+            <div style="font-size:14px;font-weight:600;color:var(--on-hero);margin-bottom:12px;">March 2026</div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;font-size:12px;">
+              <span style="color:var(--muted);">S</span><span style="color:var(--muted);">M</span><span style="color:var(--muted);">T</span><span style="color:var(--muted);">W</span><span style="color:var(--muted);">T</span><span style="color:var(--muted);">F</span><span style="color:var(--muted);">S</span>
+              <span></span><span></span><span style="padding:6px 0;color:var(--on-hero);">1</span><span style="padding:6px 0;color:var(--on-hero);">2</span><span style="padding:6px 0;color:var(--on-hero);">3</span><span style="padding:6px 0;color:var(--on-hero);">4</span><span style="padding:6px 0;color:var(--on-hero);">5</span>
+              <span style="padding:6px 0;color:var(--on-hero);">6</span><span style="padding:6px 0;color:var(--on-hero);">7</span><span style="padding:6px 0;color:var(--on-hero);">8</span><span style="padding:6px 0;border-radius:999px;background:#c14615;color:#fff;">9</span><span style="padding:6px 0;color:var(--faint);text-decoration:line-through;">10</span><span style="padding:6px 0;color:var(--on-hero);">11</span><span style="padding:6px 0;color:var(--on-hero);">12</span>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:0.5px solid var(--line);">
+              <span style="font-size:12.5px;padding:6px 12px;border-radius:999px;background:#c14615;color:#fff;">10:00 AM</span>
+              <span style="font-size:12.5px;padding:6px 12px;border-radius:999px;border:0.5px solid var(--border-strong);color:var(--ink-soft);">11:30 AM</span>
+              <span style="font-size:12.5px;padding:6px 12px;border-radius:999px;border:0.5px solid var(--border-strong);color:var(--ink-soft);">1:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="dsComponent-3" class="ds-panel comp-panel" style="display:none;">
+          <div class="glass-card" style="width:280px;padding:10px;">
+            <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 10px 6px;">Actions</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:14px;color:var(--on-hero);">Edit <kbd style="font-size:11px;font-family:inherit;background:var(--line-soft);border:0.5px solid var(--border-strong);border-radius:5px;padding:2px 6px;">⌘E</kbd></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:14px;color:var(--on-hero);">Duplicate <kbd style="font-size:11px;font-family:inherit;background:var(--line-soft);border:0.5px solid var(--border-strong);border-radius:5px;padding:2px 6px;">⌘D</kbd></div>
+            <div style="height:1px;background:var(--line);margin:6px 0;"></div>
+            <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#b62214;padding:8px 10px 6px;">Danger zone</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:14px;color:#b62214;">Delete <kbd style="font-size:11px;font-family:inherit;background:var(--line-soft);border:0.5px solid var(--border-strong);border-radius:5px;padding:2px 6px;">⌫</kbd></div>
+          </div>
+        </div>
+
+        <div id="dsComponent-4" class="ds-panel comp-panel" style="display:none;">
+          <div style="background:rgba(255,255,255,0.88);backdrop-filter:blur(12px) saturate(1.3);border-radius:16px;padding:26px 28px;width:360px;box-shadow:0 1px 2px rgba(0,0,0,.08), 0 24px 48px -20px rgba(0,0,0,.4), inset 0 1px 2px rgba(255,255,255,.6);">
+            <div style="font-size:17px;font-weight:600;color:#1a1a1a;margin-bottom:8px;">Delete this membership?</div>
+            <div style="font-size:14px;color:#4a4a4a;margin-bottom:20px;">This can't be undone. The member will lose access immediately.</div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;">
+              <button type="button" style="border:0;border-radius:10px;padding:9px 16px;font-family:inherit;font-size:13.5px;font-weight:600;background:transparent;color:#71717a;cursor:default;">Cancel</button>
+              <button type="button" style="border:0;border-radius:10px;padding:9px 16px;font-family:inherit;font-size:13.5px;font-weight:600;background:#b62214;color:#fff;cursor:default;">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="dsComponent-5" class="ds-panel comp-panel" style="display:none;">
+          <div class="glass-card" style="width:300px;padding:0;overflow:hidden;">
+            <div style="height:140px;background:linear-gradient(135deg,#e8ded2,#c9c3b5);"></div>
+            <div style="padding:16px;">
+              <div style="font-size:15px;font-weight:600;color:var(--on-hero);margin-bottom:4px;">Monet &amp; the Impressionists</div>
+              <div style="font-size:13px;color:var(--muted);">Now open · Main Gallery</div>
+            </div>
+            <div style="padding:12px 16px;border-top:0.5px solid var(--line);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:13.5px;font-weight:600;color:var(--on-hero);">from $28.00</span>
+              <button type="button" style="border:0;border-radius:8px;padding:6px 12px;font-family:inherit;font-size:12.5px;font-weight:600;background:#c14615;color:#fff;cursor:default;">Get tickets</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="dsComponent-6" class="ds-panel comp-panel" style="display:none;">
+          <div style="display:flex;flex-direction:column;gap:14px;width:420px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(5,122,84,0.08);border:0.5px solid #057a54;border-radius:12px;padding:14px 16px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#057a54" stroke-width="2" style="flex:0 0 auto;margin-top:1px;"><circle cx="12" cy="12" r="9"></circle><path d="M8 12.5l2.5 2.5L16 9.5"></path></svg>
+              <div><div style="font-size:14px;font-weight:600;color:#046249;">Payment confirmed</div><div style="font-size:13px;color:#046249;">Receipt sent to alex@example.com</div></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(182,34,20,0.08);border:0.5px solid #b62214;border-radius:12px;padding:14px 16px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b62214" stroke-width="2" style="flex:0 0 auto;margin-top:1px;"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>
+              <div><div style="font-size:14px;font-weight:600;color:#8f1a10;">Card declined</div><div style="font-size:13px;color:#8f1a10;">Try a different payment method.</div></div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <span style="font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:999px;background:rgba(5,122,84,0.12);color:#046249;">Paid</span>
+              <span style="font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:999px;background:rgba(182,34,20,0.12);color:#8f1a10;">Refunded</span>
+              <span style="font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:999px;background:rgba(113,113,122,0.14);color:#52515a;">Draft</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="dsComponent-7" class="ds-panel comp-panel" style="display:none;">
+          <div class="glass-card" style="display:flex;flex-direction:column;gap:18px;width:280px;">
+            <label style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--on-hero);">
+              <span style="width:19px;height:19px;border-radius:5px;background:#c14615;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px rgba(193,70,21,0.22);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L19 7"></path></svg></span>
+              Send email receipt
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--on-hero);">
+              <span style="width:19px;height:19px;border-radius:50%;border:1.5px solid #c14615;display:inline-flex;align-items:center;justify-content:center;"><span style="width:9px;height:9px;border-radius:50%;background:#c14615;"></span></span>
+              Credit / debit card
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--on-hero);">
+              <span style="width:36px;height:20px;border-radius:999px;background:#c14615;position:relative;display:inline-block;"><span style="position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff;"></span></span>
+              Automatic renewal
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
+        <h2 class="section-title">The system in practice</h2>
+        <p class="body-text" style="margin-bottom:24px">A sample of real screens across Veevart's products — point-of-sale, ticketing, membership — that now share the same visual language and the same components.</p>
+        <div class="filmstrip-marquee" id="dsFilmstrip">
+          <button type="button" class="filmstrip-playpause" id="dsFilmstripPlay" aria-label="Pause autoplay">
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="6 4 20 12 6 20"></polygon></svg>
+          </button>
+          <div class="filmstrip-track">
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/ds-flow-1-donor-profile.png" alt="Donor profile"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/ds-flow-2-recurring-donations.png" alt="Recurring donations"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/ds-flow-3-membership-setup.png" alt="Membership setup"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/ds-flow-4-new-subscription.png" alt="New subscription"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/ds-practice-membership-joining.png" alt="Membership — who's joining"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/ds-practice-membership-checkout.png" alt="Membership — checkout"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/ds-practice-checkout.png" alt="Ticket purchase"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/ds-practice-catalog.png" alt="Online catalog"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/ds-practice-pos-frontdesk.png" alt="POS — Front Desk"></div></div>
           </div>
         </div>
       </div>
@@ -1080,9 +1306,9 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="section-surface">
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
         <h2 class="section-title">Results</h2>
-        <p class="body-text" style="margin-bottom:24px">Bringing five platforms under one shared design system didn't just make the product look more consistent — it changed how quickly teams could ship, and how confidently customers could use what they built. Adoption grew 40% and onboarding time dropped 15% within 4 months of launch.</p>
+        <p class="body-text" style="margin-bottom:24px">Bringing five platforms under one shared design system didn't just make the product look more consistent — it changed how quickly teams could ship, and how confidently customers could use what they built. Adoption grew <strong>40%</strong> and onboarding time dropped <strong>15%</strong> within 4 months of launch.</p>
         <div class="card-grid cols-3">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5z"></path><path d="M3 8v8l9 5 9-5V8M12 13v8"></path></svg></div>
@@ -1114,7 +1340,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="card-tint"></div><div class="card-blur"></div>
           <div class="card-body next-card-body">
             <div class="card-meta"><span>Next project</span></div>
-            <h3>Veevart's online apps redesign</h3>
+            <h3>30% less drop-off in online sales</h3>
           </div>
           <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
         </a>
@@ -1124,13 +1350,15 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
   <!-- ===================== PROJECT · ONLINE SERVICES ===================== -->
   <div class="pg pg-proj pg-online-services" data-screen-label="Project — Veevart's online apps redesign">
-    <section class="cover section-surface">
+    <section class="cover section-surface cover-photo">
+      <img class="cover-photo-img" src="assets/cover-online-apps.jpg" alt="">
+      <div class="cover-photo-tint"></div>
       <div class="wrap">
         <div class="kicker">Product Design</div>
-        <h1 class="title">Veevart's online apps redesign</h1>
+        <h1 class="title">30% less drop-off in online sales</h1>
         <p class="dek">Redesigning Veevart's customer-facing pages — ticketing, donations, and membership signup — for the people using them, not just the staff behind them.</p>
         <div class="meta-row">
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">Lead UX Designer</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">Product Designer</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"></path><circle cx="17.5" cy="9.5" r="2.4"></circle><path d="M21.5 20c0-2.4-1.7-4.2-4-4.9"></path></svg><div><div class="label">Team</div><div class="value">Product, PMs &amp; Engineering</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg><div><div class="label">Timeline</div><div class="value">5 months</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-6"></path></svg><div><div class="label">My focus</div><div class="value">Redesigning Veevart's end-user pages for accessibility and ease of use across a wide range of visitors</div></div></div>
@@ -1174,6 +1402,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">03</span></div>
         <h2 class="section-title">The problem, with evidence</h2>
+        <p class="body-text" style="margin-bottom:24px">The old checkout required filling in every member of a family membership upfront, and didn't clearly show what each membership included before asking visitors to commit. On the ticketing side, buyers had no time-slot selector inside each event, and had to go through a separate cart-review step before reaching checkout.</p>
         <div class="card-grid cols-2">
           <div>
             <div class="card-eyebrow" style="margin-bottom:10px">Ticketing</div>
@@ -1273,51 +1502,38 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="tight">
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
-        <h2 class="section-title">Design exploration</h2>
-        <p class="body-text">Before the final visual direction, early versions focused on solving the flow first — where components lived, how they connected — before making them look good.</p>
-        <div class="explore-row">
-          <div class="explore-item">
-            <div class="explore-label">Early wireframe</div>
-            <div class="frame-desktop active">
-              <div class="browser-chrome">
-                <span class="traffic-lights"><span></span><span></span><span></span></span>
-                <div class="address-bar">app.veevart.com</div>
-              </div>
-              <div class="browser-body">
-                <img src="assets/ds-explore-wireframe.png" alt="Early wireframe with lorem ipsum placeholder content" style="display:block;width:100%;height:auto;">
-              </div>
-            </div>
-            <p class="explore-caption">First pass at structure, with placeholder content, before any real copy or visual design.</p>
+        <div class="explore-split">
+          <div>
+            <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
+            <h2 class="section-title">Design exploration</h2>
+            <p class="body-text" style="margin-bottom:20px">Before the final visual direction, early versions focused on solving the flow first — where components lived, how they connected — before making them look good.</p>
+            <h3 class="explore-title" id="onlineExploreTitle">Early wireframe</h3>
+            <p class="explore-desc" id="onlineExploreDesc">First pass at structure, with placeholder content, before any real copy or visual design.</p>
+            <p class="quote-callout">Orange became Veevart's primary brand color, giving the redesigned pages a consistent visual identity across ticketing, donations, and membership.</p>
           </div>
-          <div class="explore-item">
-            <div class="explore-label">Membership — early direction</div>
-            <div class="frame-desktop active">
-              <div class="browser-chrome">
-                <span class="traffic-lights"><span></span><span></span><span></span></span>
-                <div class="address-bar">app.veevart.com/membership</div>
+          <div>
+            <div class="carousel-frame-wrap">
+              <button type="button" class="carousel-arrow prev" id="onlineExplorePrev" aria-label="Previous screen">‹</button>
+              <div class="frame-desktop active">
+                <div class="browser-chrome">
+                  <span class="traffic-lights"><span></span><span></span><span></span></span>
+                  <div class="address-bar" id="onlineExploreUrl">app.veevart.com</div>
+                </div>
+                <div class="browser-body click-advance" id="onlineExploreBody">
+                  <img id="onlineExplore-1" class="carousel-slide" src="assets/ds-explore-wireframe.png" alt="Early wireframe with lorem ipsum placeholder content" style="display:block;width:100%;height:auto;">
+                  <img id="onlineExplore-2" class="carousel-slide" src="assets/ds-explore-membership.png" alt="Early membership flow direction" style="display:none;width:100%;height:auto;">
+                  <img id="onlineExplore-3" class="carousel-slide" src="assets/ds-explore-ticketing.png" alt="Early ticketing flow direction" style="display:none;width:100%;height:auto;">
+                </div>
               </div>
-              <div class="browser-body">
-                <img src="assets/ds-explore-membership.png" alt="Early membership flow direction" style="display:block;width:100%;height:auto;">
-              </div>
+              <button type="button" class="carousel-arrow next" id="onlineExploreNext" aria-label="Next screen">›</button>
             </div>
-            <p class="explore-caption">The UX was already close to what we wanted — this version still looked dated, and used colors with no connection to Veevart's brand.</p>
-          </div>
-          <div class="explore-item">
-            <div class="explore-label">Ticketing — early direction</div>
-            <div class="frame-desktop active">
-              <div class="browser-chrome">
-                <span class="traffic-lights"><span></span><span></span><span></span></span>
-                <div class="address-bar">app.veevart.com/tickets</div>
-              </div>
-              <div class="browser-body">
-                <img src="assets/ds-explore-ticketing.png" alt="Early ticketing flow direction" style="display:block;width:100%;height:auto;">
-              </div>
+            <div class="carousel-dots" id="onlineExploreDots">
+              <button type="button" class="carousel-dot active" data-i="0" aria-label="Early wireframe"></button>
+              <button type="button" class="carousel-dot" data-i="1" aria-label="Membership — early direction"></button>
+              <button type="button" class="carousel-dot" data-i="2" aria-label="Ticketing — early direction"></button>
             </div>
-            <p class="explore-caption">The UX was already close to what we wanted — this version still looked dated, and used colors with no connection to Veevart's brand.</p>
           </div>
         </div>
-        <p class="quote-callout">Orange became Veevart's primary brand color, giving the redesigned pages a consistent visual identity across ticketing, donations, and membership.</p>
       </div>
     </section>
 
@@ -1327,82 +1543,36 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
         <h2 class="section-title">The flow — final screens</h2>
 
         <h3 class="subsection-title">Ticketing</h3>
-        <div class="flow-controls">
-          <div class="device-toggle" role="tablist" aria-label="Switch device" data-carousel="tk">
-            <button type="button" class="active" data-mode="desktop" role="tab" aria-selected="true">Desktop</button>
-            <button type="button" data-mode="mobile" role="tab" aria-selected="false">Mobile</button>
+        <div class="filmstrip-marquee" id="tkFilmstrip">
+          <button type="button" class="filmstrip-playpause" id="tkFilmstripPlay" aria-label="Pause autoplay">
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="6 4 20 12 6 20"></polygon></svg>
+          </button>
+          <div class="filmstrip-track">
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/tk-desktop-1-catalog.png" alt="Browsing exhibitions — desktop"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/tk-mobile-1-catalog.png" alt="Browsing exhibitions — mobile"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/tk-desktop-2-cart.png" alt="Selecting tickets — desktop"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/tk-mobile-2-tickets.png" alt="Selecting tickets — mobile"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/tk-desktop-3-checkout.png" alt="Checkout — desktop"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/tk-mobile-3-checkout.png" alt="Checkout — mobile"></div></div>
           </div>
         </div>
-        <div class="carousel-frame-wrap">
-          <button type="button" class="carousel-arrow prev" id="tkPrev" aria-label="Previous screen">‹</button>
-          <div style="display:flex;flex-direction:column;align-items:center;">
-            <div class="frame-desktop active" id="tkDesktopFrame">
-              <div class="browser-chrome">
-                <span class="traffic-lights"><span></span><span></span><span></span></span>
-                <div class="address-bar" id="tkUrl">veevart.com/tickets</div>
-              </div>
-              <div class="browser-body" id="tkDesktopScreen" style="cursor:pointer">
-                <img id="tk-1" class="carousel-slide" src="assets/tk-desktop-1-catalog.png" alt="Catalog view" style="display:block;width:100%;height:auto;">
-                <img id="tk-2" class="carousel-slide" src="assets/tk-desktop-2-cart.png" alt="Item in cart" style="display:none;width:100%;height:auto;">
-                <img id="tk-3" class="carousel-slide" src="assets/tk-desktop-3-checkout.png" alt="Checkout" style="display:none;width:100%;height:auto;">
-              </div>
-            </div>
-            <div class="frame-iphone hidden" id="tkMobileFrame">
-              <div class="notch"></div>
-              <div class="screen" id="tkMobileScreen" style="cursor:pointer">
-                <img id="tk-m-1" class="carousel-slide" src="assets/tk-mobile-1-catalog.png" alt="Catalog view (mobile)" style="display:block;width:100%;height:auto;">
-                <img id="tk-m-2" class="carousel-slide" src="assets/tk-mobile-2-tickets.png" alt="Item in cart (mobile)" style="display:none;width:100%;height:auto;">
-                <img id="tk-m-3" class="carousel-slide" src="assets/tk-mobile-3-checkout.png" alt="Checkout (mobile)" style="display:none;width:100%;height:auto;">
-              </div>
-            </div>
-          </div>
-          <button type="button" class="carousel-arrow next" id="tkNext" aria-label="Next screen">›</button>
-        </div>
-        <div class="carousel-dots" id="tkDots">
-          <button type="button" class="carousel-dot active" data-i="0" aria-label="Browsing exhibitions"></button>
-          <button type="button" class="carousel-dot" data-i="1" aria-label="Selecting tickets"></button>
-          <button type="button" class="carousel-dot" data-i="2" aria-label="Checkout"></button>
-        </div>
-        <div class="carousel-label" id="tkLabel">Browsing exhibitions</div>
 
         <h3 class="subsection-title" style="margin-top:56px">Membership</h3>
-        <div class="flow-controls">
-          <div class="device-toggle" role="tablist" aria-label="Switch device" data-carousel="mb">
-            <button type="button" class="active" data-mode="desktop" role="tab" aria-selected="true">Desktop</button>
-            <button type="button" data-mode="mobile" role="tab" aria-selected="false">Mobile</button>
+        <div class="filmstrip-marquee" id="mbFilmstrip">
+          <button type="button" class="filmstrip-playpause" id="mbFilmstripPlay" aria-label="Pause autoplay">
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="6 4 20 12 6 20"></polygon></svg>
+          </button>
+          <div class="filmstrip-track">
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/mb-desktop-1-plans.png" alt="Choosing a plan — desktop"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/mb-mobile-1-plans.png" alt="Choosing a plan — mobile"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/mb-desktop-2-members.png" alt="Adding household members — desktop"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/mb-mobile-2-members.png" alt="Adding household members — mobile"></div></div>
+            <div class="filmstrip-thumb desktop-frame"><div class="fs-chrome"><span></span><span></span><span></span></div><div class="fs-body"><img src="assets/mb-desktop-3-checkout.png" alt="Checkout — desktop"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/mb-mobile-3-checkout.png" alt="Checkout — mobile"></div></div>
           </div>
         </div>
-        <div class="carousel-frame-wrap">
-          <button type="button" class="carousel-arrow prev" id="mbPrev" aria-label="Previous screen">‹</button>
-          <div style="display:flex;flex-direction:column;align-items:center;">
-            <div class="frame-desktop active" id="mbDesktopFrame">
-              <div class="browser-chrome">
-                <span class="traffic-lights"><span></span><span></span><span></span></span>
-                <div class="address-bar" id="mbUrl">veevart.com/membership</div>
-              </div>
-              <div class="browser-body" id="mbDesktopScreen" style="cursor:pointer">
-                <img id="mb-1" class="carousel-slide" src="assets/mb-desktop-1-plans.png" alt="Memberships list" style="display:block;width:100%;height:auto;">
-                <img id="mb-2" class="carousel-slide" src="assets/mb-desktop-2-members.png" alt="Member selection" style="display:none;width:100%;height:auto;">
-                <img id="mb-3" class="carousel-slide" src="assets/mb-desktop-3-checkout.png" alt="Checkout" style="display:none;width:100%;height:auto;">
-              </div>
-            </div>
-            <div class="frame-iphone hidden" id="mbMobileFrame">
-              <div class="notch"></div>
-              <div class="screen" id="mbMobileScreen" style="cursor:pointer">
-                <img id="mb-m-1" class="carousel-slide" src="assets/mb-mobile-1-plans.png" alt="Memberships list (mobile)" style="display:block;width:100%;height:auto;">
-                <img id="mb-m-2" class="carousel-slide" src="assets/mb-mobile-2-members.png" alt="Member selection (mobile)" style="display:none;width:100%;height:auto;">
-                <img id="mb-m-3" class="carousel-slide" src="assets/mb-mobile-3-checkout.png" alt="Checkout (mobile)" style="display:none;width:100%;height:auto;">
-              </div>
-            </div>
-          </div>
-          <button type="button" class="carousel-arrow next" id="mbNext" aria-label="Next screen">›</button>
-        </div>
-        <div class="carousel-dots" id="mbDots">
-          <button type="button" class="carousel-dot active" data-i="0" aria-label="Choosing a plan"></button>
-          <button type="button" class="carousel-dot" data-i="1" aria-label="Adding household members"></button>
-          <button type="button" class="carousel-dot" data-i="2" aria-label="Checkout"></button>
-        </div>
-        <div class="carousel-label" id="mbLabel">Choosing a plan</div>
       </div>
     </section>
 
@@ -1410,7 +1580,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
         <h2 class="section-title">Results</h2>
-        <p class="body-text" style="margin-bottom:24px">The new customer-facing pages replaced an outdated, hard-to-navigate experience with one built around how real visitors — students, parents, casual guests — actually browse and buy. In testing, satisfaction with the new pages was 50% higher than with the old ones, and over 160 museums are set to roll them out to their customers.</p>
+        <p class="body-text" style="margin-bottom:24px">The new customer-facing pages replaced an outdated, hard-to-navigate experience with one built around how real visitors — students, parents, casual guests — actually browse and buy. Drop-off fell <strong>30%</strong> overall, satisfaction in testing was <strong>50%</strong> higher than with the old pages, and over <strong>160+</strong> museums are set to roll them out to their customers.</p>
         <div class="card-grid cols-3">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><polygon points="12 3 21 8 12 13 3 8"></polygon><polyline points="3 14 12 19 21 14"></polyline></svg></div>
@@ -1452,13 +1622,15 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
   <!-- ===================== PROJECT · KIDS ADVISOR ===================== -->
   <div class="pg pg-proj pg-kids-advisor" data-screen-label="Project — Kids Advisor">
-    <section class="cover section-surface">
+    <section class="cover section-surface cover-photo">
+      <img class="cover-photo-img" src="assets/cover-kidsadvisor.png" alt="">
+      <div class="cover-photo-tint"></div>
       <div class="wrap">
-        <div class="kicker">Product Design</div>
+        <div class="kicker">UX Design</div>
         <h1 class="title">Kids Advisor</h1>
         <p class="dek">A mobile app helping parents find daycares, schools, and children's services near them — built for a private client.</p>
         <div class="meta-row">
-          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">UX Designer &amp; Front-end Developer</div></div></div>
+          <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg><div><div class="label">Role</div><div class="value">UX Designer</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg><div><div class="label">Company</div><div class="value">Bluepixel</div></div></div>
           <div class="meta-tag"><svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg><div><div class="label">Timeline</div><div class="value">6 months (2021)</div></div></div>
         </div>
@@ -1517,23 +1689,18 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">03</span></div>
         <h2 class="section-title">The flow — final screens</h2>
-        <div class="screen-tabs" id="kaTabs" role="tablist" aria-label="Select screen">
-          <button type="button" class="active" data-i="0" role="tab" aria-selected="true">Home</button>
-          <button type="button" data-i="1" role="tab" aria-selected="false">Filters</button>
-          <button type="button" data-i="2" role="tab" aria-selected="false">Business profile</button>
-          <button type="button" data-i="3" role="tab" aria-selected="false">User profile</button>
-          <button type="button" data-i="4" role="tab" aria-selected="false">Boost your listing</button>
-          <button type="button" data-i="5" role="tab" aria-selected="false">Payments</button>
-        </div>
-        <div class="frame-iphone active" style="display:flex;margin:0 auto;">
-          <div class="notch"></div>
-          <div class="screen" id="kaCarouselBody">
-            <img id="ka-flow-1" class="carousel-slide" src="assets/ka-flow-home.jpg" alt="Home" style="width:100%;height:auto;">
-            <img id="ka-flow-2" class="carousel-slide hidden" src="assets/ka-flow-filters.png" alt="Filters" style="width:100%;height:auto;">
-            <img id="ka-flow-3" class="carousel-slide hidden" src="assets/ka-flow-business-profile.png" alt="Business profile" style="width:100%;height:auto;">
-            <img id="ka-flow-4" class="carousel-slide hidden" src="assets/ka-flow-user-profile.png" alt="User profile" style="width:100%;height:auto;">
-            <img id="ka-flow-5" class="carousel-slide hidden" src="assets/ka-flow-boost.png" alt="Boost your listing" style="width:100%;height:auto;">
-            <img id="ka-flow-6" class="carousel-slide hidden" src="assets/ka-flow-payments.png" alt="Payments" style="width:100%;height:auto;">
+        <div class="filmstrip-marquee" id="kaFilmstrip">
+          <button type="button" class="filmstrip-playpause" id="kaFilmstripPlay" aria-label="Pause autoplay">
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="6 4 20 12 6 20"></polygon></svg>
+          </button>
+          <div class="filmstrip-track">
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/ka-flow-home.jpg" alt="Home"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/ka-flow-filters.png" alt="Filters"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/ka-flow-business-profile.png" alt="Business profile"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/ka-flow-user-profile.png" alt="User profile"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/ka-flow-boost.png" alt="Boost your listing"></div></div>
+            <div class="filmstrip-thumb mobile-frame"><div class="fs-notch"></div><div class="fs-screen"><img src="assets/ka-flow-payments.png" alt="Payments"></div></div>
           </div>
         </div>
       </div>
@@ -1552,7 +1719,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
           <div class="card-tint"></div><div class="card-blur"></div>
           <div class="card-body next-card-body">
             <div class="card-meta"><span>Next project</span></div>
-            <h3>Veevart's POS</h3>
+            <h3>35% faster sales in POS</h3>
           </div>
           <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
         </a>
@@ -1591,10 +1758,12 @@ const TITLES = {
 };
 const NAV_ACTIVE = {about:'.nv-about', pos:'.nv-work', ds:'.nv-work', 'online-services':'.nv-work', 'kids-advisor':'.nv-work'};
 const ROLES = ['Product Designer', 'UX Designer', 'UI Designer'];
+if (typeof history !== 'undefined' && 'scrollRestoration' in history) history.scrollRestoration = 'manual';
 
 class Component extends DCLogic {
   componentDidMount(){
     this.initTheme();
+    this.initScrollTop();
     this.initNav();
     this.initRoles();
     this.initRouter();
@@ -1606,56 +1775,69 @@ class Component extends DCLogic {
     waitReveal();
     const yr = document.getElementById('yr');
     if (yr) yr.textContent = new Date().getFullYear();
-    this.initDsCarousel();
-    this.initKaCarousel();
+    this.initDsFoundationTabs();
+    this.initDsComponentTabs();
     this.initPosLiveProto();
-    this.initFlowCarousel({prefix:'tk', slideIds:['tk-1','tk-2','tk-3'], mobileSlideIds:['tk-m-1','tk-m-2','tk-m-3'], labels:['Browsing exhibitions','Selecting tickets','Checkout'], urls:['veevart.com/tickets','veevart.com/tickets/cart','veevart.com/checkout']});
-    this.initFlowCarousel({prefix:'mb', slideIds:['mb-1','mb-2','mb-3'], mobileSlideIds:['mb-m-1','mb-m-2','mb-m-3'], labels:['Choosing a plan','Adding household members','Checkout'], urls:['veevart.com/membership','veevart.com/membership/members','veevart.com/checkout']});
+    this.initExploreCarousel({prefix:'posExplore', slideIds:['posExplore-1','posExplore-2'], titles:['Restructuring the layout','Applying the new visual identity'], descs:['The first move was structural — sidebar navigation, top-aligned product photos — before touching color or branding.','Once the navigation and card layout moved to the new structure, the sale summary panel was the last piece still carrying over old patterns.'], urls:['app.veevart.com/pos','app.veevart.com/pos']});
+    this.initExploreCarousel({prefix:'onlineExplore', slideIds:['onlineExplore-1','onlineExplore-2','onlineExplore-3'], titles:['Early wireframe','Membership \u2014 early direction','Ticketing \u2014 early direction'], descs:['First pass at structure, with placeholder content, before any real copy or visual design.',"The UX was already close to what we wanted \u2014 this version still looked dated, and used colors with no connection to Veevart's brand.","The UX was already close to what we wanted \u2014 this version still looked dated, and used colors with no connection to Veevart's brand."], urls:['app.veevart.com','app.veevart.com/membership','app.veevart.com/tickets']});
+    this.mountMarquee('dsFilmstrip', 'dsFilmstripPlay');
+    this.mountMarquee('kaFilmstrip', 'kaFilmstripPlay');
+    this.mountMarquee('tkFilmstrip', 'tkFilmstripPlay');
+    this.mountMarquee('mbFilmstrip', 'mbFilmstripPlay');
   }
 
-  initFlowCarousel(cfg){
+  mountMarquee(containerId, playBtnId){
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const track = container.querySelector('.filmstrip-track');
+    if (!track) return;
+    const originals = Array.prototype.slice.call(track.children);
+    originals.forEach(function(el){ track.appendChild(el.cloneNode(true)); });
+    const gap = 16;
+    const singleWidth = originals.reduce(function(w, el){
+      const cardWidth = el.classList.contains('mobile-frame') ? 180 : 608;
+      return w + cardWidth + gap;
+    }, 0);
+    const speed = 24.2;
+    track.style.animationDuration = (singleWidth / speed) + 's';
+    const playBtn = document.getElementById(playBtnId);
+    let playing = true;
+    if (playBtn) {
+      playBtn.addEventListener('click', function(){
+        playing = !playing;
+        container.classList.toggle('paused', !playing);
+        const pauseIcon = playBtn.querySelector('.icon-pause'), playIcon = playBtn.querySelector('.icon-play');
+        if (pauseIcon) pauseIcon.style.display = playing ? '' : 'none';
+        if (playIcon) playIcon.style.display = playing ? 'none' : '';
+        playBtn.setAttribute('aria-label', playing ? 'Pause autoplay' : 'Play autoplay');
+      });
+    }
+  }
+
+  initExploreCarousel(cfg){
     const slideEls = cfg.slideIds.map(function(id){ return document.getElementById(id); });
-    const mobileEls = (cfg.mobileSlideIds || []).map(function(id){ return document.getElementById(id); });
     if (!slideEls[0]) return;
-    let idx = 0;
-    const labelEl = document.getElementById(cfg.prefix + 'Label');
+    const titleEl = document.getElementById(cfg.prefix + 'Title');
+    const descEl = document.getElementById(cfg.prefix + 'Desc');
     const urlEl = document.getElementById(cfg.prefix + 'Url');
     const dots = document.querySelectorAll('#' + cfg.prefix + 'Dots .carousel-dot');
-    const desktopFrame = document.getElementById(cfg.prefix + 'DesktopFrame');
-    const mobileFrame = document.getElementById(cfg.prefix + 'MobileFrame');
+    let idx = 0;
     function render(){
-      slideEls.forEach(function(el, i){ if (el) el.style.display = (i === idx) ? 'block' : 'none'; });
-      mobileEls.forEach(function(el, i){ if (el) el.style.display = (i === idx) ? 'block' : 'none'; });
-      if (labelEl) labelEl.textContent = cfg.labels[idx];
+      slideEls.forEach(function(el,i){ if (el) el.style.display = (i===idx) ? 'block' : 'none'; });
+      if (titleEl) titleEl.textContent = cfg.titles[idx];
+      if (descEl) descEl.textContent = cfg.descs[idx];
       if (urlEl && cfg.urls) urlEl.textContent = cfg.urls[idx];
-      dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+      dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
     }
-    function next(){ idx = (idx + 1) % slideEls.length; render(); }
-    function prev(){ idx = (idx - 1 + slideEls.length) % slideEls.length; render(); }
+    function next(){ idx = (idx+1) % slideEls.length; render(); }
+    function prev(){ idx = (idx-1+slideEls.length) % slideEls.length; render(); }
     const prevBtn = document.getElementById(cfg.prefix + 'Prev');
     const nextBtn = document.getElementById(cfg.prefix + 'Next');
     if (prevBtn) prevBtn.addEventListener('click', prev);
     if (nextBtn) nextBtn.addEventListener('click', next);
-    const desktopScreen = document.getElementById(cfg.prefix + 'DesktopScreen');
-    const mobileScreen = document.getElementById(cfg.prefix + 'MobileScreen');
-    if (desktopScreen) desktopScreen.addEventListener('click', next);
-    if (mobileScreen) mobileScreen.addEventListener('click', next);
-    dots.forEach(function(d, i){ d.addEventListener('click', function(){ idx = i; render(); }); });
-    const toggleBtns = document.querySelectorAll('.device-toggle[data-carousel="' + cfg.prefix + '"] button');
-    toggleBtns.forEach(function(btn){
-      btn.addEventListener('click', function(){
-        toggleBtns.forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-        if (btn.dataset.mode === 'mobile'){
-          if (desktopFrame) desktopFrame.classList.remove('active');
-          if (mobileFrame) mobileFrame.classList.remove('hidden');
-        } else {
-          if (mobileFrame) mobileFrame.classList.add('hidden');
-          if (desktopFrame) desktopFrame.classList.add('active');
-        }
-      });
-    });
+    const body = document.getElementById(cfg.prefix + 'Body');
+    if (body) body.addEventListener('click', next);
+    dots.forEach(function(d,i){ d.addEventListener('click', function(){ idx=i; render(); }); });
     render();
   }
 
@@ -1717,45 +1899,26 @@ class Component extends DCLogic {
     setTimeout(fit, 0);
   }
 
-  initDsCarousel(){
-    const dsSlides = ['ds-flow-1','ds-flow-2','ds-flow-3','ds-flow-4'];
-    const dsUrls = ['app.veevart.com/donors','app.veevart.com/donors/recurring','app.veevart.com/memberships/new','app.veevart.com/subscriptions/new'];
-    let dsIdx = 0;
-    const dsUrlEl = document.getElementById('dsCarouselUrl');
-    const dsTabs = document.querySelectorAll('#dsTabs button');
-    function renderDsCarousel(){
-      dsSlides.forEach(function(id, i){
-        const el = document.getElementById(id);
-        if (el) el.style.display = (i === dsIdx) ? 'block' : 'none';
+  initDsFoundationTabs(){
+    const tabs = document.querySelectorAll('#dsFoundationTabs button');
+    if (!tabs.length) return;
+    tabs.forEach(function(tab, i){
+      tab.addEventListener('click', function(){
+        tabs.forEach(function(t,j){ const on = j===i; t.classList.toggle('active', on); t.setAttribute('aria-selected', on); });
+        for (let j=0;j<3;j++){ const p = document.getElementById('dsFoundation-'+j); if (p) p.style.display = (j===i) ? (j===1?'flex':'grid') : 'none'; }
       });
-      if (dsUrlEl) dsUrlEl.textContent = dsUrls[dsIdx];
-      dsTabs.forEach(function(tab, i){
-        const on = i === dsIdx;
-        tab.classList.toggle('active', on);
-        tab.setAttribute('aria-selected', String(on));
-      });
-    }
-    dsTabs.forEach(function(tab, i){ tab.addEventListener('click', function(){ dsIdx = i; renderDsCarousel(); }); });
-    renderDsCarousel();
+    });
   }
 
-  initKaCarousel(){
-    const kaSlides = ['ka-flow-1','ka-flow-2','ka-flow-3','ka-flow-4','ka-flow-5','ka-flow-6'];
-    let kaIdx = 0;
-    const kaTabs = document.querySelectorAll('#kaTabs button');
-    function renderKaCarousel(){
-      kaSlides.forEach(function(id, i){
-        const el = document.getElementById(id);
-        if (el) el.classList.toggle('hidden', i !== kaIdx);
+  initDsComponentTabs(){
+    const tabs = document.querySelectorAll('#dsComponentTabs button');
+    if (!tabs.length) return;
+    tabs.forEach(function(tab, i){
+      tab.addEventListener('click', function(){
+        tabs.forEach(function(t,j){ const on = j===i; t.classList.toggle('active', on); t.setAttribute('aria-selected', on); });
+        for (let j=0;j<8;j++){ const p = document.getElementById('dsComponent-'+j); if (p) p.style.display = (j===i) ? 'flex' : 'none'; }
       });
-      kaTabs.forEach(function(tab, i){
-        const on = i === kaIdx;
-        tab.classList.toggle('active', on);
-        tab.setAttribute('aria-selected', String(on));
-      });
-    }
-    kaTabs.forEach(function(tab, i){ tab.addEventListener('click', function(){ kaIdx = i; renderKaCarousel(); }); });
-    renderKaCarousel();
+    });
   }
 
   initTheme(){
@@ -1835,6 +1998,8 @@ class Component extends DCLogic {
       const page = ROUTES[hash] || 'home';
       document.documentElement.setAttribute('data-page', page);
       document.title = TITLES[page];
+      const pgEl = document.querySelector('.pg-' + (page === 'ds' ? 'ds' : (page === 'online-services' ? 'online-services' : (page === 'kids-advisor' ? 'kids-advisor' : (page === 'pos' ? 'pos' : page)))));
+      if (pgEl){ pgEl.classList.remove('pg-fade-in'); void pgEl.offsetWidth; pgEl.classList.add('pg-fade-in'); }
       document.querySelectorAll('#navLinks .nv').forEach(function(a){
         a.classList.remove('talk');
         a.removeAttribute('aria-current');
@@ -1844,12 +2009,15 @@ class Component extends DCLogic {
       const foot = document.querySelector('.foot-sec');
       if (foot) foot.classList.toggle('flush', page !== 'about');
       if (window.NateScrollReveal) window.NateScrollReveal.refresh();
+      if (!scrollTo){
+        window.scrollTo({top:0, left:0, behavior:'auto'});
+      }
       requestAnimationFrame(function(){
         if (scrollTo){
           const el = document.getElementById(scrollTo);
           if (el) window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 20, behavior:'smooth'});
         } else {
-          window.scrollTo(0, 0);
+          window.scrollTo({top:0, left:0, behavior:'auto'});
         }
       });
     };
@@ -1867,6 +2035,18 @@ class Component extends DCLogic {
 
   componentWillUnmount(){
     if (this.rolesTimer) clearInterval(this.rolesTimer);
+  }
+
+  initScrollTop(){
+    const btn = document.getElementById('scrollTopBtn');
+    if (!btn) return;
+    const projectPages = ['pos','ds','online-services','kids-advisor'];
+    window.addEventListener('scroll', function(){
+      const page = document.documentElement.getAttribute('data-page');
+      const show = projectPages.indexOf(page) !== -1 && window.scrollY > 400;
+      btn.classList.toggle('visible', show);
+    });
+    btn.addEventListener('click', function(){ window.scrollTo({top:0, left:0, behavior:'smooth'}); });
   }
 
   renderVals(){ return {}; }

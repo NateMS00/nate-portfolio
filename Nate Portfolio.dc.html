@@ -330,6 +330,33 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 .card-grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr));}
 @media (max-width:860px){.card-grid.cols-3,.card-grid.cols-2,.card-grid.cols-4{grid-template-columns:1fr;}}
 @media (min-width:861px) and (max-width:1180px){.card-grid.cols-4{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.aag-card{position:relative;border-radius:16px;padding:28px;overflow:hidden;display:flex;flex-direction:column;}
+.aag-circle{position:absolute;top:-42px;right:-42px;width:120px;height:120px;border-radius:50%;border:16px solid transparent;pointer-events:none;}
+.aag-eyebrow{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:20px;position:relative;z-index:1;}
+.aag-num{font-size:52px;font-weight:800;line-height:1;letter-spacing:-0.01em;margin-bottom:14px;position:relative;z-index:1;}
+.aag-num-row{display:flex;align-items:baseline;gap:8px;margin-bottom:14px;position:relative;z-index:1;}
+.aag-num-row .aag-num{margin-bottom:0;}
+.aag-arrow{font-size:28px;font-weight:800;}
+.aag-title{font-size:22px;font-weight:600;line-height:1.3;margin-bottom:14px;position:relative;z-index:1;}
+.aag-support{font-size:15px;font-weight:700;margin-bottom:8px;position:relative;z-index:1;}
+.aag-desc{font-size:14px;line-height:1.5;position:relative;z-index:1;margin:0;}
+.aag-problem{background:#141210;}
+[data-theme="dark"] .aag-problem{background:#1f1c19;border:1px solid rgba(255,255,255,0.08);}
+.aag-problem .aag-circle{border-color:rgba(245,242,236,0.06);}
+.aag-problem .aag-eyebrow{color:#F5C542;}
+.aag-problem .aag-num,.aag-problem .aag-title,.aag-problem .aag-support{color:#f5f2ec;}
+.aag-problem .aag-desc{color:#c8c3b8;}
+.aag-insight{background:#FBF1DC;}
+[data-theme="dark"] .aag-insight{background:rgba(245,197,66,0.08);}
+.aag-insight .aag-circle{border-color:rgba(138,94,10,0.10);}
+[data-theme="dark"] .aag-insight .aag-circle{border-color:rgba(245,197,66,0.12);}
+.aag-insight .aag-eyebrow{color:#8a5e0a;}
+[data-theme="dark"] .aag-insight .aag-eyebrow{color:var(--yellow);}
+.aag-insight .aag-title{color:var(--ink);}
+.aag-insight .aag-desc{color:var(--ink-soft);}
+.aag-impact{background:#F5C542;}
+.aag-impact .aag-circle{border-color:rgba(0,0,0,0.08);}
+.aag-impact .aag-eyebrow,.aag-impact .aag-num,.aag-impact .aag-title,.aag-impact .aag-support,.aag-impact .aag-desc{color:#000000;}
 .persona-card-bright .card-tint{background:linear-gradient(to right,rgba(14,11,8,.92) 0%,rgba(14,11,8,.74) 48%,rgba(14,11,8,.34) 78%,rgba(14,11,8,.08) 100%);}
 .carousel-frame-wrap{position:relative;width:100%;max-width:792px;margin:0 auto;}
 .carousel-frame-wrap .carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;}
@@ -750,22 +777,26 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">01</span></div>
         <h2 class="section-title">At a glance</h2>
-        <div class="card-grid cols-3">
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 0 0 3.5 20.5h17a1.5 1.5 0 0 0 1.39-2.46L13.71 3.86a1.5 1.5 0 0 0-2.42 0z"></path></svg></div>
-            <div class="card-eyebrow">Problem</div>
-            <div class="card-desc">The existing POS was slow, hard to scale, and difficult for the many older volunteer staff to use — small text and touch targets that were easy to miss made every sale take longer.</div>
+        <div class="card-grid cols-3 aag-grid">
+          <div class="aag-card aag-problem">
+            <div class="aag-circle"></div>
+            <div class="aag-eyebrow">— Problem</div>
+            <div class="aag-num">2×</div>
+            <div class="aag-support">slower than it should be</div>
+            <p class="aag-desc">Small text and missed touch targets slowed down older, less tech-fluent staff.</p>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2z"></path></svg></div>
-            <div class="card-eyebrow">Insight</div>
-            <div class="card-desc">Staff couldn't find features that already existed, task-time data showed real friction, and engineering had to rebuild the same feature twice — once for desktop, once for iPad.</div>
+          <div class="aag-card aag-insight">
+            <div class="aag-circle"></div>
+            <div class="aag-eyebrow">— Insight</div>
+            <div class="aag-title">The interface fought the staff using it</div>
+            <p class="aag-desc">Task-time data and duplicated engineering work confirmed it wasn't a one-off complaint.</p>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg></div>
-            <div class="card-eyebrow">Impact</div>
-            <div class="card-desc">Staff testing showed noticeably faster ticket and membership sales.</div>
-            <div class="badges chip"><span class="badge">↗ +35% faster sales</span></div>
+          <div class="aag-card aag-impact">
+            <div class="aag-circle"></div>
+            <div class="aag-eyebrow">— Impact</div>
+            <div class="aag-num-row"><span class="aag-num">35%</span><span class="aag-arrow">↗</span></div>
+            <div class="aag-support">faster sales</div>
+            <p class="aag-desc">Staff testing showed a clear, measurable jump in speed.</p>
           </div>
         </div>
       </div>
@@ -1039,21 +1070,26 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">01</span></div>
         <h2 class="section-title">At a glance</h2>
-        <div class="card-grid cols-3">
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 0 0 3.5 20.5h17a1.5 1.5 0 0 0 1.39-2.46L13.71 3.86a1.5 1.5 0 0 0-2.42 0z"></path></svg></div>
-            <div class="card-eyebrow">Problem</div>
-            <div class="card-desc">Veevart's legacy platforms were outdated and inconsistent in their components and flows across all products — and it was costing them clients, with churn running at double the expected rate.</div>
+        <div class="card-grid cols-3 aag-grid">
+          <div class="aag-card aag-problem">
+            <div class="aag-circle"></div>
+            <div class="aag-eyebrow">— Problem</div>
+            <div class="aag-num">2×</div>
+            <div class="aag-support">the expected churn rate</div>
+            <p class="aag-desc">Five inconsistent platforms were costing Veevart real clients.</p>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2z"></path></svg></div>
-            <div class="card-eyebrow">Insight</div>
-            <div class="card-desc">Veevart lacked a design system that simplified and gave direction to its products.</div>
+          <div class="aag-card aag-insight">
+            <div class="aag-circle"></div>
+            <div class="aag-eyebrow">— Insight</div>
+            <div class="aag-title">No shared system, no shared language</div>
+            <p class="aag-desc">Veevart lacked a design system that simplified and gave direction to its products.</p>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg></div>
-            <div class="card-eyebrow">Impact</div>
-            <div class="card-desc">One ecosystem instead of five platforms — churn cut in half, back to the expected rate — plus 40% higher adoption and 15% less onboarding time, all delivered in 4 months.</div>
+          <div class="aag-card aag-impact">
+            <div class="aag-circle"></div>
+            <div class="aag-eyebrow">— Impact</div>
+            <div class="aag-num-row"><span class="aag-num">50%</span><span class="aag-arrow">↗</span></div>
+            <div class="aag-support">less churn</div>
+            <p class="aag-desc">Plus 40% higher adoption and 15% less onboarding time, in 4 months.</p>
           </div>
         </div>
       </div>
@@ -1484,21 +1520,25 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">01</span></div>
         <h2 class="section-title">At a glance</h2>
-        <div class="card-grid cols-3">
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 0 0 3.5 20.5h17a1.5 1.5 0 0 0 1.39-2.46L13.71 3.86a1.5 1.5 0 0 0-2.42 0z"></path></svg></div>
-            <div class="card-eyebrow">Problem</div>
-            <div class="card-desc">Veevart's customer-facing pages were outdated, unattractive, and had real usability problems — and their aging codebase made it hard to add the functionality customers were asking for.</div>
+        <div class="card-grid cols-3 aag-grid">
+          <div class="aag-card aag-problem">
+            <div class="aag-circle"></div>
+            <div class="aag-eyebrow">— Problem</div>
+            <div class="aag-title">Outdated on both ends</div>
+            <p class="aag-desc">Outdated, unattractive pages with real usability problems, running on a codebase too old to keep up.</p>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2z"></path></svg></div>
-            <div class="card-eyebrow">Insight</div>
-            <div class="card-desc">The average museum visitor was a student or a parent — very different kinds of users — so the platform needed to be accessible, visually appealing, and easy to use for the widest possible range of people.</div>
+          <div class="aag-card aag-insight">
+            <div class="aag-circle"></div>
+            <div class="aag-eyebrow">— Insight</div>
+            <div class="aag-title">Two very different visitors, one platform</div>
+            <p class="aag-desc">Students and parents needed something accessible and easy, not built for power users.</p>
           </div>
-          <div class="glass-card">
-            <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg></div>
-            <div class="card-eyebrow">Impact</div>
-            <div class="card-desc">Positive reception from museums so far; over 160 clients will begin rolling these pages out to their thousands of customers over the coming year.</div>
+          <div class="aag-card aag-impact">
+            <div class="aag-circle"></div>
+            <div class="aag-eyebrow">— Impact</div>
+            <div class="aag-num-row"><span class="aag-num">30%</span><span class="aag-arrow">↗</span></div>
+            <div class="aag-support">less checkout drop-off</div>
+            <p class="aag-desc">Validated with a 20+ museum pilot before the wider rollout.</p>
           </div>
         </div>
       </div>
@@ -2156,16 +2196,18 @@ class Component extends DCLogic {
       if (active){ active.classList.add('talk'); active.setAttribute('aria-current','page'); }
       const foot = document.querySelector('.foot-sec');
       if (foot) foot.classList.toggle('flush', page !== 'about');
-      if (window.NateScrollReveal) window.NateScrollReveal.refresh();
       if (!scrollTo){
-        window.scrollTo({top:0, left:0, behavior:'auto'});
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
       }
+      if (window.NateScrollReveal) window.NateScrollReveal.refresh();
       requestAnimationFrame(function(){
         if (scrollTo){
           const el = document.getElementById(scrollTo);
           if (el) window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 20, behavior:'smooth'});
         } else {
-          window.scrollTo({top:0, left:0, behavior:'auto'});
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
         }
       });
     };

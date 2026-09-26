@@ -559,6 +559,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 </defs></svg>
 
 <div class="hero-sec" id="site" data-reveal-root="">
+  <div id="navScrim" style="position:fixed;inset:0;background:var(--bg);opacity:0;pointer-events:none;z-index:9999;transition:opacity .4s ease;"></div>
   <div class="nav-sticky-bar">
   <div class="nav-progress"><div class="nav-progress-fill" id="navProgressFill"></div></div>
   <div class="wrap">
@@ -2269,36 +2270,48 @@ class Component extends DCLogic {
   initRouter(){
     const self = this;
     this.go = function(scrollTo){
-      if (!scrollTo){
-        document.documentElement.style.scrollBehavior = 'auto';
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-      }
+      const prevPage = document.documentElement.getAttribute('data-page');
       const hash = location.hash.replace(/^#/, '');
       const page = ROUTES[hash] || 'home';
-      document.documentElement.setAttribute('data-page', page);
-      document.title = TITLES[page];
-      const pgEl = document.querySelector('.pg-' + (page === 'ds' ? 'ds' : (page === 'online-services' ? 'online-services' : (page === 'kids-advisor' ? 'kids-advisor' : (page === 'pos' ? 'pos' : page)))));
-      if (pgEl){ pgEl.classList.remove('pg-fade-in'); void pgEl.offsetWidth; pgEl.classList.add('pg-fade-in'); }
-      document.querySelectorAll('#navLinks .nv').forEach(function(a){
-        a.classList.remove('talk');
-        a.removeAttribute('aria-current');
-      });
-      const active = NAV_ACTIVE[page] ? document.querySelector('#navLinks ' + NAV_ACTIVE[page]) : null;
-      if (active){ active.classList.add('talk'); active.setAttribute('aria-current','page'); }
-      const foot = document.querySelector('.foot-sec');
-      if (foot) foot.classList.toggle('flush', page !== 'about');
-      if (window.NateScrollReveal) window.NateScrollReveal.refresh();
-      requestAnimationFrame(function(){
-        if (scrollTo){
-          const el = document.getElementById(scrollTo);
-          if (el) window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 20, behavior:'smooth'});
-        } else {
+      const scrim = document.getElementById('navScrim');
+      const pageChanged = prevPage !== page;
+      const applyNav = function(){
+        if (!scrollTo){
+          document.documentElement.style.scrollBehavior = 'auto';
           document.documentElement.scrollTop = 0;
           document.body.scrollTop = 0;
-          document.documentElement.style.scrollBehavior = '';
         }
-      });
+        document.documentElement.setAttribute('data-page', page);
+        document.title = TITLES[page];
+        const pgEl = document.querySelector('.pg-' + (page === 'ds' ? 'ds' : (page === 'online-services' ? 'online-services' : (page === 'kids-advisor' ? 'kids-advisor' : (page === 'pos' ? 'pos' : page)))));
+        if (pgEl){ pgEl.classList.remove('pg-fade-in'); void pgEl.offsetWidth; pgEl.classList.add('pg-fade-in'); }
+        document.querySelectorAll('#navLinks .nv').forEach(function(a){
+          a.classList.remove('talk');
+          a.removeAttribute('aria-current');
+        });
+        const active = NAV_ACTIVE[page] ? document.querySelector('#navLinks ' + NAV_ACTIVE[page]) : null;
+        if (active){ active.classList.add('talk'); active.setAttribute('aria-current','page'); }
+        const foot = document.querySelector('.foot-sec');
+        if (foot) foot.classList.toggle('flush', page !== 'about');
+        if (window.NateScrollReveal) window.NateScrollReveal.refresh();
+        requestAnimationFrame(function(){
+          if (scrollTo){
+            const el = document.getElementById(scrollTo);
+            if (el) window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 20, behavior:'smooth'});
+          } else {
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            document.documentElement.style.scrollBehavior = '';
+          }
+          if (scrim && pageChanged) requestAnimationFrame(function(){ scrim.style.opacity = '0'; });
+        });
+      };
+      if (scrim && pageChanged){
+        scrim.style.opacity = '1';
+        setTimeout(applyNav, 400);
+      } else {
+        applyNav();
+      }
     };
     window.addEventListener('hashchange', function(){ self.go(); });
     document.addEventListener('click', function(e){

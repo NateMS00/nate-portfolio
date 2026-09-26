@@ -48,6 +48,12 @@
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+.title-mask{position:relative;display:inline-block;overflow:hidden;vertical-align:top;}
+.title-curtain{position:absolute;inset:0;background:#8a5e0a;transform:translateX(0);transition:transform .7s cubic-bezier(.16,1,.3,1);z-index:2;}
+[data-theme="dark"] .title-curtain{background:var(--yellow);}
+.title-mask.revealed .title-curtain{transform:translateX(101%);}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:120px 120px;transition:opacity .3s ease;}
+[data-theme="dark"] body::before{opacity:.035;}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;line-height:1.6;transition:background .3s ease,color .3s ease;}
 a{color:inherit;text-decoration:none;}
 a:hover{color:var(--on-hero);}
@@ -104,11 +110,18 @@ html[data-page="kids-advisor"] .pg-kids-advisor{display:block;}
 
 /* ---- home hero ---- */
 .hero-sec{background:var(--bg-hero);transition:background .3s ease;}
-.nav-sticky-bar{position:sticky;top:0;z-index:100;background:color-mix(in srgb, var(--card) 72%, transparent);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--border-strong);transition:top .35s ease,margin .35s ease,border-radius .35s ease,box-shadow .35s ease,border-color .35s ease;}
+.nav-sticky-bar{position:sticky;top:0;z-index:100;overflow:hidden;background:color-mix(in srgb, var(--card) 72%, transparent);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--border-strong);transition:top .35s ease,margin .35s ease,border-radius .35s ease,box-shadow .35s ease,border-color .35s ease;}
 .nav-sticky-bar.floating{top:16px;margin:0 24px;border-radius:999px;border-bottom-color:transparent;border:1px solid var(--border-strong);box-shadow:0 12px 34px -12px rgba(0,0,0,.28);background:color-mix(in srgb, var(--card) 82%, transparent);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);}
 .nav-sticky-bar.floating .site-head{padding:10px 0;}
 .nav-sticky-bar.floating .wrap{padding:0 28px;}
 @media (max-width:760px){.nav-sticky-bar.floating{margin:0 12px;}.nav-sticky-bar.floating .wrap{padding:0 16px;}}
+.nav-progress{display:none;position:absolute;left:0;bottom:0;width:100%;height:3px;background:rgba(40,40,37,0.09);}
+[data-theme="dark"] .nav-progress{background:rgba(245,242,236,0.10);}
+html[data-page="pos"] .nav-progress,
+html[data-page="ds"] .nav-progress,
+html[data-page="online-services"] .nav-progress,
+html[data-page="kids-advisor"] .nav-progress{display:block;}
+.nav-progress-fill{height:100%;width:0%;background:#F5C542;}
 .hero{display:grid;grid-template-columns:1fr 340px;gap:60px;align-items:stretch;padding:56px 0 100px;}
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;gap:40px;padding:40px 0 64px;}
@@ -309,7 +322,7 @@ h1.title{font-size:clamp(34px,5vw,56px);line-height:1.05;font-weight:600;letter-
 .pg-fade-in{animation:pgFadeIn .45s ease both;}
 .next-card-body{padding-left:48px;padding-right:48px;}
 .next-card .go{right:48px;}
-.scroll-top-btn{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--card);border:0.5px solid var(--border-strong);box-shadow:0 1px 2px rgba(0,0,0,.03),0 16px 32px -22px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);z-index:40;opacity:0;visibility:hidden;transition:opacity .2s ease;}
+.scroll-top-btn{position:fixed;bottom:28px;right:28px;z-index:200;width:42px;height:42px;border-radius:50%;background:var(--card);border:0.5px solid var(--border-strong);box-shadow:0 1px 2px rgba(0,0,0,.03),0 16px 32px -22px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);opacity:0;visibility:hidden;transition:opacity .2s ease;}
 .scroll-top-btn.visible{opacity:1;visibility:visible;}
 .scroll-top-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
 h2.section-title{font-size:clamp(22px,2.4vw,28px);font-weight:600;letter-spacing:-0.01em;margin:0 0 28px;max-width:640px;color:var(--on-hero);}
@@ -410,7 +423,29 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 .decision-list li{display:flex;gap:16px;align-items:flex-start;}
 .decision-num{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--yellow);color:var(--yellow-tx);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px;}
 .decision-list p{margin:0;font-size:15.5px;line-height:1.6;color:var(--ink-soft);}
+.podium{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto 150px;gap:0 20px;max-width:760px;margin-top:8px;}
+.podium-col{display:contents;}
+.podium-title{grid-row:1;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.podium-desc{grid-row:1;font-size:14px;line-height:1.5;color:var(--ink-soft);}
+.podium-bar{grid-row:2;align-self:end;border-radius:14px 14px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:14px;font-size:26px;font-weight:800;color:#000;}
+.podium-col.rank-1 .podium-bar{background:#F5C542;height:150px;}
+.podium-col.rank-2 .podium-bar{background:rgba(245,197,66,0.65);height:108px;}
+.podium-col.rank-3 .podium-bar{background:rgba(245,197,66,0.35);height:60px;}
+@media (max-width:640px){.podium{grid-template-rows:auto 90px;gap:0 12px;}.podium-col.rank-1 .podium-bar{height:90px;}.podium-col.rank-2 .podium-bar{height:65px;}.podium-col.rank-3 .podium-bar{height:36px;}.podium-bar{padding-top:10px;font-size:20px;}}
+.prio-timeline{position:relative;max-width:640px;margin-top:12px;padding-left:76px;display:flex;flex-direction:column;gap:36px;}
+.prio-step{position:relative;}
+.prio-step-num{position:absolute;left:-76px;top:-10px;font-size:56px;font-weight:800;line-height:1;color:transparent;-webkit-text-stroke:1.5px #8a5e0a;width:64px;text-align:right;}
+.prio-step-title{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.prio-step-desc{font-size:14.5px;line-height:1.5;color:var(--ink-soft);margin:0;}
+@media (max-width:640px){.prio-timeline{padding-left:58px;}.prio-step-num{left:-58px;font-size:40px;width:48px;}}
 .result-number{font-size:40px;font-weight:600;line-height:1;margin-bottom:10px;color:var(--on-hero);letter-spacing:-0.01em;}
+.result-number.count-nps{position:relative;display:inline-flex;align-items:baseline;gap:10px;}
+.result-number.count-nps .nps-six{position:relative;opacity:1;transition:opacity .3s ease;}
+.result-number.count-nps .nps-six::after{content:"";position:absolute;left:-4%;right:-4%;top:50%;height:3px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s ease;}
+.result-number.count-nps.nps-struck .nps-six{opacity:.35;}
+.result-number.count-nps.nps-struck .nps-six::after{transform:scaleX(1);}
+.result-number.count-nps .nps-eight{opacity:0;transform:translateX(-8px);transition:opacity .4s ease,transform .4s ease;}
+.result-number.count-nps.nps-revealed .nps-eight{opacity:1;transform:translateX(0);}
 .flow-controls{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin:8px 0 32px;}
 .device-toggle{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:rgba(20,18,15,0.10);border:0.5px solid var(--border-strong);}
 [data-theme="dark"] .device-toggle{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.18);}
@@ -525,6 +560,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
 <div class="hero-sec" id="site" data-reveal-root="">
   <div class="nav-sticky-bar">
+  <div class="nav-progress"><div class="nav-progress-fill" id="navProgressFill"></div></div>
   <div class="wrap">
     <header class="site-head">
       <a href="#/" class="brand" aria-label="Nate — home"><span style="position:relative;z-index:1">Nate</span><svg class="dot" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="50" fill="url(#yg)"></circle><g filter="url(#paint-dot)"><circle cx="50" cy="50" r="50" fill="url(#yg)" opacity="0.55"></circle></g></svg></a>
@@ -935,9 +971,22 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="tight">
       <div class="wrap">
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
+        <h2 class="section-title">How we prioritized</h2>
+        <p class="body-text" style="margin-bottom:20px">Every decision on what to build first went through RICE. Core functionality came first — tickets, memberships, donations, and refunds — followed by feature parity with the old system, and finally finishing what was already mid-build.</p>
+        <div class="prio-timeline">
+          <div class="prio-step"><div class="prio-step-num">01</div><div class="prio-step-title">Core functionality</div><p class="prio-step-desc">Tickets, memberships, donations, and refunds.</p></div>
+          <div class="prio-step"><div class="prio-step-num">02</div><div class="prio-step-title">Feature parity</div><p class="prio-step-desc">Matching what the old system already did.</p></div>
+          <div class="prio-step"><div class="prio-step-num">03</div><div class="prio-step-title">Finish what was in progress</div><p class="prio-step-desc">Wrapping up features already mid-build.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tight">
+      <div class="wrap">
         <div class="explore-split">
           <div>
-            <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
+            <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
             <h2 class="section-title">Design exploration</h2>
             <p class="body-text" style="margin-bottom:20px">The redesign happened in stages — first restructuring the layout, then bringing the new visual identity all the way through.</p>
             <h3 class="explore-title" id="posExploreTitle">Restructuring the layout</h3>
@@ -969,7 +1018,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section>
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
         <h2 class="section-title">The flow — final screens</h2>
         <p class="body-text" style="margin-bottom:8px">The prototype below is live — try it. It's embedded at a fixed width so the sidebar stays icon-only and Quick access shows its compact 2-column layout, matching how it looks on a smaller screen.</p>
         <div class="flow-controls">
@@ -997,35 +1046,35 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="section-surface">
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">10</span></div>
         <h2 class="section-title">Results</h2>
         <p class="body-text" style="margin-bottom:24px">The redesign replaced a fragmented, hard-to-learn system with one built around how staff actually work at the counter — with measurable gains in speed and adoption. Ticket and membership sales got <strong>35%</strong> faster, staff satisfaction rose <strong>33.8%</strong> relative to the previous POS, and use of previously hard-to-find features — membership renewals, tax exemptions, per-item discounts — grew <strong>40%</strong>.</p>
         <div class="card-grid cols-4">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 12l5-3M4 13a8 8 0 1 1 16 0"></path></svg></div>
             <div class="stat-label">Sales speed</div>
-            <div class="result-number">+35%</div>
+            <div class="result-number" data-count data-prefix="+" data-value="35" data-suffix="%">+35%</div>
             <div class="card-desc">Faster ticket &amp; membership sales</div>
             <div class="badges chip"><span class="badge">↗ vs. before</span></div>
           </div>
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 14s1.2 2 3.5 2 3.5-2 3.5-2M9 9h.01M15 9h.01"></path></svg></div>
             <div class="stat-label">Staff satisfaction</div>
-            <div class="result-number">+33.8%</div>
+            <div class="result-number" data-count data-prefix="+" data-value="33.8" data-decimals="1" data-suffix="%">+33.8%</div>
             <div class="card-desc">Relative to the previous POS</div>
             <div class="badges chip"><span class="badge">↗ vs. before</span></div>
           </div>
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5z"></path><path d="M3 8v8l9 5 9-5V8M12 13v8"></path></svg></div>
             <div class="stat-label">Feature discoverability</div>
-            <div class="result-number">+40%</div>
+            <div class="result-number" data-count data-prefix="+" data-value="40" data-suffix="%">+40%</div>
             <div class="card-desc">Use of features that were previously hard to find — membership renewals, tax exemptions, per-item discounts</div>
             <div class="badges chip"><span class="badge">↗ shipped</span></div>
           </div>
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a7 7 0 1 1 14 0c0 5.5-7 10-7 10z"></path><circle cx="12" cy="11" r="2.2"></circle></svg></div>
             <div class="stat-label">NPS</div>
-            <div class="result-number">6 → 8</div>
+            <div class="result-number count-nps"><span class="nps-six">6</span><span class="nps-eight">8</span></div>
             <div class="card-desc">Net Promoter Score</div>
             <div class="badges chip"><span class="badge">↑ vs. before</span></div>
           </div>
@@ -1209,7 +1258,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
       <div class="wrap">
         <div class="section-eyebrow"><span class="rule"></span><span class="num">06</span></div>
         <h2 class="section-title">Key decisions</h2>
-        <div class="card-grid cols-3">
+        <div class="card-grid cols-4">
           <div class="fc fc-decision">
             <div class="fc-eyebrow">— Trade-off</div>
             <h3 class="fc-title">Give up ownership for consistency</h3>
@@ -1240,13 +1289,36 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
               <span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg>Onboarding</span>
             </div>
           </div>
+          <div class="fc fc-decision">
+            <div class="fc-eyebrow">— Buy-in</div>
+            <h3 class="fc-title">Won the room over</h3>
+            <p class="fc-desc">Won buy-in with a two-part pitch: the long-term payoff of one shared system, plus temporary support from other teams so no one felt buried by the extra work.</p>
+            <div class="fc-rule"></div>
+            <div class="fc-tags">
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"></path></svg>Stakeholders</span>
+              <span class="fc-tag"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14.5-4.6M20 12a8 8 0 0 1-14.5 4.6"></path><polyline points="18 4 18.5 7.4 15.1 6.9"></polyline><polyline points="6 20 5.5 16.6 8.9 17.1"></polyline></svg>Change management</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tight">
+      <div class="wrap">
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
+        <h2 class="section-title">How we prioritized</h2>
+        <p class="body-text" style="margin-bottom:20px">RICE decided the order. Accounting and money/tax handling came first, given the risk involved, followed by CRM object pages and creation flows — then the team moved product by product.</p>
+        <div class="prio-timeline">
+          <div class="prio-step"><div class="prio-step-num">01</div><div class="prio-step-title">Accounting &amp; money/tax handling</div><p class="prio-step-desc">Highest risk, so it came first.</p></div>
+          <div class="prio-step"><div class="prio-step-num">02</div><div class="prio-step-title">CRM object pages &amp; creation flows</div><p class="prio-step-desc">Core object pages and creation flows across the CRM.</p></div>
+          <div class="prio-step"><div class="prio-step-num">03</div><div class="prio-step-title">Product-by-product rollout</div><p class="prio-step-desc">Rolling out the system one product at a time.</p></div>
         </div>
       </div>
     </section>
 
     <section class="section-surface">
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
         <h2 class="section-title">Design system foundations &amp; components</h2>
         <p class="body-text" style="margin-bottom:28px">The component library is built on HeroUI. The work here was taking that foundation and shaping it around Veevart's own tokens — color, typography, radius, elevation — and the specific needs of its products and users, so every component reads as a coherent, purpose-built system rather than a generic kit with a new coat of paint. Here is a sample of it.</p>
 
@@ -1429,7 +1501,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section>
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
         <h2 class="section-title">The system in practice</h2>
         <p class="body-text" style="margin-bottom:24px">A sample of real screens across Veevart's products — point-of-sale, ticketing, membership — that now share the same visual language and the same components.</p>
         <div class="filmstrip-marquee" id="dsFilmstrip">
@@ -1454,28 +1526,28 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="section-surface">
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">10</span></div>
         <h2 class="section-title">Results</h2>
         <p class="body-text" style="margin-bottom:24px">Standardizing on one design system brought churn back down to the expected rate — roughly half of what it had been — while adoption rose 40%. Simpler, consistent patterns across every product also meant new clients no longer had to relearn each one from scratch, cutting average onboarding time by 15% compared to clients who joined before the redesign — all within 4 months.</p>
         <div class="card-grid cols-3">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14s1.2 2 3.5 2 3.5-2 3.5-2M9 9h.01M15 9h.01"></path><circle cx="12" cy="12" r="9"></circle></svg></div>
             <div class="stat-label">Churn</div>
-            <div class="result-number">−50%</div>
+            <div class="result-number" data-count data-prefix="−" data-value="50" data-suffix="%">−50%</div>
             <div class="card-desc">Back to the expected rate</div>
             <div class="badges chip"><span class="badge">↓ less churn</span></div>
           </div>
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5-9 5-9-5z"></path><path d="M3 8v8l9 5 9-5V8M12 13v8"></path></svg></div>
             <div class="stat-label">Adoption</div>
-            <div class="result-number">+40%</div>
+            <div class="result-number" data-count data-prefix="+" data-value="40" data-suffix="%">+40%</div>
             <div class="card-desc">Adoption of the unified ecosystem</div>
             <div class="badges chip"><span class="badge">↗ vs. before</span></div>
           </div>
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg></div>
             <div class="stat-label">Onboarding time</div>
-            <div class="result-number">−15%</div>
+            <div class="result-number" data-count data-prefix="−" data-value="15" data-suffix="%">−15%</div>
             <div class="card-desc">Time for new users to get productive, in 4 months</div>
             <div class="badges chip"><span class="badge">↓ vs. before</span></div>
           </div>
@@ -1692,9 +1764,22 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="tight">
       <div class="wrap">
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
+        <h2 class="section-title">How we prioritized</h2>
+        <p class="body-text" style="margin-bottom:20px">Prioritization ran on RICE. The cart came first, since it's shared across every online product — followed by shared form patterns, and finally each product's own specialized pages.</p>
+        <div class="prio-timeline">
+          <div class="prio-step"><div class="prio-step-num">01</div><div class="prio-step-title">Cart</div><p class="prio-step-desc">Shared across every online product.</p></div>
+          <div class="prio-step"><div class="prio-step-num">02</div><div class="prio-step-title">Shared forms</div><p class="prio-step-desc">Common form patterns reused across products.</p></div>
+          <div class="prio-step"><div class="prio-step-num">03</div><div class="prio-step-title">Product-specific pages</div><p class="prio-step-desc">Each product's own specialized pages.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tight">
+      <div class="wrap">
         <div class="explore-split">
           <div>
-            <div class="section-eyebrow"><span class="rule"></span><span class="num">07</span></div>
+            <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
             <h2 class="section-title">Design exploration</h2>
             <p class="body-text" style="margin-bottom:20px">Before the final visual direction, early versions focused on solving the flow first — where components lived, how they connected — before making them look good.</p>
             <h3 class="explore-title" id="onlineExploreTitle">Early wireframe</h3>
@@ -1729,7 +1814,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section>
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">08</span></div>
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
         <h2 class="section-title">The flow — final screens</h2>
 
         <h3 class="subsection-title">Ticketing</h3>
@@ -1768,21 +1853,21 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
     <section class="section-surface">
       <div class="wrap">
-        <div class="section-eyebrow"><span class="rule"></span><span class="num">09</span></div>
+        <div class="section-eyebrow"><span class="rule"></span><span class="num">10</span></div>
         <h2 class="section-title">Results</h2>
         <p class="body-text" style="margin-bottom:24px">A pilot across more than 20 museums validated the redesign through usability testing and before/after analytics: checkout and membership drop-off fell by 30%, and visitor satisfaction rose by 50%.</p>
         <div class="card-grid cols-2">
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><polygon points="12 3 21 8 12 13 3 8"></polygon><polyline points="3 14 12 19 21 14"></polyline></svg></div>
             <div class="stat-label">Drop-off</div>
-            <div class="result-number">-30%</div>
+            <div class="result-number" data-count data-prefix="-" data-value="30" data-suffix="%">-30%</div>
             <div class="card-desc">Checkout and membership drop-off</div>
             <div class="badges chip"><span class="badge">↓ less drop-off</span></div>
           </div>
           <div class="glass-card stat-card">
             <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8.5 14s1.2 2 3.5 2 3.5-2 3.5-2M9 9h.01M15 9h.01"></path><circle cx="12" cy="12" r="9"></circle></svg></div>
             <div class="stat-label">Satisfaction</div>
-            <div class="result-number">+50%</div>
+            <div class="result-number" data-count data-prefix="+" data-value="50" data-suffix="%">+50%</div>
             <div class="card-desc">Vs. the old pages in testing</div>
             <div class="badges chip"><span class="badge">↗ vs. before</span></div>
           </div>
@@ -1950,9 +2035,11 @@ class Component extends DCLogic {
   componentDidMount(){
     this.initTheme();
     this.initScrollTop();
+    this.initResultCounters();
     this.initNav();
     this.initFloatingNav();
     this.initHomeCardsStack();
+    this.initTitleReveals();
     this.initRoles();
     this.initRouter();
     this.revealTries = 0;
@@ -2182,6 +2269,11 @@ class Component extends DCLogic {
   initRouter(){
     const self = this;
     this.go = function(scrollTo){
+      if (!scrollTo){
+        document.documentElement.style.scrollBehavior = 'auto';
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }
       const hash = location.hash.replace(/^#/, '');
       const page = ROUTES[hash] || 'home';
       document.documentElement.setAttribute('data-page', page);
@@ -2196,10 +2288,6 @@ class Component extends DCLogic {
       if (active){ active.classList.add('talk'); active.setAttribute('aria-current','page'); }
       const foot = document.querySelector('.foot-sec');
       if (foot) foot.classList.toggle('flush', page !== 'about');
-      if (!scrollTo){
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-      }
       if (window.NateScrollReveal) window.NateScrollReveal.refresh();
       requestAnimationFrame(function(){
         if (scrollTo){
@@ -2208,6 +2296,7 @@ class Component extends DCLogic {
         } else {
           document.documentElement.scrollTop = 0;
           document.body.scrollTop = 0;
+          document.documentElement.style.scrollBehavior = '';
         }
       });
     };
@@ -2230,22 +2319,94 @@ class Component extends DCLogic {
   initScrollTop(){
     const btn = document.getElementById('scrollTopBtn');
     if (!btn) return;
-    const projectPages = ['pos','ds','online-services','kids-advisor'];
     window.addEventListener('scroll', function(){
-      const page = document.documentElement.getAttribute('data-page');
-      const show = projectPages.indexOf(page) !== -1 && window.scrollY > 400;
+      const show = window.scrollY > 400;
       btn.classList.toggle('visible', show);
     });
     btn.addEventListener('click', function(){ window.scrollTo({top:0, left:0, behavior:'smooth'}); });
   }
 
+  initResultCounters(){
+    const nums = document.querySelectorAll('.result-number[data-count]');
+    const npsEls = document.querySelectorAll('.result-number.count-nps');
+    if (!nums.length && !npsEls.length) return;
+    const reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const setFinal = function(el){
+      const prefix = el.getAttribute('data-prefix') || '';
+      const suffix = el.getAttribute('data-suffix') || '';
+      const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      const target = parseFloat(el.getAttribute('data-value'));
+      el.textContent = prefix + target.toFixed(decimals) + suffix;
+    };
+    const animateNum = function(el){
+      if (reduceMq.matches){ setFinal(el); return; }
+      const prefix = el.getAttribute('data-prefix') || '';
+      const suffix = el.getAttribute('data-suffix') || '';
+      const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      const target = parseFloat(el.getAttribute('data-value'));
+      const dur = 1800;
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    };
+    const animateNps = function(el){
+      if (reduceMq.matches){ el.classList.add('nps-struck','nps-revealed'); return; }
+      setTimeout(function(){ el.classList.add('nps-struck'); }, 300);
+      setTimeout(function(){ el.classList.add('nps-revealed'); }, 700);
+    };
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        if (el.classList.contains('count-nps')) animateNps(el); else animateNum(el);
+        io.unobserve(el);
+      });
+    }, {threshold: 0.4});
+    nums.forEach(function(el){ io.observe(el); });
+    npsEls.forEach(function(el){ io.observe(el); });
+  }
+
+  initTitleReveals(){
+    const reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const titles = document.querySelectorAll('h2.section-title');
+    if (!titles.length) return;
+    if (reduceMq.matches) return;
+    titles.forEach(function(h){
+      if (h.dataset.revealWrapped) return;
+      h.dataset.revealWrapped = '1';
+      h.innerHTML = '<span class="title-mask"><span class="title-curtain"></span><span class="title-text">' + h.innerHTML + '</span></span>';
+    });
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        const mask = entry.target.querySelector('.title-mask');
+        if (mask) mask.classList.add('revealed');
+        io.unobserve(entry.target);
+      });
+    }, {threshold: 0.3});
+    titles.forEach(function(h){ io.observe(h); });
+  }
+
   initFloatingNav(){
     const bar = document.querySelector('.nav-sticky-bar');
     if (!bar) return;
+    const fill = document.getElementById('navProgressFill');
     const onScroll = function(){
       bar.classList.toggle('floating', window.scrollY > 40);
+      if (fill){
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - doc.clientHeight;
+        const pct = max > 0 ? Math.min(100, Math.max(0, (window.scrollY / max) * 100)) : 0;
+        fill.style.width = pct + '%';
+      }
     };
     window.addEventListener('scroll', onScroll);
+    window.addEventListener('resize', onScroll);
     onScroll();
   }
 

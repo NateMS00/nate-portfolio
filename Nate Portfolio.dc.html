@@ -320,6 +320,14 @@ h1.title{font-size:clamp(34px,5vw,56px);line-height:1.05;font-weight:600;letter-
 .pg-proj section.next-project-section{padding-bottom:0;}
 @keyframes pgFadeIn{from{opacity:0;}to{opacity:1;}}
 .pg-fade-in{animation:pgFadeIn .28s ease-out both;}
+#navSweepDot::before{content:'';position:absolute;left:5px;top:0;width:6px;height:140px;background:linear-gradient(to top,rgba(245,197,66,0.55),rgba(245,197,66,0));border-radius:3px;}
+#navSweepDot::after{content:'';position:absolute;left:0;top:140px;width:16px;height:16px;border-radius:50%;background:#F5C542;box-shadow:0 0 14px 4px rgba(245,197,66,0.55);}
+#navSweepDot.sweeping{animation:navSweep .8s cubic-bezier(0.25,0.46,0.45,0.94) both;}
+@keyframes navSweep{
+  from{ top:-160px; }
+  to{ top:calc(100vh + 160px); }
+}
+@media (prefers-reduced-motion:reduce){#navSweepDot.sweeping{animation:none;display:none;}}
 .next-card-body{padding-left:48px;padding-right:48px;}
 .next-card .go{right:48px;}
 .scroll-top-btn{position:fixed;bottom:28px;right:28px;z-index:200;width:42px;height:42px;border-radius:50%;background:var(--card);border:0.5px solid var(--border-strong);box-shadow:0 1px 2px rgba(0,0,0,.03),0 16px 32px -22px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);opacity:0;visibility:hidden;transition:opacity .2s ease;}
@@ -560,6 +568,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
 
 <div class="hero-sec" id="site" data-reveal-root="">
   <div id="navScrim" style="position:fixed;inset:0;background:var(--bg);opacity:0;pointer-events:none;z-index:9999;transition:opacity .4s ease;"></div>
+  <div id="navSweepDot" style="position:fixed;left:50%;top:-160px;width:16px;height:16px;transform:translateX(-50%);pointer-events:none;z-index:10000;"></div>
   <div class="nav-sticky-bar">
   <div class="nav-progress"><div class="nav-progress-fill" id="navProgressFill"></div></div>
   <div class="wrap">
@@ -2303,11 +2312,20 @@ class Component extends DCLogic {
             document.body.scrollTop = 0;
             document.documentElement.style.scrollBehavior = '';
           }
-          if (scrim && pageChanged) requestAnimationFrame(function(){ scrim.style.opacity = '0'; });
+          if (scrim && pageChanged) {}
         });
       };
       if (scrim && pageChanged){
         scrim.style.opacity = '1';
+        setTimeout(function(){ scrim.style.opacity = '0'; }, 400);
+        const dot = document.getElementById('navSweepDot');
+        const reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (dot && !reduceMq.matches){
+          dot.classList.remove('sweeping');
+          void dot.offsetWidth;
+          dot.classList.add('sweeping');
+          dot.addEventListener('animationend', function handler(){ dot.classList.remove('sweeping'); dot.removeEventListener('animationend', handler); });
+        }
         setTimeout(applyNav, 400);
       } else {
         applyNav();

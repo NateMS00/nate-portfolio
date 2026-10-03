@@ -115,13 +115,14 @@ html[data-page="kids-advisor"] .pg-kids-advisor{display:block;}
 .nav-sticky-bar.floating .site-head{padding:10px 0;}
 .nav-sticky-bar.floating .wrap{padding:0 28px;}
 @media (max-width:760px){.nav-sticky-bar.floating{margin:0 12px;}.nav-sticky-bar.floating .wrap{padding:0 16px;}}
-.nav-progress{display:none;position:absolute;left:0;bottom:0;width:100%;height:3px;background:rgba(40,40,37,0.09);overflow:hidden;border-radius:inherit;}
-[data-theme="dark"] .nav-progress{background:rgba(245,242,236,0.10);}
+.nav-progress{display:none;position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none;}
+.nav-progress-track{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(40,40,37,0.09);}
+[data-theme="dark"] .nav-progress-track{background:rgba(245,242,236,0.10);}
 html[data-page="pos"] .nav-progress,
 html[data-page="ds"] .nav-progress,
 html[data-page="online-services"] .nav-progress,
 html[data-page="kids-advisor"] .nav-progress{display:block;}
-.nav-progress-fill{height:100%;width:0%;background:#F5C542;}
+.nav-progress-fill{position:absolute;left:0;bottom:0;right:auto;height:3px;width:0%;background:#F5C542;}
 .hero{display:grid;grid-template-columns:1fr 340px;gap:60px;align-items:stretch;padding:56px 0 100px;}
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;gap:40px;padding:40px 0 64px;}
@@ -570,7 +571,7 @@ p.body-text{font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:680px
   <div id="navScrim" style="position:fixed;inset:0;background:var(--bg);opacity:0;pointer-events:none;z-index:9999;transition:opacity .4s ease;"></div>
   <div id="navSweepDot" style="position:fixed;left:50%;top:-160px;width:16px;height:16px;transform:translateX(-50%);pointer-events:none;z-index:10000;"></div>
   <div class="nav-sticky-bar">
-  <div class="nav-progress"><div class="nav-progress-fill" id="navProgressFill"></div></div>
+  <div class="nav-progress"><div class="nav-progress-track"></div><div class="nav-progress-fill" id="navProgressFill"></div></div>
   <div class="wrap">
     <header class="site-head">
       <a href="#/" class="brand" aria-label="Nate — home"><span style="position:relative;z-index:1">Nate</span><svg class="dot" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="50" fill="url(#yg)"></circle><g filter="url(#paint-dot)"><circle cx="50" cy="50" r="50" fill="url(#yg)" opacity="0.55"></circle></g></svg></a>

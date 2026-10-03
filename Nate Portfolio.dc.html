@@ -2230,6 +2230,13 @@ class Component extends DCLogic {
     const links = document.getElementById('navLinks');
     if (burger && links && !burger.dataset.bound){
       burger.dataset.bound = '1';
+      const closeMenu = function(opts){
+        links.classList.remove('open');
+        burger.classList.remove('open');
+        burger.setAttribute('aria-expanded','false');
+        burger.setAttribute('aria-label','Open menu');
+        if (opts && opts.returnFocus) burger.focus();
+      };
       burger.addEventListener('click', function(){
         const open = links.classList.toggle('open');
         burger.classList.toggle('open', open);
@@ -2237,11 +2244,18 @@ class Component extends DCLogic {
         burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       });
       links.querySelectorAll('a').forEach(function(a){
-        a.addEventListener('click', function(){
-          links.classList.remove('open');
-          burger.classList.remove('open');
-          burger.setAttribute('aria-expanded','false');
-        });
+        a.addEventListener('click', function(){ closeMenu(); });
+      });
+      document.addEventListener('click', function(e){
+        if (!links.classList.contains('open')) return;
+        if (e.target.closest('#navLinks') || e.target.closest('#hamburger')) return;
+        closeMenu();
+      });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && links.classList.contains('open')) closeMenu({returnFocus:true});
+      });
+      window.addEventListener('resize', function(){
+        if (window.innerWidth > 860 && links.classList.contains('open')) closeMenu();
       });
     }
   }
